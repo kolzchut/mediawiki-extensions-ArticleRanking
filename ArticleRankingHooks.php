@@ -3,12 +3,8 @@
 class ArticleRankingHooks {
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$out->addModules( 'ext.articleranking' );
+		$out->addModules( 'ext.articleRanking' );
 
-		return true;
-	}
-
-	public static function onSkinHelenaAfterTitle( HelenaTemplate &$template, String &$output ) {
 		return true;
 	}
 
