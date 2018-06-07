@@ -2,8 +2,6 @@
 
 class ArticleRanking {
 
-	protected $displayMinVotes = 5;
-
 	/**
 	 * Save vote for a certain page ID
 	 *
@@ -11,7 +9,7 @@ class ArticleRanking {
 	 * @param int $vote 1 for positive vote, 0 for negative vote
 	 * @return bool
 	 */
-	public function saveVote( Int $page_id, Int $vote ) {
+	public static function saveVote( Int $page_id, Int $vote ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$votes = $dbw->select( 'article_rankings',
@@ -57,9 +55,9 @@ class ArticleRanking {
 	 * Get rank for a specific page ID
 	 *
 	 * @param int $page_id
-	 * @return int|bool number of positive votes, or false when no entry exists
+	 * @return array|bool an array that includes the amount of positive votes, total votes and total rank percentage, or false
 	 */
-	public function getRank( Int $page_id ) {
+	public static function getRank( Int $page_id ) {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$result = $dbr->select(
@@ -70,32 +68,27 @@ class ArticleRanking {
 
 		$result = $result->fetchRow();
 
-		if ( !$result || $result[ 'positive_votes' ] < $this->displayMinVotes ) {
+		if ( !$result ) {
 			return false;
 		}
 
-		return $result[ 'positive_votes' ] ? (int)$result[ 'positive_votes' ] : false;
+		return [
+			'positive_votes' => $result[ 'positive_votes' ],
+			'total_votes'    => $result[ 'total_votes' ],
+			'rank'           => ( (int)$result[ 'positive_votes' ] / (int)$result[ 'total_votes' ] ) * 100
+		];
 	}
 
-	/**
-	 * Sets minimum votes needed in order to see the current ranking
-	 *
-	 * @param int $minVotes
-	 * @return $this
-	 */
-	public function setMinVotes( $minVotes ) {
-		$this->displayMinVotes = $minVotes;
+	public static function createRankingSection() {
+		$templateParser = new TemplateParser( __DIR__ . '/templates' );
 
-		return $this;
-	}
-
-	/**
-	 * Returns minimum votes needed in order to see the current ranking
-	 *
-	 * @return int
-	 */
-	public function getMinVotes() {
-		return $this->displayMinVotes;
+		return $templateParser->processTemplate( 'voting', [
+			'section1title'  => wfMessage( 'ranking-section1-title' ),
+			'yes'            => wfMessage( 'ranking-yes' ),
+			'no'             => wfMessage( 'ranking-no' ),
+			'section2title'  => wfMessage( 'ranking-section2-title' ),
+			'proposeChanges' => wfMessage( 'ranking-propose-change' )
+		] );
 	}
 
 }
