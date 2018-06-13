@@ -43,8 +43,6 @@ class ARVoteAPI extends ApiBase {
 		if ( $captchaResult ) {
 			$result = ArticleRanking::saveVote( $page_id, $vote );
 			$output[ 'success' ] = (int)$result;
-		} else {
-			$queryResult->addValue( null, 'ranking', $output );
 		}
 
 		$queryResult->addValue( null, 'ranking', $output );
