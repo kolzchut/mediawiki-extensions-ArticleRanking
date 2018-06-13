@@ -80,6 +80,8 @@ class ArticleRanking {
 	}
 
 	public static function createRankingSection() {
+		global $wgArticleRankingCaptcha;
+
 		$templateParser = new TemplateParser( __DIR__ . '/templates' );
 
 		return $templateParser->processTemplate( 'voting', [
@@ -87,7 +89,8 @@ class ArticleRanking {
 			'yes'            => wfMessage( 'ranking-yes' ),
 			'no'             => wfMessage( 'ranking-no' ),
 			'section2title'  => wfMessage( 'ranking-section2-title' ),
-			'proposeChanges' => wfMessage( 'ranking-propose-change' )
+			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
+			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		] );
 	}
 

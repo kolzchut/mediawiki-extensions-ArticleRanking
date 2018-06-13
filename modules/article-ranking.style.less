@@ -1,1 +1,45 @@
 @import 'mediawiki.mixins';
+
+@green: #608a36;
+
+.ranking-section {
+    border-top: 4px solid @green;
+    border-bottom: 4px solid @green;
+	padding: 0 0 22px 0;
+	
+	h2 {
+		color: #000;
+		font-size: 17px;
+		font-weight: bold;
+	}
+
+	.ranking-btn {
+		background: @green;
+		border: 0;
+		font-size: 16px;
+		font-weight: bold;
+		color: #fff;
+		min-width: 100px;
+		padding: 3px 0;
+    	width: 146px;
+	}
+
+	.sub-section {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.sub-section.sub-section1 {
+		width: 43%;
+	}
+}
+
+.article-type-mainpage {
+	.ranking-section {
+		margin-left: 0;
+
+		.sub-section.sub-section1 {
+			width: 36%;
+		}
+	}
+}
