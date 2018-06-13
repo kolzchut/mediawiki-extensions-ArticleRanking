@@ -6,7 +6,7 @@
     border-top: 4px solid @green;
     border-bottom: 4px solid @green;
 	padding: 0 0 22px 0;
-	
+
 	h2 {
 		color: #000;
 		font-size: 17px;
@@ -21,7 +21,8 @@
 		color: #fff;
 		min-width: 100px;
 		padding: 3px 0;
-    	width: 146px;
+		width: 146px;
+		margin-left: 3px;
 	}
 
 	.sub-section {
@@ -31,6 +32,25 @@
 
 	.sub-section.sub-section1 {
 		width: 43%;
+	}
+
+	@media screen and (max-width: 768px) {
+		.sub-section.sub-section1 {
+			width: 100%;
+		}
+
+		.ranking-btn {
+			width: 144px;
+			margin: 0;
+		}
+
+		.ranking-btn.yes {
+			float: right;
+		}
+
+		.ranking-btn.no {
+			float: left;
+		}
 	}
 }
 
