@@ -15,13 +15,13 @@
 					token: token,
 					vote: Number( this.positiveVote )
 				},
-				success: function( response ){
+				success: function( response ) {
 
-					if (response.ranking.success) {
-						mw.ranking.setMessage(mw.messages.get('ranking-vote-success'));
+					if ( response.ranking.success ) {
+						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
 					} else {
 						$( '.ranking-section .sub-section1 .ranking-btn' ).attr( 'disabled', false );
-						mw.ranking.setMessage(mw.messages.get('ranking-vote-fail'));
+						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-fail' ) );
 					}
 				}.bind( this )
 			} );
