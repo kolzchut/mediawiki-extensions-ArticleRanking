@@ -3,9 +3,11 @@
 class ArticleRankingHooks {
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$out->addModules( 'ext.articleRanking' );
-		$out->addHeadItem('recaptcha', '<script async defer src="https://www.google.com/recaptcha/api.js"></script>' );
-		
+		$out->addModules( [ 'ext.articleRanking', 'ext.articleRanking.changeRequest' ] );
+		$out->addHeadItem(
+			'recaptcha', '<script async defer src="https://www.google.com/recaptcha/api.js"></script>'
+		);
+
 		return true;
 	}
 

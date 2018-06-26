@@ -4,18 +4,24 @@
 
 The purpose of this extension is to let users rank certain articles. 
 
-[Invisible Recaptcha](https://developers.google.com/recaptcha/docs/invisible) is also provided and requires a site key and a secret key provided by Google.
+[Invisible Recaptcha](https://developers.google.com/recaptcha/docs/invisible)
+is also provided and requires a site key and a secret key provided by Google.
+
+One (smaller) part of this extension is used to launch an external change
+proposal form. This is dependant on extension:WRShareBar.
 
 ## Configuration
 
-ArticleRankingConfig - Currently contains various properties to be considered when a user clicks the 'propose changes' button
+ArticleRankingConfig - Currently contains various properties to be considered
+when a user clicks the 'propose changes' button
 
 ArticleRankingCaptcha - Contains the site key and secret key pair for the captcha
 
 ## How to use
 
 ### Updating a vote count for a specific page
-To update a vote count, make a POST request to `http://example.com/api.php?action=rank-vote&id={page_id}&vote={vote_type}&token={token}&format=json`
+To update a vote count, make a POST request to
+`http://example.com/api.php?action=rank-vote&id={page_id}&vote={vote_type}&token={token}&format=json`
 
 | Parameter | Type | Description |
 |-----------|-------------|------|
