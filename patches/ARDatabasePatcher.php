@@ -18,14 +18,10 @@ class ARDatabasePatcher {
 	 * @return bool
 	 */
 	public static function applyUpdates( $updater = null ) {
-		$base = __DIR__;
-
 		if ( $updater->getDB()->getType() == 'mysql' ) {
-			$updater->addExtensionUpdate(
-				[
-					 'addTable', 'article_ranking',
-					 $base . '/ArticleRankings.sql', true
-				]
+			$updater->addExtensionTable(
+				 'article_ranking',
+				 __DIR__ . '/ArticleRankings.sql'
 			);
 		}
 		return true;
