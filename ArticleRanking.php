@@ -55,7 +55,7 @@ class ArticleRanking {
 	 * Get rank for a specific page ID
 	 *
 	 * @param int $page_id
-	 * @return array|bool an array that includes the amount of positive votes, total votes and total rank percentage, or false
+	 * @return array|bool an array that includes the number of positive votes, total votes and total rank percentage, or false
 	 */
 	public static function getRank( Int $page_id ) {
 		$dbr = wfGetDB( DB_REPLICA );
@@ -95,3 +95,4 @@ class ArticleRanking {
 	}
 
 }
+
