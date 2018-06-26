@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+		]
+	},
+	"ranking-section1-title": "Was this article helpful?",
+	"ranking-yes": "Yes",
+	"ranking-no": "No",
+
+	"ranking-section2-title": "Spotted any inaccuracies? Have additional information or suggestions for this article?",
+	"ranking-propose-change": "Send change proposal",
+	"ranking-vote-success": "Thank you for your feedback!",
+	"ranking-vote-fail": "An error had occurred; please try again."
+}
