@@ -1,0 +1,67 @@
+{
+	"name": "Article Ranking",
+	"version": "0.0.0",
+	"author": [
+		"Tal Koren (Interjet, Kol Zchut)"
+	],
+	"descriptionmsg": "An extension that allows anonymous users to rate certain articles",
+	"url": "https://github.com/kolzchut/mediawiki-extensions-ArticleRanking",
+	"license-name": "MIT",
+	"type": "other",
+	"AutoloadClasses": {
+		"ArticleRanking": "ArticleRanking.php",
+		"ARVoteAPI": "api/ARVoteAPI.php",
+		"ARGetVotesAPI": "api/ARGetVotesAPI.php",
+		"ArticleRankingHooks": "ArticleRankingHooks.php",
+		"ARDatabasePatcher": "patches/ARDatabasePatcher.php",
+		"ARDatabase": "includes/ARDatabase.php",
+		"ARCaptcha": "includes/ARCaptcha.php"
+	},
+	"APIModules": {
+		"rank-vote": "ARVoteAPI",
+		"rank-votes": "ARGetVotesAPI"
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "WikiRights/ArticleRanking"
+	},
+	"ResourceModules": {
+		"ext.articleRanking": {
+			"scripts": "modules/article-ranking.script.js",
+			"styles": "modules/article-ranking.style.less",
+			"dependencies": ["mediawiki.jqueryMsg"],
+			"messages": [
+				"ranking-vote-success",
+				"ranking-vote-fail"
+			]
+		},
+		"ext.articleRanking.changeRequest": {
+			"scripts": "modules/articleRanking.changeRequest.js",
+			"dependencies": ["ext.wr.ShareBar.js"]
+		}
+	},
+	"Hooks": {
+		"BeforePageDisplay": "ArticleRankingHooks::onBeforePageDisplay",
+		"LoadExtensionSchemaUpdates": "ARDatabasePatcher::applyUpdates",
+		"ResourceLoaderGetConfigVars": [ "ArticleRankingHooks::onResourceLoaderGetConfigVars" ]
+	},
+	"MessagesDirs": {
+		"ArticleRanking": [
+			"i18n"
+		]
+	},
+	"config": {
+		"ArticleRankingConfig": {
+			"changerequest": {
+				"url": "/forms/ChangeRequest/",
+				"width": 750,
+				"height": 650
+			}
+		},
+		"ArticleRankingCaptcha": {
+			"siteKey": "",
+			"secret": ""
+		}
+	},
+	"manifest_version": 1
+}
