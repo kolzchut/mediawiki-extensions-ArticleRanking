@@ -10,5 +10,9 @@
 	"ranking-section2-title": "מצאת אי דיוקים? יש לך מידע נוסף או הצעות לעדכון ערך זה?",
 	"ranking-propose-change": "שלח הצעת שינוי",
 	"ranking-vote-success": "תודה, הצבעתך נקלטה בהצלחה",
-	"ranking-vote-fail": "אירעה שגיאה במהלך שליחת ההצבעה, אנא נסו שנית"
+	"ranking-vote-fail": "אירעה שגיאה במהלך שליחת ההצבעה, אנא נסו שנית",
+	
+	"ranking-invalid-captcha-title": "שגיאת reCAPTCHA",
+	"ranking-invalid-captcha-keys-message": "מפתחות reCAPTCHA חסרים"
+
 }

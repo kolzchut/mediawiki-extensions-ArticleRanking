@@ -10,5 +10,8 @@
 	"ranking-section2-title": "Spotted any inaccuracies? Have additional information or suggestions for this article?",
 	"ranking-propose-change": "Send change proposal",
 	"ranking-vote-success": "Thank you for your feedback!",
-	"ranking-vote-fail": "An error had occurred; please try again."
+	"ranking-vote-fail": "An error had occurred; please try again.",
+	
+	"ranking-invalid-captcha-title": "reCAPTCHA error",
+	"ranking-invalid-captcha-keys-message": "Missing reCAPTCHA keys"
 }

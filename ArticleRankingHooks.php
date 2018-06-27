@@ -3,6 +3,12 @@
 class ArticleRankingHooks {
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+		global $wgArticleRankingCaptcha;
+
+		if ( !$wgArticleRankingCaptcha[ 'secret' ] || !$wgArticleRankingCaptcha[ 'siteKey' ] ) {
+			$out->showErrorPage( 'ranking-invalid-captcha-title', 'ranking-invalid-captcha-keys-message' );
+		}
+
 		$out->addModules( [ 'ext.articleRanking', 'ext.articleRanking.changeRequest' ] );
 		$out->addHeadItem(
 			'recaptcha', '<script async defer src="https://www.google.com/recaptcha/api.js"></script>'
