@@ -56,11 +56,12 @@
 				"url": "/forms/ChangeRequest/",
 				"width": 750,
 				"height": 650
-			}
+			},
+			"trackClicks": true
 		},
 		"ArticleRankingCaptcha": {
-			"siteKey": "",
-			"secret": ""
+			"siteKey": "6LePm14UAAAAALVl-EgDR62ez14HsUbDmRhy1iCz",
+			"secret": "6LePm14UAAAAACfkkABCudQa5ab6RECCsEoj-HWQ"
 		}
 	},
 	"manifest_version": 1
