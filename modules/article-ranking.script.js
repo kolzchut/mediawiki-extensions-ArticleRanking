@@ -4,6 +4,7 @@
 
 	mw.ranking = {
 		positiveVote: false,
+		config: mw.config.get( 'wgArticleRankingConfig' ),
 		vote: function ( token ) {
 			return $.ajax( {
 				method: 'POST',
@@ -16,9 +17,10 @@
 					vote: Number( this.positiveVote )
 				},
 				success: function( response ) {
-
 					if ( response.ranking.success ) {
 						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
+
+						mw.ranking.trackEvent( 'click', 'vote', mw.ranking.positiveVote )
 					} else {
 						$( '.ranking-section .sub-section1 .ranking-btn' ).attr( 'disabled', false );
 						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-fail' ) );
@@ -31,9 +33,25 @@
 		},
 		verifyCaptcha: function( token ) {
 			return mw.ranking.vote( token );
+		},
+		trackEvent: function(action, label, value) {
+			if ( mw.loader.getState( 'ext.googleUniversalAnalytics.utils' ) === null ) {
+				return;
+			}
+
+			mw.loader.using( 'ext.googleUniversalAnalytics.utils' ).then( function () {
+				if ( mw.ranking.config.trackClicks === true ) {
+					mw.googleAnalytics.utils.recordEvent( {
+						eventCategory: 'ranking',
+						eventAction: action,
+						eventLabel: label,
+						eventValue: value,
+						nonInteraction: false
+					} );
+				}
+			} );
 		}
 	};
-
 	$( document ).ready( function () {
 		var btns = $( '.ranking-section .sub-section1 .ranking-btn' );
 
