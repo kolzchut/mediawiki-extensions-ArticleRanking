@@ -38,19 +38,22 @@
 	@media screen and (max-width: 768px) {
 		.sub-section.sub-section1 {
 			width: 100%;
+			border-bottom: 2px solid #b7b7b7;
+    		padding: 0 0 25px 0;
+
+			> div {
+				display: flex;
+				justify-content: space-between;
+			}
 		}
 
 		.ranking-btn {
 			width: 144px;
 			margin: 0;
-		}
 
-		.ranking-btn.yes {
-			float: right;
-		}
-
-		.ranking-btn.no {
-			float: left;
+			&.no {
+				margin: 0 0 0 10px;
+			}
 		}
 	}
 }
