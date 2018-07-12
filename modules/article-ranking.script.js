@@ -34,21 +34,21 @@
 		verifyCaptcha: function( token ) {
 			return mw.ranking.vote( token );
 		},
-		trackEvent: function(action, label, value) {
-			if ( mw.loader.getState( 'ext.googleUniversalAnalytics.utils' ) === null ) {
+		trackEvent: function ( action, label, value ) {
+			if ( mw.ranking.config.trackClicks !== true ||
+				mw.loader.getState( 'ext.googleUniversalAnalytics.utils' ) === null
+			) {
 				return;
 			}
 
 			mw.loader.using( 'ext.googleUniversalAnalytics.utils' ).then( function () {
-				if ( mw.ranking.config.trackClicks === true ) {
-					mw.googleAnalytics.utils.recordEvent( {
-						eventCategory: 'ranking',
-						eventAction: action,
-						eventLabel: label,
-						eventValue: value,
-						nonInteraction: false
-					} );
-				}
+				mw.googleAnalytics.utils.recordEvent( {
+					eventCategory: 'ranking',
+					eventAction: action,
+					eventLabel: label,
+					eventValue: value,
+					nonInteraction: false
+				} );
 			} );
 		}
 	};
