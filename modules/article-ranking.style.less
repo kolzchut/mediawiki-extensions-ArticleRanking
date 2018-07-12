@@ -3,8 +3,8 @@
 @green: #608a36;
 
 .ranking-section {
-    border-top: 4px solid @green;
-    border-bottom: 4px solid @green;
+	border-top: 4px solid @green;
+	border-bottom: 4px solid @green;
 	padding: 0 0 22px 0;
 	margin-bottom: 10px;
 
@@ -24,6 +24,15 @@
 		padding: 3px 0;
 		width: 146px;
 		margin-left: 3px;
+
+		&[disabled].selected {
+			opacity: 1;
+		}
+
+		// When an icon is added to the text
+		.fa {
+			margin-right: 5px;
+		}
 	}
 
 	.sub-section {
@@ -39,7 +48,7 @@
 		.sub-section.sub-section1 {
 			width: 100%;
 			border-bottom: 2px solid #b7b7b7;
-    		padding: 0 0 25px 0;
+			padding: 0 0 25px 0;
 
 			> div {
 				display: flex;
