@@ -40,20 +40,25 @@
 		vertical-align: top;
 	}
 
-	.sub-section.sub-section1 {
+	.sub-section1 {
 		width: 43%;
 	}
 
 	@media screen and (max-width: 768px) {
-		.sub-section.sub-section1 {
+		.sub-section1 {
 			width: 100%;
-			border-bottom: 2px solid #b7b7b7;
-			padding: 0 0 25px 0;
 
 			> div {
 				display: flex;
 				justify-content: space-between;
 			}
+		}
+
+		.sub-section2 {
+			display: none;
+			// The following rules are useless when hidden - relevant in the future when we show this
+		    border-top: 2px solid #b7b7b7;
+			padding-top: 25px;
 		}
 
 		.ranking-btn {
@@ -71,7 +76,7 @@
 	.ranking-section {
 		margin-left: 0;
 
-		.sub-section.sub-section1 {
+		.sub-section1 {
 			width: 36%;
 		}
 	}
