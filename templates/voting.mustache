@@ -5,13 +5,14 @@
 			<button class="btn ranking-btn yes" type="button">{{ yes }}</button>
 			<button class="btn ranking-btn no" type="button">{{ no }}</button>
 		</div>
-		
+
 		<div class="voting-messages"></div>
 
 		<div class="g-recaptcha"
-			data-sitekey="{{ siteKey }}"
-			data-callback="verifyRankingCaptcha"
-			data-size="invisible">
+			 data-sitekey="{{ siteKey }}"
+			 data-callback="verifyRankingCaptcha"
+			 data-error-callback="handleRankingCaptchaError"
+			 data-size="invisible">
 		</div>
 	</div>
 

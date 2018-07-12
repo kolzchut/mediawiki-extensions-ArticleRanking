@@ -1,10 +1,12 @@
 ( function ( mw, $ ) {
-
 	'use strict';
 
 	mw.ranking = {
 		positiveVote: false,
 		config: mw.config.get( 'wgArticleRankingConfig' ),
+		$btns: $( '.ranking-section .sub-section1 .ranking-btn' ),
+		$statusIcon: $( '<i class="fa fa-spinner fa-spin"></i>' ),
+		$votingMessages: $( '.ranking-section .voting-messages' ),
 		vote: function ( token ) {
 			return $.ajax( {
 				method: 'POST',
@@ -16,22 +18,26 @@
 					token: token,
 					vote: Number( this.positiveVote )
 				},
-				success: function( response ) {
+				success: function ( response ) {
 					if ( response.ranking.success ) {
 						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
-
-						mw.ranking.trackEvent( 'click', 'vote', mw.ranking.positiveVote )
+						mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );
+						mw.ranking.trackEvent( 'click', 'vote', mw.ranking.positiveVote );
 					} else {
-						$( '.ranking-section .sub-section1 .ranking-btn' ).attr( 'disabled', false );
-						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-fail' ) );
+						mw.ranking.informFailedVote();
 					}
-				}.bind( this )
+				}
 			} );
 		},
 		setMessage: function ( msg ) {
-			$( '.ranking-section .voting-messages' ).text( msg );
+			mw.ranking.$votingMessages.text( msg ).show();
 		},
-		verifyCaptcha: function( token ) {
+		informFailedVote: function () {
+			mw.ranking.$btns.attr( 'disabled', false ).removeClass( 'selected' );
+			mw.ranking.$statusIcon.detach();
+			mw.ranking.setMessage( mw.messages.get( 'ranking-vote-fail' ) );
+		},
+		verifyCaptcha: function ( token ) {
 			return mw.ranking.vote( token );
 		},
 		trackEvent: function ( action, label, value ) {
@@ -52,17 +58,20 @@
 			} );
 		}
 	};
-	$( document ).ready( function () {
-		var btns = $( '.ranking-section .sub-section1 .ranking-btn' );
 
-		btns.click( function () {
+	$( document ).ready( function () {
+		$( mw.ranking.$btns ).on( 'click', function () {
+			mw.ranking.$votingMessages.hide(); // In case we already displayed a message before
 			mw.ranking.positiveVote = $( this ).hasClass( 'yes' );
-			btns.attr( 'disabled', true );
+			mw.ranking.$btns.attr( 'disabled', true );
+			$( this ).prepend( mw.ranking.$statusIcon );
+			$( this ).addClass( 'selected' );
 			grecaptcha.execute();
 		} );
 
 	} );
 
 	window.verifyRankingCaptcha = mw.ranking.verifyCaptcha;
+	window.handleRankingCaptchaError = mw.ranking.informFailedVote;
 
 }( mediaWiki, jQuery ) );
