@@ -29,7 +29,6 @@ class ArticleRanking {
 				$totalVotes = $totalVotes + 1;
 			}
 
-			$dbw->begin();
 			$result = $dbw->update( 'article_rankings',
 				[
 					'positive_votes' => $positiveVotes,
@@ -39,7 +38,6 @@ class ArticleRanking {
 					'page_id' => $page_id
 				]
 			);
-			$dbw->commit();
 		} else {
 			$result = $dbw->insert( 'article_rankings', [
 				'positive_votes' => $vote,
