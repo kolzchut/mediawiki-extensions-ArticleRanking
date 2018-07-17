@@ -22,7 +22,7 @@
 					if ( response.ranking.success ) {
 						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
 						mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );
-						mw.ranking.trackEvent( 'click', 'vote', mw.ranking.positiveVote );
+						mw.ranking.trackEvent( 'vote', mw.ranking.positiveVote ? 'yes' : 'no' );
 					} else {
 						mw.ranking.informFailedVote();
 					}
@@ -40,7 +40,7 @@
 		verifyCaptcha: function ( token ) {
 			return mw.ranking.vote( token );
 		},
-		trackEvent: function ( action, label, value ) {
+		trackEvent: function ( action, label ) {
 			if ( mw.ranking.config.trackClicks !== true ||
 				mw.loader.getState( 'ext.googleUniversalAnalytics.utils' ) === null
 			) {
@@ -49,10 +49,9 @@
 
 			mw.loader.using( 'ext.googleUniversalAnalytics.utils' ).then( function () {
 				mw.googleAnalytics.utils.recordEvent( {
-					eventCategory: 'ranking',
+					eventCategory: 'article-ranking',
 					eventAction: action,
 					eventLabel: label,
-					eventValue: value,
 					nonInteraction: false
 				} );
 			} );
