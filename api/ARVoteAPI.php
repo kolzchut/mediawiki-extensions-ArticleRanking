@@ -14,9 +14,9 @@ class ARVoteAPI extends ApiBase {
 
 	protected function getAllowedParams() {
 		return [
-			'token' => [
+			'captchaToken' => [
 				ApiBase::PARAM_TYPE => 'string',
-				ApiBase::PARAM_REQUIRED => true
+				ApiBase::PARAM_REQUIRED => ArticleRanking::isCaptchaEnabled()
 			],
 			'id' => [
 				ApiBase::PARAM_TYPE => 'integer',
@@ -33,19 +33,21 @@ class ARVoteAPI extends ApiBase {
 		$queryResult = $this->getResult();
 		$params      = $this->extractRequestParams();
 
-		$token   = $params[ 'token' ];
+		$captchaToken = $params['captchaToken'];
 		$page_id = $params[ 'id' ];
 		$vote    = $params[ 'vote' ];
 		$output  = [ 'success' => false ];
 
-		$captchaResult = ARCaptcha::verifyToken( $this->secret, $token );
-
-		if ( $captchaResult ) {
+		if ( !ArticleRanking::isCaptchaEnabled() || ARCaptcha::verifyToken( $this->secret, $captchaToken ) ) {
 			$result = ArticleRanking::saveVote( $page_id, $vote );
 			$output[ 'success' ] = (int)$result;
 		}
 
 		$queryResult->addValue( null, 'ranking', $output );
+	}
+
+	public function needsToken() {
+		return 'csrf';
 	}
 
 }

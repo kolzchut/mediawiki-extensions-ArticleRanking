@@ -7,13 +7,14 @@
 		</div>
 
 		<div class="voting-messages"></div>
-
+		{{#is-captcha-enabled}}
 		<div class="g-recaptcha"
 			 data-sitekey="{{ siteKey }}"
 			 data-callback="verifyRankingCaptcha"
 			 data-error-callback="handleRankingCaptchaError"
 			 data-size="invisible">
 		</div>
+		{{/is-captcha-enabled}}
 	</div>
 
 	<div class="sub-section sub-section2">

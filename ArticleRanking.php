@@ -53,7 +53,8 @@ class ArticleRanking {
 	 * Get rank for a specific page ID
 	 *
 	 * @param int $page_id
-	 * @return array|bool an array that includes the number of positive votes, total votes and total rank percentage, or false
+	 * @return array|bool an array that includes the number of positive votes, total votes and
+	 *                    total rank percentage, or false
 	 */
 	public static function getRank( Int $page_id ) {
 		$dbr = wfGetDB( DB_REPLICA );
@@ -88,9 +89,14 @@ class ArticleRanking {
 			'no'             => wfMessage( 'ranking-no' ),
 			'section2title'  => wfMessage( 'ranking-section2-title' ),
 			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
+			'is-captcha-enabled' => self::isCaptchaEnabled(),
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		] );
 	}
 
+	public static function isCaptchaEnabled() {
+		global $wgArticleRankingCaptcha;
+		return ( $wgArticleRankingCaptcha[ 'secret' ] && $wgArticleRankingCaptcha[ 'siteKey' ] );
+	}
 }
 

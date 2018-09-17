@@ -7,25 +7,19 @@
 		$btns: $( '.ranking-section .sub-section1 .ranking-btn' ),
 		$statusIcon: $( '<i class="fa fa-spinner fa-spin"></i>' ),
 		$votingMessages: $( '.ranking-section .voting-messages' ),
-		vote: function ( token ) {
-			return $.ajax( {
-				method: 'POST',
-				url: mw.config.get( 'wgServer' ) + mw.config.get( 'wgScriptPath' ) + '/api.php',
-				data: {
-					action: 'rank-vote',
-					id: mw.config.get( 'wgArticleId' ),
-					format: 'json',
-					token: token,
-					vote: Number( this.positiveVote )
-				},
-				success: function ( response ) {
-					if ( response.ranking.success ) {
-						mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
-						mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );
-						mw.ranking.trackEvent( 'vote', mw.ranking.positiveVote ? 'yes' : 'no' );
-					} else {
-						mw.ranking.informFailedVote();
-					}
+		vote: function ( captchaToken ) {
+			return new mw.Api().postWithToken( 'csrf', {
+				action: 'rank-vote',
+				id: mw.config.get( 'wgArticleId' ),
+				captchaToken: captchaToken || null,
+				vote: Number( this.positiveVote )
+			} ).always( function( response ) {
+				if ( response.ranking.success ) {
+					mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
+					mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );
+					mw.ranking.trackEvent( 'vote', mw.ranking.positiveVote ? 'yes' : 'no' );
+				} else {
+					mw.ranking.informFailedVote();
 				}
 			} );
 		},
@@ -65,7 +59,11 @@
 			mw.ranking.$btns.attr( 'disabled', true );
 			$( this ).prepend( mw.ranking.$statusIcon );
 			$( this ).addClass( 'selected' );
-			grecaptcha.execute();
+			if ( mw.ranking.config.isCaptchaEnabled === true ) {
+				grecaptcha.execute();
+			} else {
+				mw.ranking.vote();
+			}
 		} );
 
 	} );

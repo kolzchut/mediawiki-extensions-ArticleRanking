@@ -1,10 +1,11 @@
 {
 	"name": "Article Ranking",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"author": [
-		"Tal Koren (Interjet, Kol Zchut)"
+		"Tal Koren (Interjet, Kol Zchut)",
+		"Dror S. [FFS] ([https://www.kolzchut.org.il Kol-Zchut])"
 	],
-	"descriptionmsg": "An extension that allows anonymous users to rate certain articles",
+	"descriptionmsg": "An extension that allows anonymous users to rate articles",
 	"url": "https://github.com/kolzchut/mediawiki-extensions-ArticleRanking",
 	"license-name": "MIT",
 	"type": "other",
@@ -29,7 +30,10 @@
 		"ext.articleRanking": {
 			"scripts": "modules/article-ranking.script.js",
 			"styles": "modules/article-ranking.style.less",
-			"dependencies": ["mediawiki.jqueryMsg"],
+			"dependencies": [
+				"mediawiki.jqueryMsg",
+				"mediawiki.api"
+			],
 			"messages": [
 				"ranking-vote-success",
 				"ranking-vote-fail"
