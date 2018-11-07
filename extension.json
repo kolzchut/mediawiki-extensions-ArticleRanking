@@ -1,6 +1,6 @@
 {
 	"name": "Article Ranking",
-	"version": "0.1.0",
+	"version": "1.0.0a",
 	"author": [
 		"Tal Koren (Interjet, Kol Zchut)",
 		"Dror S. [FFS] ([https://www.kolzchut.org.il Kol-Zchut])"
@@ -41,7 +41,7 @@
 		},
 		"ext.articleRanking.changeRequest": {
 			"scripts": "modules/articleRanking.changeRequest.js",
-			"dependencies": ["ext.wr.ShareBar.js"]
+			"dependencies": ["ext.wr.ShareBar.js", "mediawiki.Uri"]
 		}
 	},
 	"Hooks": {
