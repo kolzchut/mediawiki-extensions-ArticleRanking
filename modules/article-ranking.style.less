@@ -3,6 +3,8 @@
 @green: #608a36;
 
 .ranking-section {
+	display: table;
+	width: 100%;
 	padding: 0 0 22px 0;
 	margin-bottom: 10px;
 
@@ -31,13 +33,16 @@
 	}
 
 	.sub-section {
-		display: inline-block;
+		display: table-cell;
 		vertical-align: top;
 	}
 
+	.sub-section + .sub-section {
+		padding-left: 2%;
+	}
+
 	.sub-section1 {
-		width: 43%;
-		margin-right: 2%;
+		min-width: 43%;
 	}
 
 	@media screen and (max-width: 768px) {
@@ -70,6 +75,5 @@
 .article-type-mainpage {
 	.ranking-section {
 		display: none;
-		// margin-left: 0; // Undo offset, because main page doesn't have a sidebar
 	}
 }
