@@ -11,8 +11,6 @@
 			categories: mw.config.get( 'wgCategories' ).join()
 		} );
 
-		mw.log( uri.toString() );
-
 		$( '.ranking-btn.changerequest' ).click( function() {
 			mw.wrShareBar.openModal(
 				uri.toString(),
