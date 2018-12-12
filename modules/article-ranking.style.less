@@ -3,15 +3,12 @@
 @green: #608a36;
 
 .ranking-section {
-	border-top: 4px solid @green;
-	border-bottom: 4px solid @green;
+	display: table;
+	width: 100%;
 	padding: 0 0 22px 0;
 	margin-bottom: 10px;
 
 	h2 {
-		color: #000;
-		font-size: 17px;
-		font-weight: bold;
 	}
 
 	.ranking-btn {
@@ -21,8 +18,8 @@
 		font-weight: bold;
 		color: #fff;
 		min-width: 100px;
-		padding: 3px 0;
-		width: 146px;
+		padding-top: 3px;
+		padding-bottom: 3px;
 		margin-left: 3px;
 
 		&[disabled].selected {
@@ -36,12 +33,16 @@
 	}
 
 	.sub-section {
-		display: inline-block;
+		display: table-cell;
 		vertical-align: top;
 	}
 
+	.sub-section + .sub-section {
+		padding-left: 2%;
+	}
+
 	.sub-section1 {
-		width: 43%;
+		min-width: 43%;
 	}
 
 	@media screen and (max-width: 768px) {
@@ -50,7 +51,6 @@
 
 			> div {
 				display: flex;
-				justify-content: space-between;
 			}
 		}
 
@@ -75,6 +75,5 @@
 .article-type-mainpage {
 	.ranking-section {
 		display: none;
-		// margin-left: 0; // Undo offset, because main page doesn't have a sidebar
 	}
 }

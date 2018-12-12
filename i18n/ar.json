@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+		]
+	},
+	"ranking-section1-title": "هل استفدتم من هذه المعلومات؟",
+	"ranking-yes": "نعم",
+	"ranking-no": "لا",
+
+	"ranking-section2-title": "هل لديكم معلومات أو اقتراحات أخرى لهذه الصفحة",
+	"ranking-propose-change": "أرسلوا اقتراح التغيير ",
+	"ranking-vote-success": "شكرا، استلمنا تصويتكم",
+	"ranking-vote-fail": "طرأ خلل خلال ارسال اقتراحكم، حاولوا ثانية لطفا",
+
+	"ranking-invalid-captcha-title": "שגיאת reCAPTCHA",
+	"ranking-invalid-captcha-keys-message": "מפתחות reCAPTCHA חסרים"
+
+}

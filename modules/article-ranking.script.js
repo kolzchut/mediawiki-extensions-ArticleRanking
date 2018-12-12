@@ -13,7 +13,9 @@
 				id: mw.config.get( 'wgArticleId' ),
 				captchaToken: captchaToken || null,
 				vote: Number( this.positiveVote )
-			} ).always( function( response ) {
+			} ).fail( function() {
+				mw.ranking.informFailedVote();
+			} ).done( function( response ) {
 				if ( response.ranking.success ) {
 					mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
 					mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );

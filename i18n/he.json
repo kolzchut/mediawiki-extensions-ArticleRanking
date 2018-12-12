@@ -3,15 +3,15 @@
 		"authors": [
 		]
 	},
-    "ranking-section1-title": "מצאת תוכן זה מועיל?",
-    "ranking-yes": "כן",
-    "ranking-no": "לא",
-	
-	"ranking-section2-title": "מצאת אי דיוקים? יש לך מידע נוסף או הצעות לעדכון ערך זה?",
-	"ranking-propose-change": "שלח הצעת שינוי",
-	"ranking-vote-success": "תודה, הצבעתך נקלטה בהצלחה",
+	"ranking-section1-title": "האם העמוד סייע לכם?",
+	"ranking-yes": "כן",
+	"ranking-no": "לא",
+
+	"ranking-section2-title": "יש לכם מידע נוסף או הצעות לעדכון ערך זה?",
+	"ranking-propose-change": "שלחו הצעת שינוי",
+	"ranking-vote-success": "תודה, הצבעתכם נקלטה בהצלחה",
 	"ranking-vote-fail": "אירעה שגיאה במהלך שליחת ההצבעה, אנא נסו שנית",
-	
+
 	"ranking-invalid-captcha-title": "שגיאת reCAPTCHA",
 	"ranking-invalid-captcha-keys-message": "מפתחות reCAPTCHA חסרים"
 
