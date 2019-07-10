@@ -18,11 +18,28 @@ change proposal form. This is dependant on extension:WRShareBar.
 | $wgArticleRankingConfig  | `trackClicks`          | true                    | whether to use Google Analytics to track votes
 | $wgArticleRankingConfig  | `changerequest['url']` | "/forms/ChangeRequest/" | the location of the change request form
 | $wgArticleRankingCaptcha | `siteKey`              | empty                   | Google's captcha site key
-| $wgArticleRankingCaptcha | `secret`               | empty                   | Google's captcha secret key
+| $wgArticleRankingTemplatePath |                | empty                   | Path of directory includes template file.
+| $wgArticleRankingTemplateFileName |                | voting                   | mustache file name
+| $wgArticleRankingAddChangeRequest |                | true                   | If to add change request part
 
 Leaving either of the $wgArticleRankingCaptcha keys empty will disable
 the use of the captcha, falling back to only using a MediaWiki token
-to verify (basically a CSRF protection and nothing more).
+to verify (basically a CSRF protection and nothing more).  
+When omitting  $wgArticleRankingTemplatePath `ArticleRanking/templates` used.
+
+## Templating  
+Best way is copy from `ArticleRanking/templates/voting.mustache` and modifing it.
+The dynamic of JS is applyed by classes adding and removing.
+When button clicked it would get `selected` class. When call is firing - `on-call`. When finishing - both removed and `after-success-call` is set (if succeed).
+
+**Into the button:**
+`.ranking-on-request` is visible just when button have `.on-call` and hidden otherwise. All others are the opposite.
+`.ranking-just-before` is visible just before `.after-success-call`. `.ranking-just-after` - the opposite.
+`.ranking-always` is visible on both cases (but not on `.ranking-on-request`)
+
+
+`.voting-messages` holds messages. It's hidden by default, and getting `show` class after call returns (both success or failure).  
+When the call returns, it also get `.voting-messages-wrp-success` or `.voting-messages-wrp-failure` respectively which hide or show `.voting-messages-failure` and `.voting-messages-success`.
 
 ## API modules
 

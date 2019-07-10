@@ -31,7 +31,9 @@
 		}
 		&:not(.on-call) .ranking-on-request,
 		&.on-call > *:not(.ranking-on-request),
-		&:not(.after-success-call) .ranking-just-after{
+		&:not(.after-success-call) .ranking-just-after,
+		&.after-success-call .ranking-just-before,
+		{
 			display: none;
 		}
 	}
@@ -77,8 +79,8 @@
 }
 .voting-messages{
 	&:not(.show),
-	&:not(.voting-messages-success) .voting-messages-success,
-	&:not(.voting-messages-failure) .voting-messages-failure{
+	&:not(.voting-messages-wrp-success) .voting-messages-success,
+	&:not(.voting-messages-wrp-failure) .voting-messages-failure{
 		display: none;
 	}
 }
