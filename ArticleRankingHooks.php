@@ -3,7 +3,12 @@
 class ArticleRankingHooks {
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$out->addModules( [ 'ext.articleRanking', 'ext.articleRanking.changeRequest' ] );
+		$conf = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
+		$wgArticleRankingAddChangeRequest = $conf->get('ArticleRankingAddChangeRequest');
+		if($wgArticleRankingAddChangeRequest){
+			$out->addModules( [ 'ext.articleRanking.changeRequest' ] );
+		}
+		$out->addModules( [ 'ext.articleRanking' ] );
 
 		// $out->showErrorPage( 'ranking-invalid-captcha-title', 'ranking-invalid-captcha-keys-message' );
 		if ( ArticleRanking::isCaptchaEnabled() ) {

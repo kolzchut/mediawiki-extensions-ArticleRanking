@@ -14,9 +14,10 @@
 				captchaToken: captchaToken || null,
 				vote: Number( this.positiveVote )
 			} ).fail( function() {
-				mw.ranking.informFailedVote(btn);
+				mw.ranking.informFailedVote();
 			} ).done( function( response ) {
 				if ( response.ranking.success ) {
+					console.log(mw.ranking.getClickedBtn(),"mw.ranking.getClickedBtn()");
 					mw.ranking.getClickedBtn().removeClass('on-call').addClass('after-success-call');
 					mw.ranking.setMessageSuccess();
 					mw.ranking.trackEvent( 'vote', mw.ranking.positiveVote ? 'yes' : 'no' );
@@ -26,7 +27,7 @@
 			} );
 		},
 		getClickedBtn(){
-			return mw.ranking.$btns.find('selected');
+			return mw.ranking.$btns.filter('.selected');
 		},
 		setMessageSuccess: function () {
 			$('.voting-messages').removeClass('voting-messages-failure').addClass('voting-messages-success');
@@ -36,9 +37,9 @@
 		},
 		resetButtons: function () {
 			mw.ranking.$btns.attr( 'disabled', false ).removeClass( 'selected on-call' );
-		}
+		},
 		informFailedVote: function () {
-			mw.ranking.ranking();
+			mw.ranking.resetButtons();
 			mw.ranking.setMessageFailure();
 		},
 		verifyCaptcha: function ( token ) {

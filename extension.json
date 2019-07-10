@@ -24,7 +24,7 @@
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
-		"remoteExtPath": "WikiRights/ArticleRanking"
+		"remoteExtPath": "ArticleRanking"
 	},
 	"ResourceModules": {
 		"ext.articleRanking": {
@@ -68,7 +68,8 @@
 			"secret": ""
 		},
 		"ArticleRankingTemplatePath": false,
-		"ArticleRankingTemplateFileName": "voting"
+		"ArticleRankingTemplateFileName": "voting",
+		"ArticleRankingAddChangeRequest": true
 	},
 	"manifest_version": 1
 }
