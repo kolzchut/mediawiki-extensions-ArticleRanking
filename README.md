@@ -32,14 +32,30 @@ Best way is copy from `ArticleRanking/templates/voting.mustache` and modifing it
 The dynamic of JS is applyed by classes adding and removing.
 When button clicked it would get `selected` class. When call is firing - `on-call`. When finishing - both removed and `after-success-call` is set (if succeed).
 
-**Into the button:**
-`.ranking-on-request` is visible just when button have `.on-call` and hidden otherwise. All others are the opposite.
-`.ranking-just-before` is visible just before `.after-success-call`. `.ranking-just-after` - the opposite.
+**Into the button:**  
+`.ranking-on-request` is visible just when button have `.on-call` and hidden otherwise. All others are the opposite.  
+`.ranking-just-before` is visible just before `.after-success-call`. `.ranking-just-after` - the opposite.  
 `.ranking-always` is visible on both cases (but not on `.ranking-on-request`)
 
 
 `.voting-messages` holds messages. It's hidden by default, and getting `show` class after call returns (both success or failure).  
 When the call returns, it also get `.voting-messages-wrp-success` or `.voting-messages-wrp-failure` respectively which hide or show `.voting-messages-failure` and `.voting-messages-success`.
+
+## Hooks
+`ArticleRankingTemplateParams` allows you to modify the parmams passed into the mustache template. You can pass to the hook additional parameters to use, when calling `ArticleRanking::createRankingSection`.  
+For example, pass pageId to use the title.
+
+```
+$html .= ArticleRanking::createRankingSection(['pageId' => $pageId]);
+```
+Then:  
+```
+public static function onArticleRankingTemplateParams( &$params, $additionalParams ) {
+		$title = Title::newFromID( $additionalParams['pageId']);
+		$params['section1title'] = 'Do you like ' . $title->getFullText() . '?';
+}
+```
+
 
 ## API modules
 

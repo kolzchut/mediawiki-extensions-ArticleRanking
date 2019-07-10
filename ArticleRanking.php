@@ -78,7 +78,7 @@ class ArticleRanking {
 		];
 	}
 
-	public static function createRankingSection( $additionalParams ) {
+	public static function createRankingSection( $additionalParams = []) {
 		
 		$conf = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
 		$wgArticleRankingCaptcha = $conf->get('ArticleRankingCaptcha');
