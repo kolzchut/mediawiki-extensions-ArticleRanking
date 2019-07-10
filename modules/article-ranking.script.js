@@ -30,10 +30,10 @@
 			return mw.ranking.$btns.filter('.selected');
 		},
 		setMessageSuccess: function () {
-			$('.voting-messages').removeClass('voting-messages-failure').addClass('voting-messages-success');
+			$('.voting-messages').addClass('show').removeClass('voting-messages-failure').addClass('voting-messages-success');
 		},
 		setMessageFailure: function () {
-			$('.voting-messages').addClass('voting-messages-success').removeClass('voting-messages-failure');
+			$('.voting-messages').addClass('show').addClass('voting-messages-success').removeClass('voting-messages-failure');
 		},
 		resetButtons: function () {
 			mw.ranking.$btns.attr( 'disabled', false ).removeClass( 'selected on-call' );
@@ -65,7 +65,6 @@
 
 	$( document ).ready( function () {
 		$( mw.ranking.$btns ).on( 'click', function () {
-			mw.ranking.$votingMessages.hide(); // In case we already displayed a message before
 			mw.ranking.positiveVote = $( this ).hasClass( 'yes' );
 			mw.ranking.$btns.attr( 'disabled', true );
 			//$( this ).prepend( mw.ranking.$statusIcon );

@@ -75,7 +75,13 @@
 		}
 	}
 }
-
+.voting-messages{
+	&:not(.show),
+	&:not(.voting-messages-success) .voting-messages-success,
+	&:not(.voting-messages-failure) .voting-messages-failure{
+		display: none;
+	}
+}
 .article-type-mainpage {
 	.ranking-section {
 		display: none;
