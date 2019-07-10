@@ -29,6 +29,11 @@
 		.fa {
 			margin-right: 5px;
 		}
+		&:not(.on-call) .ranking-on-request,
+		&.on-call > *:not(.ranking-on-request),
+		&:not(.after-success-call) .ranking-just-after{
+			display: none;
+		}
 	}
 
 	.sub-section {

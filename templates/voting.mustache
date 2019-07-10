@@ -2,11 +2,29 @@
 	<div class="sub-section sub-section1">
 		<h2>{{ section1title }}</h2>
 		<div class="buttons">
-			<button class="btn btn-secondary ranking-btn yes" type="button">{{ yes }}</button>
-			<button class="btn btn-secondary ranking-btn no" type="button">{{ no }}</button>
+			<button class="btn btn-secondary ranking-btn yes" type="button">
+				<span class="ranking-just-after">
+					<i class="fa fa-check"></i>
+				</span>
+				<span class="ranking-on-request">
+					<i class="fa fa-spinner fa-spin"></i>
+				</span>
+				<span class="ranking-always">{{ yes }}</span>
+				<span class="ranking-just-before"></span>
+			</button>
+			<button class="btn btn-secondary ranking-btn no" type="button">
+				{{ no }}
+			</button>
 		</div>
 
-		<div class="voting-messages"></div>
+		<div class="voting-messages">
+			<div class="voting-messages-success">
+				{{ranking-vote-success}}
+			</div>
+			<div class="voting-messages-failure">
+				{{ranking-vote-fail}}
+			</div>
+		</div>
 		{{#is-captcha-enabled}}
 		<div class="g-recaptcha"
 			 data-sitekey="{{ siteKey }}"

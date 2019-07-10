@@ -79,19 +79,27 @@ class ArticleRanking {
 	}
 
 	public static function createRankingSection() {
-		global $wgArticleRankingCaptcha;
-
-		$templateParser = new TemplateParser( __DIR__ . '/templates' );
-
-		return $templateParser->processTemplate( 'voting', [
+		
+		$conf = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
+		$wgArticleRankingCaptcha = $conf->get('ArticleRankingCaptcha');
+		$wgArticleRankingTemplateFileName = $conf->get('ArticleRankingTemplateFileName');
+		$wgArticleRankingTemplatePath = $conf->get('ArticleRankingTemplatePath');
+		$wgArticleRankingTemplatePath = $wgArticleRankingTemplatePath ? $wgArticleRankingTemplatePath : __DIR__ . '/templates';
+		$templateParser = new TemplateParser( $wgArticleRankingTemplatePath );
+		$params = [
 			'section1title'  => wfMessage( 'ranking-section1-title' ),
 			'yes'            => wfMessage( 'ranking-yes' ),
 			'no'             => wfMessage( 'ranking-no' ),
 			'section2title'  => wfMessage( 'ranking-section2-title' ),
+			'ranking-vote-success'  => wfMessage( 'ranking-vote-success' ),
+			'ranking-vote-fail'  => wfMessage( 'ranking-vote-fail' ),
 			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
 			'is-captcha-enabled' => self::isCaptchaEnabled(),
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
-		] );
+		];
+		Hooks::run( 'ArticleRankingTemplateParams', [ &$params ] );
+
+		return $templateParser->processTemplate( $wgArticleRankingTemplateFileName, $params  );
 	}
 
 	public static function isCaptchaEnabled() {

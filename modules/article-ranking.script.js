@@ -14,24 +14,32 @@
 				captchaToken: captchaToken || null,
 				vote: Number( this.positiveVote )
 			} ).fail( function() {
-				mw.ranking.informFailedVote();
+				mw.ranking.informFailedVote(btn);
 			} ).done( function( response ) {
 				if ( response.ranking.success ) {
-					mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
-					mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );
+					mw.ranking.getClickedBtn().removeClass('on-call').addClass('after-success-call');
+					mw.ranking.setMessageSuccess();
 					mw.ranking.trackEvent( 'vote', mw.ranking.positiveVote ? 'yes' : 'no' );
 				} else {
 					mw.ranking.informFailedVote();
 				}
 			} );
 		},
-		setMessage: function ( msg ) {
-			mw.ranking.$votingMessages.text( msg ).show();
+		getClickedBtn(){
+			return mw.ranking.$btns.find('selected');
 		},
+		setMessageSuccess: function () {
+			$('.voting-messages').removeClass('voting-messages-failure').addClass('voting-messages-success');
+		},
+		setMessageFailure: function () {
+			$('.voting-messages').addClass('voting-messages-success').removeClass('voting-messages-failure');
+		},
+		resetButtons: function () {
+			mw.ranking.$btns.attr( 'disabled', false ).removeClass( 'selected on-call' );
+		}
 		informFailedVote: function () {
-			mw.ranking.$btns.attr( 'disabled', false ).removeClass( 'selected' );
-			mw.ranking.$statusIcon.detach();
-			mw.ranking.setMessage( mw.messages.get( 'ranking-vote-fail' ) );
+			mw.ranking.ranking();
+			mw.ranking.setMessageFailure();
 		},
 		verifyCaptcha: function ( token ) {
 			return mw.ranking.vote( token );
@@ -59,8 +67,8 @@
 			mw.ranking.$votingMessages.hide(); // In case we already displayed a message before
 			mw.ranking.positiveVote = $( this ).hasClass( 'yes' );
 			mw.ranking.$btns.attr( 'disabled', true );
-			$( this ).prepend( mw.ranking.$statusIcon );
-			$( this ).addClass( 'selected' );
+			//$( this ).prepend( mw.ranking.$statusIcon );
+			$( this ).addClass( 'selected on-call' );
 			if ( mw.ranking.config.isCaptchaEnabled === true ) {
 				grecaptcha.execute();
 			} else {

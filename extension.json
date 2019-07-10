@@ -66,7 +66,9 @@
 		"ArticleRankingCaptcha": {
 			"siteKey": "",
 			"secret": ""
-		}
+		},
+		"ArticleRankingTemplatePath": false,
+		"ArticleRankingTemplateFileName": "voting"
 	},
 	"manifest_version": 1
 }
