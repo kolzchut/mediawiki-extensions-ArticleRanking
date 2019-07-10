@@ -29,10 +29,10 @@
 			return mw.ranking.$btns.filter('.selected');
 		},
 		setMessageSuccess: function () {
-			$('.voting-messages').addClass('show').removeClass('voting-messages-failure').addClass('voting-messages-success');
+			$('.voting-messages').addClass('show').removeClass('voting-messages-wrp-failure').addClass('voting-messages-wrp-success');
 		},
 		setMessageFailure: function () {
-			$('.voting-messages').addClass('show').addClass('voting-messages-success').removeClass('voting-messages-failure');
+			$('.voting-messages').addClass('show').removeClass('voting-messages-wrp-success').addClass('voting-messages-wrp-failure');
 		},
 		resetButtons: function () {
 			mw.ranking.$btns.attr( 'disabled', false ).removeClass( 'selected on-call' );
