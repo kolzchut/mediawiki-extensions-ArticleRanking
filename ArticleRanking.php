@@ -78,7 +78,7 @@ class ArticleRanking {
 		];
 	}
 
-	public static function createRankingSection() {
+	public static function createRankingSection( ?RequestContext $context ) {
 		
 		$conf = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
 		$wgArticleRankingCaptcha = $conf->get('ArticleRankingCaptcha');
@@ -97,7 +97,7 @@ class ArticleRanking {
 			'is-captcha-enabled' => self::isCaptchaEnabled(),
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		];
-		Hooks::run( 'ArticleRankingTemplateParams', [ &$params ] );
+		Hooks::run( 'ArticleRankingTemplateParams', [ &$params , $context] );
 
 		return $templateParser->processTemplate( $wgArticleRankingTemplateFileName, $params  );
 	}
