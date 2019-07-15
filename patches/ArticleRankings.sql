@@ -4,13 +4,13 @@ CREATE TABLE IF NOT EXISTS /*_*/article_rankings (
   positive_votes int(10) DEFAULT 0,
   total_votes int(10) DEFAULT 0,
   UNIQUE KEY article_rankings_page_id_UNIQUE (page_id),
-  CONSTRAINT article_rankings_page_id_fk FOREIGN KEY (page_id) REFERENCES page (page_id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT article_rankings_page_id_fk FOREIGN KEY (page_id) REFERENCES /*_*/page (page_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) /*$wgDBTableOptions*/;
 
 DROP TRIGGER IF EXISTS /*_*/article_rankings_BEFORE_UPDATE;
 
 DELIMITER |
-CREATE TRIGGER article_rankings_BEFORE_UPDATE BEFORE UPDATE ON /*_*/article_rankings FOR EACH ROW
+CREATE TRIGGER /*_*/article_rankings_BEFORE_UPDATE BEFORE UPDATE ON /*_*/article_rankings FOR EACH ROW
 BEGIN
 	IF NEW.positive_votes != OLD.positive_votes THEN
 		SET NEW.total_votes = OLD.total_votes + 1;
