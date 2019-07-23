@@ -11,7 +11,12 @@
 	"ranking-propose-change": "Send change proposal",
 	"ranking-vote-success": "Thank you for your feedback!",
 	"ranking-vote-fail": "An error had occurred; please try again.",
-	
+	"after-vote-button" : "Send",
+	"voting-messages-positive-placeholder":"Thanck you! Want to add something?",
+	"voting-messages-negative-placeholder":"We are sorry. We will be happy to know why",
 	"ranking-invalid-captcha-title": "reCAPTCHA error",
-	"ranking-invalid-captcha-keys-message": "Missing reCAPTCHA keys"
+	"ranking-invalid-captcha-keys-message": "Missing reCAPTCHA keys",
+	"article-ranking-after-vote-failed":"Your message not sent. We are sorry",
+	"article-ranking-after-vote-success":"Your message sent. Thank you!",
+	"article-ranking-after-vote-OK" : "O.K."
 }

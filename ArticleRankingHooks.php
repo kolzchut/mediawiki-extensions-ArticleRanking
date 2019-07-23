@@ -9,7 +9,10 @@ class ArticleRankingHooks {
 			$out->addModules( [ 'ext.articleRanking.changeRequest' ] );
 		}
 		$out->addModules( [ 'ext.articleRanking' ] );
+		if($conf->get('ArticleRankingAddAfterVote')){
+			$out->addModules( [ 'ext.articleRanking-after-vote' ] );
 
+		}
 		// $out->showErrorPage( 'ranking-invalid-captcha-title', 'ranking-invalid-captcha-keys-message' );
 		if ( ArticleRanking::isCaptchaEnabled() ) {
 			$out->addHeadItem(

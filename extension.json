@@ -13,6 +13,7 @@
 		"ArticleRanking": "ArticleRanking.php",
 		"ARVoteAPI": "api/ARVoteAPI.php",
 		"ARGetVotesAPI": "api/ARGetVotesAPI.php",
+		"ARVoteMessageAPI": "api/ARVoteMessageAPI.php",
 		"ArticleRankingHooks": "ArticleRankingHooks.php",
 		"ARDatabasePatcher": "patches/ARDatabasePatcher.php",
 		"ARDatabase": "includes/ARDatabase.php",
@@ -20,6 +21,7 @@
 	},
 	"APIModules": {
 		"rank-vote": "ARVoteAPI",
+		"rank-vote-message": "ARVoteMessageAPI",
 		"rank-votes": "ARGetVotesAPI"
 	},
 	"ResourceFileModulePaths": {
@@ -37,6 +39,15 @@
 			"messages": [
 				"ranking-vote-success",
 				"ranking-vote-fail"
+			]
+		},
+		"ext.articleRanking-after-vote": {
+			"scripts": "modules/after-vote/after-vote.js",
+			"styles": "modules/after-vote/after-vote.less",
+			"messages": [
+				"article-ranking-after-vote-failed",
+				"article-ranking-after-vote-success",
+				"article-ranking-after-vote-OK" 
 			]
 		},
 		"ext.articleRanking.changeRequest": {
@@ -69,6 +80,7 @@
 		},
 		"ArticleRankingTemplatePath": false,
 		"ArticleRankingTemplateFileName": "voting",
+		"ArticleRankingAddAfterVote": false,
 		"ArticleRankingAddChangeRequest": true
 	},
 	"manifest_version": 1

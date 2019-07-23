@@ -8,6 +8,7 @@
 		$statusIcon: $( '<i class="fa fa-spinner fa-spin"></i>' ),
 		$votingMessages: $( '.ranking-section .voting-messages' ),
 		vote: function ( captchaToken ) {
+			mw.ranking.captchaToken = captchaToken;
 			return new mw.Api().postWithToken( 'csrf', {
 				action: 'rank-vote',
 				id: mw.config.get( 'wgArticleId' ),
@@ -18,7 +19,7 @@
 			} ).done( function( response ) {
 				if ( response.ranking.success ) {
 					mw.ranking.getClickedBtn().removeClass('on-call').addClass('after-success-call');
-					mw.ranking.setMessageSuccess();
+					mw.ranking.setMessageSuccess(Number( mw.ranking.positiveVote ));
 					mw.ranking.trackEvent( 'vote', mw.ranking.positiveVote ? 'yes' : 'no' );
 				} else {
 					mw.ranking.informFailedVote();
@@ -28,7 +29,9 @@
 		getClickedBtn(){
 			return mw.ranking.$btns.filter('.selected');
 		},
-		setMessageSuccess: function () {
+		setMessageSuccess: function ( voteType ) {
+			console.log($('.ranking-section'));
+			$('.ranking-section-wrapper').addClass('voted').addClass( voteType ? 'voted-positive' : 'voted-negative');
 			$('.voting-messages').addClass('show').removeClass('voting-messages-wrp-failure').addClass('voting-messages-wrp-success');
 		},
 		setMessageFailure: function () {

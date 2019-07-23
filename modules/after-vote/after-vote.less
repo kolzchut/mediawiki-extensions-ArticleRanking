@@ -1,0 +1,19 @@
+.ranking-section-wrapper{
+	.after-vote-form{
+		max-width: 600px;
+		margin: 0 auto;
+		&,textarea{
+			display: none;
+		}
+	}
+	&.voted .after-vote-form{
+		display: block;
+	}
+	&.voted-positive .voting-messages-positive,
+	&.voted-negative .voting-messages-negative{
+		display: block;
+	}
+	.after-voting-button {
+	    margin-top: 10px;
+	}
+}

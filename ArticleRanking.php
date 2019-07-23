@@ -48,7 +48,24 @@ class ArticleRanking {
 
 		return (bool)$result;
 	}
-
+	/**
+	 * Save vote nessage for a certain page ID
+	 *
+	 * @param int $page_id
+	 * @param int $vote 1 for positive vote, 0 for negative vote
+	 * @param string $message message for vote
+	 * @return bool
+	 */
+	public static function saveVoteMessage( Int $page_id, Int $vote, string $message ) {
+		$dbw = wfGetDB( DB_MASTER );
+		$fields = [
+				'positive_or_negative' => $vote,
+				'votes_messages'    => $message,
+				'votes_messages_page_id'        => $page_id
+			];
+		$result = $dbw->insert( 'article_rankings_votes_messages', $fields );
+		return (bool) $result;
+	}
 	/**
 	 * Get rank for a specific page ID
 	 *
@@ -79,7 +96,6 @@ class ArticleRanking {
 	}
 
 	public static function createRankingSection( $additionalParams = []) {
-		
 		$conf = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
 		$wgArticleRankingCaptcha = $conf->get('ArticleRankingCaptcha');
 		$wgArticleRankingTemplateFileName = $conf->get('ArticleRankingTemplateFileName');
@@ -94,9 +110,14 @@ class ArticleRanking {
 			'ranking-vote-success'  => wfMessage( 'ranking-vote-success' ),
 			'ranking-vote-fail'  => wfMessage( 'ranking-vote-fail' ),
 			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
+			'voting-messages-positive-placeholder' => wfMessage( 'voting-messages-positive-placeholder' ),
+			'voting-messages-negative-placeholder' => wfMessage( 'voting-messages-negative-placeholder' ),
 			'is-captcha-enabled' => self::isCaptchaEnabled(),
+			'is-after-vote-form' => $conf->get('ArticleRankingAddAfterVote'),
+			'after-voting-button' => wfMessage( 'after-vote-button' )->text() . '<i class="fas fa-chevron-left"></i>',
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		];
+		//die(print_r($params));
 		Hooks::run( 'ArticleRankingTemplateParams', [ &$params , $additionalParams] );
 
 		return $templateParser->processTemplate( $wgArticleRankingTemplateFileName, $params  );

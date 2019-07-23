@@ -23,6 +23,10 @@ class ARDatabasePatcher {
 				 'article_ranking',
 				 __DIR__ . '/ArticleRankings.sql'
 			);
+			$updater->addExtensionTable(
+				 'article_ranking',
+				 __DIR__ . '/ArticleRankingsVoteMessages.sql'
+			);
 		}
 		return true;
 	}
