@@ -41,7 +41,7 @@
 				$('.after-voting-button').removeAttr('disabled');
 				openMessage(mw.message('article-ranking-after-vote-failed').text());
 			} ).done( function( response ) {
-				openMessage(mw.message('article-ranking-after-vote-success').text());
+				$('.after-vote-form').addClass('vote-message-sent').append( $('<div class="vote-message-sent-text">').html(mw.message('article-ranking-after-vote-success').text()) );
 			} );
 		});
 	});
