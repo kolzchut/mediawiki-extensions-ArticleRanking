@@ -21,7 +21,7 @@
 	}
 	$(function(){
 		$('.after-vote-form textarea').bind('keydown change', function(){
-			if( $(this).val() ){
+			if( $(this).val().trim() ){
 				$('.after-voting-button').removeAttr('disabled');
 			}
 			else{
