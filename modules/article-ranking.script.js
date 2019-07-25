@@ -30,7 +30,6 @@
 			return mw.ranking.$btns.filter('.selected');
 		},
 		setMessageSuccess: function ( voteType ) {
-			console.log($('.ranking-section'));
 			$('.ranking-section-wrapper').addClass('voted').addClass( voteType ? 'voted-positive' : 'voted-negative');
 			$('.voting-messages').addClass('show').removeClass('voting-messages-wrp-failure').addClass('voting-messages-wrp-success');
 		},

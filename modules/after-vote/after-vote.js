@@ -1,5 +1,19 @@
 ( function ( mw, $ ) {
 	'use strict';
+
+	function isElementInViewport (el) {
+	    var rect = el.getBoundingClientRect();
+	    return (rect.top>-1 && rect.bottom <= $(window).height());
+	}
+	function scrollIfFocusedTextareaNotInFold(){
+		var focusedTextarea = $('.after-vote-form textarea:visible:focus');
+		if( focusedTextarea.length && !isElementInViewport( focusedTextarea[0])){
+			$([document.documentElement, document.body]).animate({
+		        scrollTop: focusedTextarea.offset().top  - $(window).height() + focusedTextarea.height() + 10
+		    }, 800);
+		}
+	}
+	
 	function openMessage( title ){
 		var messageDialog = new OO.ui.MessageDialog(),
             windowManager = new OO.ui.WindowManager();
@@ -19,16 +33,21 @@
             windowManager.$element.remove();
         });
 	}
+
 	$(function(){
-		$('.after-vote-form textarea').bind('keydown change', function(){
+		$('.after-vote-form textarea').on('keydown change', function(){
 			if( $(this).val().trim() ){
 				$('.after-voting-button').removeAttr('disabled');
 			}
 			else{
 				$('.after-voting-button').attr('disabled','disabled');
 			}
-		}).trigger('keydown');
-		$('.after-voting-button').unbind('click').bind('click', function(){
+		}).trigger('keydown')
+		//catch virtual keyboard opening
+		$(window).bind('resize', function(){
+
+		});
+		$('.after-voting-button').off('click').on('click', function(){
 			$('.after-voting-button').attr('disabled','disabled');
 			let message = $('.after-vote-form textarea:visible').val();
 			return new mw.Api().postWithToken( 'csrf', {

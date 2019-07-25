@@ -17,6 +17,6 @@
 	"ranking-invalid-captcha-title": "reCAPTCHA error",
 	"ranking-invalid-captcha-keys-message": "Missing reCAPTCHA keys",
 	"article-ranking-after-vote-failed":"Your message not sent. We are sorry",
-	"article-ranking-after-vote-success":"Your message sent. Thank you!",
+	"article-ranking-after-vote-success":"Your message sent.<br/>Thank you",
 	"article-ranking-after-vote-OK" : "O.K."
 }
