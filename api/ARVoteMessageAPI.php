@@ -29,6 +29,10 @@ class ARVoteMessageAPI extends ApiBase {
 			'vote' => [
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
+			],
+			'timestamp' => [
+				ApiBase::PARAM_TYPE => 'integer',
+				ApiBase::PARAM_REQUIRED => true
 			]
 		];
 	}
