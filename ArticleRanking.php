@@ -62,7 +62,7 @@ class ArticleRanking {
 				'positive_or_negative' => $vote,
 				'votes_messages'    => $message,
 				'votes_messages_page_id'        => $page_id,
-				'votes_timestamp'        => time()
+				'votes_timestamp'        => $dbw->timestamp()
 			];
 		$result = $dbw->insert( 'article_rankings_votes_messages', $fields );
 		return (bool) $result;
