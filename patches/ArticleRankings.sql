@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS /*_*/article_rankings (
   total_votes int(10) DEFAULT 0,
   INDEX `page_id_index` (`page_id` ASC),
   UNIQUE KEY article_rankings_page_id_UNIQUE (page_id),
-  CONSTRAINT article_rankings_page_id_fk FOREIGN KEY (page_id) REFERENCES page (page_id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT article_rankings_page_id_fk FOREIGN KEY (page_id) REFERENCES /*_*/page (page_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) /*$wgDBTableOptions*/;
 
 DROP TRIGGER IF EXISTS /*_*/article_rankings_BEFORE_UPDATE;
