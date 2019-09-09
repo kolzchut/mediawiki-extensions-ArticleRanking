@@ -1,8 +1,9 @@
 {
 	"name": "Article Ranking",
-	"version": "1.0.0a",
+	"version": "1.1.0",
 	"author": [
 		"Tal Koren (Interjet, Kol Zchut)",
+		"Itschak Krumbein (OpenFox)",
 		"Dror S. [FFS] ([https://www.kolzchut.org.il Kol-Zchut])"
 	],
 	"descriptionmsg": "An extension that allows anonymous users to rate articles",
@@ -10,19 +11,19 @@
 	"license-name": "MIT",
 	"type": "other",
 	"AutoloadClasses": {
-		"ArticleRanking": "ArticleRanking.php",
-		"ARVoteAPI": "api/ARVoteAPI.php",
-		"ARGetVotesAPI": "api/ARGetVotesAPI.php",
-		"ARVoteMessageAPI": "api/ARVoteMessageAPI.php",
-		"ArticleRankingHooks": "ArticleRankingHooks.php",
-		"ARDatabasePatcher": "patches/ARDatabasePatcher.php",
-		"ARDatabase": "includes/ARDatabase.php",
-		"ARCaptcha": "includes/ARCaptcha.php"
+		"MediaWiki\\Extension\\ArticleRanking\\ArticleRanking": "ArticleRanking.php",
+		"MediaWiki\\Extension\\ArticleRanking\\ARVoteAPI": "api/ARVoteAPI.php",
+		"MediaWiki\\Extension\\ArticleRanking\\ARGetVotesAPI": "api/ARGetVotesAPI.php",
+		"MediaWiki\\Extension\\ArticleRanking\\ARVoteMessageAPI": "api/ARVoteMessageAPI.php",
+		"MediaWiki\\Extension\\ArticleRanking\\Hooks": "Hooks.php",
+		"MediaWiki\\Extension\\ArticleRanking\\ARDatabasePatcher": "patches/ARDatabasePatcher.php",
+		"MediaWiki\\Extension\\ArticleRanking\\ARDatabase": "includes/ARDatabase.php",
+		"MediaWiki\\Extension\\ArticleRanking\\ARCaptcha": "includes/ARCaptcha.php"
 	},
 	"APIModules": {
-		"rank-vote": "ARVoteAPI",
-		"rank-vote-message": "ARVoteMessageAPI",
-		"rank-votes": "ARGetVotesAPI"
+		"rank-vote": "MediaWiki\\Extension\\ArticleRanking\\ARVoteAPI",
+		"rank-vote-message": "MediaWiki\\Extension\\ArticleRanking\\ARVoteMessageAPI",
+		"rank-votes": "MediaWiki\\Extension\\ArticleRanking\\ARGetVotesAPI"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
@@ -56,9 +57,9 @@
 		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": "ArticleRankingHooks::onBeforePageDisplay",
-		"LoadExtensionSchemaUpdates": "ARDatabasePatcher::applyUpdates",
-		"ResourceLoaderGetConfigVars": [ "ArticleRankingHooks::onResourceLoaderGetConfigVars" ]
+		"BeforePageDisplay": "MediaWiki\\Extension\\ArticleRanking\\Hooks::onBeforePageDisplay",
+		"LoadExtensionSchemaUpdates": "MediaWiki\\Extension\\ArticleRanking\\ARDatabasePatcher::applyUpdates",
+		"ResourceLoaderGetConfigVars": "MediaWiki\\Extension\\ArticleRanking\\Hooks::onResourceLoaderGetConfigVars"
 	},
 	"MessagesDirs": {
 		"ArticleRanking": [

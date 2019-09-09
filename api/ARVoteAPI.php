@@ -1,5 +1,9 @@
 <?php
 
+namespace MediaWiki\Extension\ArticleRanking;
+
+use ApiBase;
+
 class ARVoteAPI extends ApiBase {
 
 	protected $secret = '';

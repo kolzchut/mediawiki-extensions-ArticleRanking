@@ -3,6 +3,10 @@
 /**
  * Utility functions for ArticleRanking that don't belong elsewhere
  */
+namespace MediaWiki\Extension\ArticleRanking;
+
+use DatabaseBase;
+
 class ARDatabase {
 	/**
 	 * Gets a database object. Will be the master if the user is logged in.
@@ -14,7 +18,6 @@ class ARDatabase {
 	 * @return DatabaseBase
 	 */
 	public static function getDb( $force = false, $wiki = false ) {
-		global $wgCentralDBname;
 		global $wgUser;
 
 		if ( $wgUser->isAllowed( 'articleranking-admin' ) ) {

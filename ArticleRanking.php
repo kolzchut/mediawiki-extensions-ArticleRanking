@@ -1,4 +1,9 @@
 <?php
+namespace MediaWiki\Extension\ArticleRanking;
+
+use Hooks;
+use MediaWiki\MediaWikiServices;
+use TemplateParser;
 
 class ArticleRanking {
 
@@ -97,7 +102,7 @@ class ArticleRanking {
 	}
 
 	public static function createRankingSection( $additionalParams = []) {
-		$conf = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
+		$conf = MediaWikiServices::getInstance()->getMainConfig();
 		$wgArticleRankingCaptcha = $conf->get('ArticleRankingCaptcha');
 		$wgArticleRankingTemplateFileName = $conf->get('ArticleRankingTemplateFileName');
 		$wgArticleRankingTemplatePath = $conf->get('ArticleRankingTemplatePath');

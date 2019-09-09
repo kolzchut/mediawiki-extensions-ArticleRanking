@@ -1,5 +1,9 @@
 <?php
 
+namespace MediaWiki\Extension\ArticleRanking;
+
+use ApiBase;
+
 class ARGetVotesAPI extends ApiBase {
 
 	public function __construct( $main, $moduleName ) {

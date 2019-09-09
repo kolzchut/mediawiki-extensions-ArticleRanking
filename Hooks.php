@@ -1,9 +1,14 @@
 <?php
+namespace MediaWiki\Extension\ArticleRanking;
 
-class ArticleRankingHooks {
+use MediaWiki\MediaWikiServices;
+use OutputPage;
+use Skin;
+
+class Hooks {
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$conf = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
+		$conf = MediaWikiServices::getInstance()->getMainConfig();
 		$wgArticleRankingAddChangeRequest = $conf->get('ArticleRankingAddChangeRequest');
 		if($wgArticleRankingAddChangeRequest){
 			$out->addModules( [ 'ext.articleRanking.changeRequest' ] );

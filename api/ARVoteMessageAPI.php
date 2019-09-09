@@ -1,4 +1,7 @@
 <?php
+namespace MediaWiki\Extension\ArticleRanking;
+
+use ApiBase;
 
 class ARVoteMessageAPI extends ApiBase {
 
