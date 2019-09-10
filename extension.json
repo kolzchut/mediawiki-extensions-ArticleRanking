@@ -18,7 +18,12 @@
 		"MediaWiki\\Extension\\ArticleRanking\\Hooks": "Hooks.php",
 		"MediaWiki\\Extension\\ArticleRanking\\ARDatabasePatcher": "patches/ARDatabasePatcher.php",
 		"MediaWiki\\Extension\\ArticleRanking\\ARDatabase": "includes/ARDatabase.php",
-		"MediaWiki\\Extension\\ArticleRanking\\ARCaptcha": "includes/ARCaptcha.php"
+		"MediaWiki\\Extension\\ArticleRanking\\ARCaptcha": "includes/ARCaptcha.php",
+		"MediaWiki\\Extension\\ArticleRanking\\SpecialFeedback": "includes/SpecialFeedback.php",
+		"MediaWiki\\Extension\\ArticleRanking\\FeedbackPager": "includes/FeedbackPager.php"
+	},
+	"SpecialPages": {
+		"ArticleRankingFeedback": "MediaWiki\\Extension\\ArticleRanking\\SpecialFeedback"
 	},
 	"APIModules": {
 		"rank-vote": "MediaWiki\\Extension\\ArticleRanking\\ARVoteAPI",
@@ -66,6 +71,9 @@
 			"i18n"
 		]
 	},
+	"ExtensionMessagesFiles": {
+		"ArticleRankingAlias": "ArticleRanking.i18n.alias.php"
+	},
 	"config": {
 		"ArticleRankingConfig": {
 			"changerequest": {
@@ -84,5 +92,13 @@
 		"ArticleRankingAddAfterVote": false,
 		"ArticleRankingAddChangeRequest": true
 	},
+	"GroupPermissions": {
+		"sysop": {
+			"viewfeedback": true
+		}
+	},
+	"AvailableRights": [
+		"viewfeedback"
+	],
 	"manifest_version": 1
 }

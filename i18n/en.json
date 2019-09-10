@@ -18,5 +18,12 @@
 	"ranking-invalid-captcha-keys-message": "Missing reCAPTCHA keys",
 	"article-ranking-after-vote-failed":"Your message not sent. We are sorry",
 	"article-ranking-after-vote-success":"Thank you for the feedback",
-	"article-ranking-after-vote-OK" : "O.K."
+	"article-ranking-after-vote-OK" : "O.K.",
+	"article-ranking-special-feedback": "Feedback List",
+	"article-ranking-feedbacklist-title": "Title",
+	"article-ranking-feedbacklist-text": "Text",
+	"article-ranking-feedbacklist-vote": "Vote",
+	"article-ranking-feedbacklist-timestamp": "Date and time",
+	"articlerankingfeedback": "Feedback",
+	"article-ranking-feedbacklist-submit": "Filter"
 }
