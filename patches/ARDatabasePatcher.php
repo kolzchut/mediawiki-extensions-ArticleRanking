@@ -4,6 +4,10 @@
  * @license GNU General Public Licence 2.0 or later
  */
 
+namespace MediaWiki\Extension\ArticleRanking;
+
+use DatabaseUpdater;
+
 /**
  * Maintenance helper class that updates the database schema when required.
  *
