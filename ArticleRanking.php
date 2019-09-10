@@ -124,9 +124,12 @@ class ArticleRanking {
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		];
 		//die(print_r($params));
-		Hooks::run( 'ArticleRankingTemplateParams', [ &$params , $additionalParams] );
+		$continue = Hooks::run( 'ArticleRankingTemplateParams', [ &$params , $additionalParams] );
+		if ( $continue ) {
+			return $templateParser->processTemplate( $wgArticleRankingTemplateFileName, $params  );
+		}
 
-		return $templateParser->processTemplate( $wgArticleRankingTemplateFileName, $params  );
+		return '';
 	}
 
 	public static function isCaptchaEnabled() {
