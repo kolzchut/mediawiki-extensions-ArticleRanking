@@ -18,5 +18,14 @@
 	"ranking-invalid-captcha-keys-message": "מפתחות reCAPTCHA חסרים",
 	"article-ranking-after-vote-failed":"ההודעה לא נשלחה. אנו מתנצלים על תקלה.",
 	"article-ranking-after-vote-success":"תודה על המשוב",
-	"article-ranking-after-vote-OK" : "בסדר"
+	"article-ranking-after-vote-OK" : "בסדר",
+
+	"article-ranking-special-feedback": "רשימת משובים",
+	"article-ranking-feedbacklist-title": "עמוד",
+	"article-ranking-feedbacklist-text": "טקסט",
+	"article-ranking-feedbacklist-vote": "הצבעה",
+	"article-ranking-feedbacklist-timestamp": "תאריך ושעה",
+	"articlerankingfeedback": "משוב",
+	"article-ranking-feedbacklist-submit": "סינון",
+	"article-ranking-feedbacklist-no-results": "לא נמצאו תוצאות"
 }

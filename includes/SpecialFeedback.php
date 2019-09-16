@@ -37,7 +37,7 @@ class SpecialFeedback extends SpecialPage {
 		$out->addModuleStyles( [ 'mediawiki.special' ] );
 
 		$request = $this->getRequest();
-		$this->target = trim( $request->getVal( 'wpTarget', $par ) );
+		$this->target = trim( $request->getVal( 'target', $par ) );
 
 		# setup the pager
 		$pager = $this->getPager();
@@ -50,6 +50,7 @@ class SpecialFeedback extends SpecialPage {
 				'tabindex' => '1',
 				'size' => '45',
 				'required' => false,
+				'name' => 'target',
 				'default' => $this->target,
 			],
 			'Limit' => [
@@ -57,7 +58,7 @@ class SpecialFeedback extends SpecialPage {
 				'label-message' => 'table_pager_limit_label',
 				'options' => $pager->getLimitSelectList(),
 				'name' => 'limit',
-				'default' => $pager->getLimit(),
+				'default' => $request->getVal( 'limit', $pager->getLimit() ),
 			],
 		];
 		$context = new DerivativeContext( $this->getContext() );
@@ -65,7 +66,6 @@ class SpecialFeedback extends SpecialPage {
 		$form = HTMLForm::factory( 'ooui', $fields, $context );
 		$form
 			->setMethod( 'get' )
-			->setFormIdentifier( 'feedbacklist' )
 			->setWrapperLegendMsg( 'articlerankingfeedback' )
 			->setSubmitTextMsg( 'article-ranking-feedbacklist-submit' )
 			->prepareForm()
@@ -79,7 +79,7 @@ class SpecialFeedback extends SpecialPage {
 	 * @return FeedbackPager
 	 */
 	protected function getPager() {
-		$conds = [];
+		$conds = [ 'target' => $this->target ];
 
 		return new FeedbackPager( $this, $conds );
 	}
@@ -92,12 +92,10 @@ class SpecialFeedback extends SpecialPage {
 	protected function showList( FeedbackPager $pager ) {
 		$out = $this->getOutput();
 
-		if ( $pager->getNumRows() ) {
+		if ( $pager->getNumRows() > 0 ) {
 			$out->addParserOutputContent( $pager->getFullOutput() );
-		} elseif ( $this->target ) {
-			$out->addWikiMsg( 'article-ranking-feedbacklist-no-results' );
 		} else {
-			$out->addWikiMsg( 'article-ranking-feedbacklist-empty' );
+			$out->addWikiMsg( 'article-ranking-feedbacklist-no-results' );
 		}
 	}
 }

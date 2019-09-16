@@ -112,9 +112,9 @@ class FeedbackPager extends TablePager {
 			],
 			'join_conds' => [ 'page' => [ 'LEFT JOIN', 'votes_messages_page_id = page_id' ] ]
 		];
-		if ( isset( $this->conds['page'] ) ) {
+		if ( isset( $this->conds['target'] ) ) {
 			$dbr = wfGetDB( DB_REPLICA );
-			$query['conds'][] = 'page_title ' . $dbr->buildLike( $this->conds['page'], $dbr->anyString() );
+			$query['conds'][] = 'page_title ' . $dbr->buildLike( $dbr->anyString(), $this->conds['target'], $dbr->anyString() );
 		}
 
 		return $query;
