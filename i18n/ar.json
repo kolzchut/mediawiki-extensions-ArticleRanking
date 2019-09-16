@@ -11,13 +11,13 @@
 	"ranking-propose-change": "أرسلوا اقتراح التغيير ",
 	"ranking-vote-success": "شكرا، استلمنا تصويتكم",
 	"ranking-vote-fail": "طرأ خلل خلال ارسال اقتراحكم، حاولوا ثانية لطفا",
-	"after-vote-button" : "שלח/י",
-	"voting-messages-positive-placeholder":"תודה! רוצה להוסיף משהו?",
-	"voting-messages-negative-placeholder":"חבל. נשמח אם תגידו לנו למה",
+	"after-vote-button" : "إرسل/ي",
+	"voting-messages-positive-placeholder":"شكراً، تودون إضافة شيء؟",
+	"voting-messages-negative-placeholder":"خسارة. من المهم أن نعرف السبب",
 	"ranking-invalid-captcha-title": "שגיאת reCAPTCHA",
 	"ranking-invalid-captcha-keys-message": "מפתחות reCAPTCHA חסרים",
-	"article-ranking-after-vote-failed":"ההודעה לא נשלחה. אנו מתנצלים על תקלה.",
-	"article-ranking-after-vote-success":"תודה על המשוב",
-	"article-ranking-after-vote-OK" : "או קיי"
+	"article-ranking-after-vote-failed":"لم يتم إرسال الرسالة.نعتذر عن الخلل.",
+	"article-ranking-after-vote-success":"شكراً لك",
+	"article-ranking-after-vote-OK" : "جيد"
 
 }
