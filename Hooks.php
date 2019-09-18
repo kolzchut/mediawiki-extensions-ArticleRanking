@@ -7,14 +7,21 @@ use Skin;
 
 class Hooks {
 
+	/**
+	 * @param OutputPage &$out
+	 * @param Skin &$skin
+	 *
+	 * @return bool
+	 * @throws \ConfigException
+	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		$conf = MediaWikiServices::getInstance()->getMainConfig();
-		$wgArticleRankingAddChangeRequest = $conf->get('ArticleRankingAddChangeRequest');
-		if($wgArticleRankingAddChangeRequest){
+		$wgArticleRankingAddChangeRequest = $conf->get( 'ArticleRankingAddChangeRequest' );
+		if ( $wgArticleRankingAddChangeRequest ) {
 			$out->addModules( [ 'ext.articleRanking.changeRequest' ] );
 		}
 		$out->addModules( [ 'ext.articleRanking' ] );
-		if($conf->get('ArticleRankingAddAfterVote')){
+		if ( $conf->get( 'ArticleRankingAddAfterVote' ) ) {
 			$out->addModules( [ 'ext.articleRanking-after-vote' ] );
 
 		}
@@ -35,7 +42,7 @@ class Hooks {
 	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderGetConfigVars
 	 *
-	 * @param &$vars array of variables to be added into the output of the startup module.
+	 * @param array &$vars variables to be added into the output of the startup module.
 	 *
 	 * @return true
 	 */

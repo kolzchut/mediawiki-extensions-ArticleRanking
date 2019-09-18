@@ -1,22 +1,22 @@
-( function ( mw, $ ) {
+( function () {
 	'use strict';
-	var wgArticleRankingConfig = mw.config.get( 'wgArticleRankingConfig' ),
+	var config = mw.config.get( 'wgArticleRankingConfig' ),
 		uri;
 
-	if ( wgArticleRankingConfig.changerequest !== null && wgArticleRankingConfig.changerequest.url ) {
-		uri = new mw.Uri( wgArticleRankingConfig.changerequest.url );
+	if ( config.changerequest !== null && config.changerequest.url ) {
+		uri = new mw.Uri( config.changerequest.url );
 		uri.extend( {
 			page: mw.config.get( 'wgTitle' ),
 			lang: mw.config.get( 'wgContentLanguage' ),
 			categories: mw.config.get( 'wgCategories' ).join()
 		} );
 
-		$( '.ranking-btn.changerequest' ).click( function() {
+		document.querySelector( '.ranking-btn.changerequest' ).addEventListener( 'click', function () {
 			mw.wrShareBar.openModal(
 				uri.toString(),
-				wgArticleRankingConfig.changerequest.width,
-				wgArticleRankingConfig.changerequest.height
+				config.changerequest.width,
+				config.changerequest.height
 			);
 		} );
 	}
-}( mediaWiki, jQuery ) );
+}() );

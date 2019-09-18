@@ -29,7 +29,6 @@ use SpecialPage;
 use TablePager;
 use TitleValue;
 
-
 class FeedbackPager extends TablePager {
 
 	protected $conds;
@@ -39,21 +38,24 @@ class FeedbackPager extends TablePager {
 	 * @param SpecialPage $page
 	 * @param array $conds
 	 */
-	function __construct( $page, $conds ) {
+	public function __construct( $page, $conds ) {
 		$this->page = $page;
 		$this->conds = $conds;
 		$this->mDefaultDirection = TablePager::DIR_DESCENDING;
 		parent::__construct( $page->getContext() );
 	}
 
-	function getFieldNames() {
+	/**
+	 * @return array|null
+	 */
+	public function getFieldNames() {
 		static $headers = null;
 
 		if ( $headers === null ) {
 			$headers = [
 				'page_title' => 'article-ranking-feedbacklist-title',
 				'text' => 'article-ranking-feedbacklist-text',
-				'vote' =>  'article-ranking-feedbacklist-vote',
+				'vote' => 'article-ranking-feedbacklist-vote',
 				'timestamp' => 'article-ranking-feedbacklist-timestamp',
 			];
 			foreach ( $headers as $key => $val ) {
@@ -64,7 +66,13 @@ class FeedbackPager extends TablePager {
 		return $headers;
 	}
 
-	function formatValue( $name, $value ) {
+	/**
+	 * @param string $name The database field name
+	 * @param string $value The value retrieved from the database
+	 *
+	 * @return string
+	 */
+	public function formatValue( $name, $value ) {
 		$language = $this->getLanguage();
 		$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
 
@@ -97,7 +105,10 @@ class FeedbackPager extends TablePager {
 		return $formatted;
 	}
 
-	function getQueryInfo() {
+	/**
+	 * @return array
+	 */
+	public function getQueryInfo() {
 		$query = [
 			'tables' => [ 'article_rankings_votes_messages', 'page' ],
 			'fields' => [
@@ -120,11 +131,19 @@ class FeedbackPager extends TablePager {
 		return $query;
 	}
 
-	function getDefaultSort() {
+	/**
+	 * @return string
+	 */
+	public function getDefaultSort() {
 		return 'timestamp';
 	}
 
-	function isFieldSortable( $name ) {
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function isFieldSortable( $name ) {
 		if ( in_array( $name, [ 'page_title', 'vote', 'timestamp' ] ) ) {
 			return true;
 		}

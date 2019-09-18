@@ -14,7 +14,7 @@ class ArticleRanking {
 	 * @param int $vote 1 for positive vote, 0 for negative vote
 	 * @return bool
 	 */
-	public static function saveVote( Int $page_id, Int $vote ) {
+	public static function saveVote( int $page_id, int $vote ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$votes = $dbw->select( 'article_rankings',
@@ -53,6 +53,7 @@ class ArticleRanking {
 
 		return (bool)$result;
 	}
+
 	/**
 	 * Save vote nessage for a certain page ID
 	 *
@@ -61,7 +62,7 @@ class ArticleRanking {
 	 * @param string $message message for vote
 	 * @return bool
 	 */
-	public static function saveVoteMessage( Int $page_id, Int $vote, string $message ) {
+	public static function saveVoteMessage( int $page_id, int $vote, string $message ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$fields = [
 				'positive_or_negative' => $vote,
@@ -70,8 +71,9 @@ class ArticleRanking {
 				'votes_timestamp'        => $dbw->timestamp( wfTimestampNow() )
 			];
 		$result = $dbw->insert( 'article_rankings_votes_messages', $fields );
-		return (bool) $result;
+		return (bool)$result;
 	}
+
 	/**
 	 * Get rank for a specific page ID
 	 *
@@ -79,7 +81,7 @@ class ArticleRanking {
 	 * @return array|bool an array that includes the number of positive votes, total votes and
 	 *                    total rank percentage, or false
 	 */
-	public static function getRank( Int $page_id ) {
+	public static function getRank( int $page_id ) {
 		$dbr = wfGetDB( DB_REPLICA );
 
 		$result = $dbr->select(
@@ -101,11 +103,19 @@ class ArticleRanking {
 		];
 	}
 
-	public static function createRankingSection( $additionalParams = []) {
+	/**
+	 * @param array $additionalParams
+	 *
+	 * @return string
+	 * @throws \ConfigException
+	 * @throws \FatalError
+	 * @throws \MWException
+	 */
+	public static function createRankingSection( $additionalParams = [] ) {
 		$conf = MediaWikiServices::getInstance()->getMainConfig();
-		$wgArticleRankingCaptcha = $conf->get('ArticleRankingCaptcha');
-		$wgArticleRankingTemplateFileName = $conf->get('ArticleRankingTemplateFileName');
-		$wgArticleRankingTemplatePath = $conf->get('ArticleRankingTemplatePath');
+		$wgArticleRankingCaptcha = $conf->get( 'ArticleRankingCaptcha' );
+		$wgArticleRankingTemplateFileName = $conf->get( 'ArticleRankingTemplateFileName' );
+		$wgArticleRankingTemplatePath = $conf->get( 'ArticleRankingTemplatePath' );
 		$wgArticleRankingTemplatePath = $wgArticleRankingTemplatePath ? $wgArticleRankingTemplatePath : __DIR__ . '/templates';
 		$templateParser = new TemplateParser( $wgArticleRankingTemplatePath );
 		$params = [
@@ -119,14 +129,13 @@ class ArticleRanking {
 			'voting-messages-positive-placeholder' => wfMessage( 'voting-messages-positive-placeholder' ),
 			'voting-messages-negative-placeholder' => wfMessage( 'voting-messages-negative-placeholder' ),
 			'is-captcha-enabled' => self::isCaptchaEnabled(),
-			'is-after-vote-form' => $conf->get('ArticleRankingAddAfterVote'),
+			'is-after-vote-form' => $conf->get( 'ArticleRankingAddAfterVote' ),
 			'after-voting-button' => wfMessage( 'after-vote-button' )->text() . '<i class="fas fa-chevron-left"></i>',
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		];
-		//die(print_r($params));
-		$continue = Hooks::run( 'ArticleRankingTemplateParams', [ &$params , $additionalParams] );
+		$continue = Hooks::run( 'ArticleRankingTemplateParams', [ &$params , $additionalParams ] );
 		if ( $continue ) {
-			return $templateParser->processTemplate( $wgArticleRankingTemplateFileName, $params  );
+			return $templateParser->processTemplate( $wgArticleRankingTemplateFileName, $params );
 		}
 
 		return '';
@@ -137,4 +146,3 @@ class ArticleRanking {
 		return ( $wgArticleRankingCaptcha[ 'secret' ] && $wgArticleRankingCaptcha[ 'siteKey' ] );
 	}
 }
-

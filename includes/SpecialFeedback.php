@@ -20,6 +20,12 @@ use SpecialPage;
 class SpecialFeedback extends SpecialPage {
 	protected $target;
 
+	/**
+	 * SpecialFeedback constructor.
+	 *
+	 * @param string $name
+	 * @param string $restriction
+	 */
 	public function __construct( $name = 'ArticleRankingFeedback', $restriction = 'viewfeedback' ) {
 		parent::__construct( $name, $restriction );
 	}
@@ -62,7 +68,8 @@ class SpecialFeedback extends SpecialPage {
 			],
 		];
 		$context = new DerivativeContext( $this->getContext() );
-		$context->setTitle( $this->getPageTitle() ); // Remove subpage
+		// Remove subpage
+		$context->setTitle( $this->getPageTitle() );
 		$form = HTMLForm::factory( 'ooui', $fields, $context );
 		$form
 			->setMethod( 'get' )

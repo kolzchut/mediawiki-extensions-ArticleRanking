@@ -3,19 +3,29 @@
 namespace MediaWiki\Extension\ArticleRanking;
 
 use ApiBase;
+use ApiMain;
 
 class ARVoteAPI extends ApiBase {
 
 	protected $secret = '';
 
-	public function __construct( $main, $moduleName ) {
-		parent::__construct( $main, $moduleName );
+	/**
+	 * ARVoteAPI constructor.
+	 *
+	 * @param ApiMain $mainModule
+	 * @param string $moduleName Name of this module
+	 */
+	public function __construct( $mainModule, $moduleName ) {
+		parent::__construct( $mainModule, $moduleName );
 
 		global $wgArticleRankingCaptcha;
 
 		$this->secret = $wgArticleRankingCaptcha[ 'secret' ];
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getAllowedParams() {
 		return [
 			'captchaToken' => [
@@ -33,6 +43,9 @@ class ARVoteAPI extends ApiBase {
 		];
 	}
 
+	/**
+	 * @throws \ApiUsageException
+	 */
 	public function execute() {
 		$queryResult = $this->getResult();
 		$params      = $this->extractRequestParams();

@@ -3,8 +3,13 @@ namespace MediaWiki\Extension\ArticleRanking;
 
 class ARCaptcha {
 
+	/**
+	 * @param string $secret
+	 * @param string $token
+	 *
+	 * @return bool
+	 */
 	public static function verifyToken( $secret, $token ) {
-
 		$data = [
 			'secret'   => $secret,
 			'response' => $token
@@ -24,7 +29,6 @@ class ARCaptcha {
 		$result = json_decode( $result );
 
 		return $result->success === true;
-
 	}
 
 }
