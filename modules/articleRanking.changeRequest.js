@@ -1,7 +1,8 @@
 ( function () {
 	'use strict';
 	var config = mw.config.get( 'wgArticleRankingConfig' ),
-		uri;
+		uri,
+		selector;
 
 	if ( config.changerequest !== null && config.changerequest.url ) {
 		uri = new mw.Uri( config.changerequest.url );
@@ -11,12 +12,15 @@
 			categories: mw.config.get( 'wgCategories' ).join()
 		} );
 
-		document.querySelector( '.ranking-btn.changerequest' ).addEventListener( 'click', function () {
-			mw.wrShareBar.openModal(
-				uri.toString(),
-				config.changerequest.width,
-				config.changerequest.height
-			);
-		} );
+		selector = document.querySelector( '.ranking-btn.changerequest' );
+		if ( selector !== null ) {
+			selector.addEventListener( 'click', function () {
+				mw.wrShareBar.openModal(
+					uri.toString(),
+					config.changerequest.width,
+					config.changerequest.height
+				);
+			});
+		}
 	}
 }() );
