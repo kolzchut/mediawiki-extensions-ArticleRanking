@@ -66,7 +66,7 @@
 			} ).done( function () {
 				var $el = $( '<div>' )
 					.addClass( 'vote-message-sent-text' )
-					.html( mw.message( 'article-ranking-after-vote-success' ).text() );
+					.html( mw.msg( 'article-ranking-after-vote-success' ) );
 				$( '.after-vote-form' ).addClass( 'vote-message-sent' ).append( $el );
 			} );
 		} );

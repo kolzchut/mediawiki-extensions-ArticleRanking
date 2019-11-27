@@ -119,18 +119,18 @@ class ArticleRanking {
 		$wgArticleRankingTemplatePath = $wgArticleRankingTemplatePath ? $wgArticleRankingTemplatePath : __DIR__ . '/templates';
 		$templateParser = new TemplateParser( $wgArticleRankingTemplatePath );
 		$params = [
-			'section1title'  => wfMessage( 'ranking-section1-title' ),
-			'yes'            => wfMessage( 'ranking-yes' ),
-			'no'             => wfMessage( 'ranking-no' ),
-			'section2title'  => wfMessage( 'ranking-section2-title' ),
-			'ranking-vote-success'  => wfMessage( 'ranking-vote-success' ),
-			'ranking-vote-fail'  => wfMessage( 'ranking-vote-fail' ),
-			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
-			'voting-messages-positive-placeholder' => wfMessage( 'voting-messages-positive-placeholder' ),
-			'voting-messages-negative-placeholder' => wfMessage( 'voting-messages-negative-placeholder' ),
+			'section1title'  => self::getMsgForContent( 'ranking-section1-title' ),
+			'yes'            => self::getMsgForContent( 'ranking-yes' ),
+			'no'             => self::getMsgForContent( 'ranking-no' ),
+			'section2title'  => self::getMsgForContent( 'ranking-section2-title' ),
+			'ranking-vote-success'  => self::getMsgForContent( 'ranking-vote-success' ),
+			'ranking-vote-fail'  => self::getMsgForContent( 'ranking-vote-fail' ),
+			'proposeChanges' => self::getMsgForContent( 'ranking-propose-change' ),
+			'voting-messages-positive-placeholder' => self::getMsgForContent( 'voting-messages-positive-placeholder' ),
+			'voting-messages-negative-placeholder' => self::getMsgForContent( 'voting-messages-negative-placeholder' ),
 			'is-captcha-enabled' => self::isCaptchaEnabled(),
 			'is-after-vote-form' => $conf->get( 'ArticleRankingAddAfterVote' ),
-			'after-voting-button' => wfMessage( 'after-vote-button' )->text() . '<i class="fas fa-chevron-left"></i>',
+			'after-voting-button' => self::getMsgForContent( 'after-vote-button' ) . '<i class="fas fa-chevron-left"></i>',
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		];
 		$continue = Hooks::run( 'ArticleRankingTemplateParams', [ &$params , $additionalParams ] );
@@ -139,6 +139,10 @@ class ArticleRanking {
 		}
 
 		return '';
+	}
+
+	private static function getMsgForContent( $msgName ) {
+		return wfMessage( $msgName )->inContentLanguage()->text();
 	}
 
 	public static function isCaptchaEnabled() {
