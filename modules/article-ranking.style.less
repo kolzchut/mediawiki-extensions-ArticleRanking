@@ -3,25 +3,21 @@
 @color-green: #5B7F31; // See @color-green in skin:Helena
 
 .ranking-section {
-	display: table;
-	width: 100%;
+	display: flex;
 	padding: 0 0 22px 0;
-	margin-bottom: 10px;
-
-	h2 {
-	}
 
 	.buttons {
 		white-space: nowrap;
+		display: flex;
+		justify-content: center;
 	}
 
 	.ranking-btn {
-		min-width: 100px;
 		padding-top: 3px;
 		padding-bottom: 3px;
 		margin-left: 3px;
 
-		&[disabled].selected {
+		&[ disabled ].selected {
 			opacity: 1;
 		}
 
@@ -38,20 +34,22 @@
 	}
 
 	.sub-section {
-		display: table-cell;
-		vertical-align: top;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.sub-section + .sub-section {
 		padding-left: 2%;
 	}
 
-	.sub-section1 {
-		min-width: 43%;
+	@media screen and (min-width: 768px) {
+		.sub-section1 {
+			min-width: 53%;
+		}
 	}
-	
 
-	@media screen and (max-width: 768px) {
+	@media screen and (max-width: 767px) {
+		/* This part needs to be copied into Helena, not be here
 		.sub-section1 {
 			width: 100%;
 
@@ -59,16 +57,18 @@
 				display: flex;
 			}
 		}
+		*/
 
 		.sub-section2 {
+			/* This too should go into Helena:
 			display: none;
+			 */
 			// The following rules are useless when hidden - relevant in the future when we show this
 		    border-top: 2px solid #b7b7b7;
 			padding-top: 25px;
 		}
 
 		.ranking-btn {
-			width: 144px;
 			margin: 0;
 			&.no {
 				margin: 0 0 0 10px;
@@ -76,15 +76,17 @@
 		}
 	}
 }
-.voting-messages{
+.voting-messages {
 	&:not(.show),
 	&:not(.voting-messages-wrp-success) .voting-messages-success,
 	&:not(.voting-messages-wrp-failure) .voting-messages-failure{
 		display: none;
 	}
 }
+/* This part needs to be copied into Helena, not be here
 .article-type-mainpage {
 	.ranking-section {
 		display: none;
 	}
 }
+*/

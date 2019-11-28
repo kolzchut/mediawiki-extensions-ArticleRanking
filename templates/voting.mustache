@@ -1,63 +1,66 @@
 <div class="ranking-section-wrapper">
 	<div class="ranking-section hidden-print noprint">
 		<div id="voting-section1" class="sub-section sub-section1">
-			<h2>{{ section1title }}</h2>
-			<div class="buttons">
-				<button class="btn btn-secondary ranking-btn yes" type="button">
-					<span class="ranking-just-after">
-					</span>
-					<span class="ranking-on-request">
-						<i class="fa fa-spinner fa-spin"></i>
-					</span>
-					<span class="ranking-always">{{{ yes }}}</span>
-					<span class="ranking-just-before"></span>
-				</button>
-				<button class="btn btn-secondary ranking-btn no" type="button">
-					<span class="ranking-just-after">
-						<i class="fa fa-check"></i>
-					</span>
-					<span class="ranking-on-request">
-						<i class="fa fa-spinner fa-spin"></i>
-					</span>
-					<span class="ranking-always">{{{ no }}}</span>
-					<span class="ranking-just-before"></span>
-				</button>
+			<h2 class="sub-section-header">{{ section1title }}</h2>
+			<div class="sub-section-content">
+				<div class="buttons">
+					<button class="btn btn-secondary ranking-btn yes" type="button">
+						<span class="ranking-just-after">
+						</span>
+						<span class="ranking-on-request">
+							<i class="fa fa-spinner fa-spin"></i>
+						</span>
+						<span class="ranking-always">{{{ yes }}}</span>
+						<span class="ranking-just-before"></span>
+					</button>
+					<button class="btn btn-secondary ranking-btn no" type="button">
+						<span class="ranking-just-after">
+							<i class="fa fa-check"></i>
+						</span>
+						<span class="ranking-on-request">
+							<i class="fa fa-spinner fa-spin"></i>
+						</span>
+						<span class="ranking-always">{{{ no }}}</span>
+						<span class="ranking-just-before"></span>
+					</button>
+				</div>
 			</div>
 			{{^is-after-vote-form}}
-			<div class="voting-messages">
-				<div class="voting-messages-success">
-					{{ranking-vote-success}}
+				<div class="voting-messages">
+					<div class="voting-messages-success">
+						{{ranking-vote-success}}
+					</div>
+					<div class="voting-messages-failure">
+						{{ranking-vote-fail}}
+					</div>
 				</div>
-				<div class="voting-messages-failure">
-					{{ranking-vote-fail}}
-				</div>
-			</div>
 			{{/is-after-vote-form}}
 			{{#is-captcha-enabled}}
-			<div class="g-recaptcha"
-				 data-sitekey="{{ siteKey }}"
-				 data-callback="verifyRankingCaptcha"
-				 data-error-callback="handleRankingCaptchaError"
-				 data-size="invisible">
-			</div>
+				<div class="g-recaptcha"
+					 data-sitekey="{{ siteKey }}"
+					 data-callback="verifyRankingCaptcha"
+					 data-error-callback="handleRankingCaptchaError"
+					 data-size="invisible">
+				</div>
 			{{/is-captcha-enabled}}
 		</div>
-
 		<div id="voting-section2" class="sub-section sub-section2">
-			<h2>{{ section2title }}</h2>
-			<a class="whatsapp-link" href="whatsapp://send?text={{whatsapp-share-text}}" data-action="share/whatsapp/share">{{{whatsapp-share-label}}}</a>
+			<h2 class="sub-section-header">{{ section2title }}</h2>
+			<div class="sub-section-content">
+				<a class="whatsapp-link" href="whatsapp://send?text={{whatsapp-share-text}}" data-action="share/whatsapp/share">{{{whatsapp-share-label}}}</a>
+			</div>
 		</div>
 	</div>
 	{{#is-after-vote-form}}
-	<div class="after-vote-section">
-		<div class="after-vote-form">
-			<textarea class="voting-messages-positive" placeholder="{{voting-messages-positive-placeholder}}"></textarea>
-			<textarea class="voting-messages-negative" placeholder="{{voting-messages-negative-placeholder}}"></textarea>
-			<button type="button" class="after-voting-button">
-				{{{after-voting-button}}}
-			</button>
+		<div class="after-vote-section">
+			<div class="after-vote-form">
+				<textarea class="voting-messages-positive" placeholder="{{voting-messages-positive-placeholder}}"></textarea>
+				<textarea class="voting-messages-negative" placeholder="{{voting-messages-negative-placeholder}}"></textarea>
+				<button type="button" class="after-voting-button">
+					{{{after-voting-button}}}
+				</button>
+			</div>
 		</div>
-	</div>
 	{{/is-after-vote-form}}
 </div>
 
