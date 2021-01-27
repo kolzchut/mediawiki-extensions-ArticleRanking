@@ -36,7 +36,8 @@
 			],
 			"messages": [
 				"ranking-vote-success",
-				"ranking-vote-fail"
+				"ranking-vote-fail",
+				"ranking-cr-form-title"
 			]
 		},
 		"ext.articleRanking.changeRequest": {

@@ -18,9 +18,10 @@
 				mw.wrShareBar.openModal(
 					uri.toString(),
 					config.changerequest.width,
-					config.changerequest.height
+					config.changerequest.height,
+					{ title: mw.msg( 'ranking-cr-form-title' ) }
 				);
-			});
+			} );
 		}
 	}
 }() );
