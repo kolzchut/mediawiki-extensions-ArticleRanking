@@ -8,7 +8,7 @@ class ARDatabase {
 	 * Gets a database object. Will be the master if the user is logged in.
 	 *
 	 * @param int|bool    $force   If false will return a DB master/slave based on users permissions.
-	 *                             Set to DB_MASTER or DB_SLAVE to force that type.
+	 *                             Set to DB_MASTER or DB_REPLICA to force that type.
 	 * @param string|bool $wiki    Wiki database to connect to, if false will be the Infrastructure DB
 	 *
 	 * @return DatabaseBase
@@ -20,7 +20,7 @@ class ARDatabase {
 		if ( $wgUser->isAllowed( 'articleranking-admin' ) ) {
 			$dbmode = DB_MASTER;
 		} elseif ( $force === false ) {
-			$dbmode = DB_SLAVE;
+			$dbmode = DB_REPLICA;
 		} else {
 			$dbmode = $force;
 		}
