@@ -8,13 +8,3 @@ CREATE TABLE IF NOT EXISTS /*_*/article_rankings (
 ) /*$wgDBTableOptions*/;
 
 DROP TRIGGER IF EXISTS /*_*/article_rankings_BEFORE_UPDATE;
-
-DELIMITER |
-CREATE TRIGGER /*_*/article_rankings_BEFORE_UPDATE BEFORE UPDATE ON /*_*/article_rankings FOR EACH ROW
-BEGIN
-	IF NEW.positive_votes != OLD.positive_votes THEN
-		SET NEW.total_votes = OLD.total_votes + 1;
-	END IF;
-END
-|
-DELIMITER ;

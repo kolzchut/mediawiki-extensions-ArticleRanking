@@ -25,9 +25,9 @@ class ArticleRanking {
 
 			if ( $vote === 1 ) {
 				$positiveVotes = $positiveVotes + 1;
-			} else {
-				$totalVotes = $totalVotes + 1;
 			}
+
+			$totalVotes = $totalVotes + 1;
 
 			$result = $dbw->update( 'article_rankings',
 				[
