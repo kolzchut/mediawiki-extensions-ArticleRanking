@@ -58,6 +58,7 @@ class SpecialFeedback extends SpecialPage {
 				'required' => false,
 				'name' => 'target',
 				'default' => $this->target,
+				'exists' => true
 			],
 			'Limit' => [
 				'type' => 'limitselect',

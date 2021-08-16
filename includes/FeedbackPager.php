@@ -119,13 +119,15 @@ class FeedbackPager extends TablePager {
 				'vote' => 'positive_or_negative',
 				'timestamp' => 'votes_timestamp'
 			],
-			'conds' => [
-			],
+			'conds' => [],
 			'join_conds' => [ 'page' => [ 'LEFT JOIN', 'votes_messages_page_id = page_id' ] ]
 		];
-		if ( isset( $this->conds['target'] ) ) {
-			$dbr = wfGetDB( DB_REPLICA );
-			$query['conds'][] = 'page_title ' . $dbr->buildLike( $dbr->anyString(), $this->conds['target'], $dbr->anyString() );
+		if ( !empty( $this->conds['target'] ) ) {
+			$title = \Title::newFromText( $this->conds['target'] );
+			if ( $title !== null ) {
+				$query[ 'conds' ]['page_title'] = $title->getDBkey();
+				$query[ 'conds' ]['page_namespace'] = $title->getNamespace();
+			}
 		}
 
 		return $query;
@@ -135,7 +137,7 @@ class FeedbackPager extends TablePager {
 	 * @return string
 	 */
 	public function getDefaultSort() {
-		return 'timestamp';
+		return 'votes_timestamp';
 	}
 
 	/**
