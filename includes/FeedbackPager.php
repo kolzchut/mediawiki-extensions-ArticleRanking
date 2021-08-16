@@ -117,7 +117,7 @@ class FeedbackPager extends TablePager {
 				'page_id',
 				'text' => 'votes_messages',
 				'vote' => 'positive_or_negative',
-				'timestamp' => 'votes_timestamp'
+				'votes_timestamp'
 			],
 			'conds' => [],
 			'join_conds' => [ 'page' => [ 'LEFT JOIN', 'votes_messages_page_id = page_id' ] ]
@@ -146,7 +146,7 @@ class FeedbackPager extends TablePager {
 	 * @return bool
 	 */
 	public function isFieldSortable( $name ) {
-		if ( in_array( $name, [ 'page_title', 'vote', 'timestamp' ] ) ) {
+		if ( in_array( $name, [ 'page_title', 'vote', 'votes_timestamp' ] ) ) {
 			return true;
 		}
 		return false;
