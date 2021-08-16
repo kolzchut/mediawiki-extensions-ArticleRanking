@@ -56,7 +56,7 @@ class FeedbackPager extends TablePager {
 				'page_title' => 'article-ranking-feedbacklist-title',
 				'text' => 'article-ranking-feedbacklist-text',
 				'vote' => 'article-ranking-feedbacklist-vote',
-				'timestamp' => 'article-ranking-feedbacklist-timestamp',
+				'votes_timestamp' => 'article-ranking-feedbacklist-timestamp',
 			];
 			foreach ( $headers as $key => $val ) {
 				$headers[$key] = $this->msg( $val )->text();
@@ -79,7 +79,7 @@ class FeedbackPager extends TablePager {
 		$formatted = '';
 
 		switch ( $name ) {
-			case 'timestamp':
+			case 'votes_timestamp':
 				$formatted = htmlspecialchars( $language->userTimeAndDate( $value, $this->getUser() ) );
 				break;
 
