@@ -36,8 +36,8 @@ class SpecialFeedback extends SpecialPage {
 	 * @param string $par Title fragment
 	 */
 	public function execute( $par ) {
-		$this->setHeaders();
-		$this->outputHeader();
+		parent::execute( $par );
+
 		$out = $this->getOutput();
 		$out->setPageTitle( $this->msg( 'article-ranking-special-feedback' ) );
 		$out->addModuleStyles( [ 'mediawiki.special' ] );

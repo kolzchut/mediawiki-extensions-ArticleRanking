@@ -27,5 +27,8 @@
 	"article-ranking-feedbacklist-timestamp": "Date and time",
 	"articlerankingfeedback": "Feedback",
 	"article-ranking-feedbacklist-submit": "Filter",
-	"article-ranking-feedbacklist-no-results": "No results found"
+	"article-ranking-feedbacklist-no-results": "No results found",
+
+	"right-upload": "View Article Ranking Feedback",
+	"action-viewfeedback": "View Article Ranking Feedback"
 }
