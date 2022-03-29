@@ -1,6 +1,6 @@
 {
-	"name": "Article Ranking",
-	"version": "1.0.0a",
+	"name": "ArticleRanking",
+	"version": "2.0.0",
 	"author": [
 		"Tal Koren (Interjet, Kol Zchut)",
 		"Dror S. [FFS] ([https://www.kolzchut.org.il Kol-Zchut])"
@@ -9,18 +9,12 @@
 	"url": "https://github.com/kolzchut/mediawiki-extensions-ArticleRanking",
 	"license-name": "MIT",
 	"type": "other",
-	"AutoloadClasses": {
-		"ArticleRanking": "ArticleRanking.php",
-		"ARVoteAPI": "api/ARVoteAPI.php",
-		"ARGetVotesAPI": "api/ARGetVotesAPI.php",
-		"ArticleRankingHooks": "ArticleRankingHooks.php",
-		"ARDatabasePatcher": "patches/ARDatabasePatcher.php",
-		"ARDatabase": "includes/ARDatabase.php",
-		"ARCaptcha": "includes/ARCaptcha.php"
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\ArticleRanking\\": "includes/"
 	},
 	"APIModules": {
-		"rank-vote": "ARVoteAPI",
-		"rank-votes": "ARGetVotesAPI"
+		"rank-vote": "MediaWiki\\Extension\\ArticleRanking\\Api\\ApiVote",
+		"rank-votes": "MediaWiki\\Extension\\ArticleRanking\\Api\\ApiGetVotes"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
@@ -46,9 +40,9 @@
 		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": "ArticleRankingHooks::onBeforePageDisplay",
-		"LoadExtensionSchemaUpdates": "ARDatabasePatcher::applyUpdates",
-		"ResourceLoaderGetConfigVars": [ "ArticleRankingHooks::onResourceLoaderGetConfigVars" ]
+		"BeforePageDisplay": "MediaWiki\\Extension\\ArticleRanking\\Hooks::onBeforePageDisplay",
+		"LoadExtensionSchemaUpdates": "MediaWiki\\Extension\\ArticleRanking\\Hooks::onLoadExtensionSchemaUpdates",
+		"ResourceLoaderGetConfigVars": "MediaWiki\\Extension\\ArticleRanking\\Hooks::onResourceLoaderGetConfigVars"
 	},
 	"MessagesDirs": {
 		"ArticleRanking": [

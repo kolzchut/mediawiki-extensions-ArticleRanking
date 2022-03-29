@@ -10,13 +10,13 @@
 		vote: function ( captchaToken ) {
 			return new mw.Api().postWithToken( 'csrf', {
 				action: 'rank-vote',
-				id: mw.config.get( 'wgArticleId' ),
+				pageid: mw.config.get( 'wgArticleId' ),
 				captchaToken: captchaToken || null,
-				vote: Number( this.positiveVote )
+				vote: this.positiveVote ? 1 : -1
 			} ).fail( function() {
 				mw.ranking.informFailedVote();
 			} ).done( function( response ) {
-				if ( response.ranking.success ) {
+				if ( response.success ) {
 					mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
 					mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );
 					mw.ranking.trackEvent( 'vote', mw.ranking.positiveVote ? 'yes' : 'no' );

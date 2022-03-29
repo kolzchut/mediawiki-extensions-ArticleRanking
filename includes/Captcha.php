@@ -1,11 +1,25 @@
 <?php
 
-class ARCaptcha {
+namespace MediaWiki\Extension\ArticleRanking;
 
-	public static function verifyToken( $secret, $token ) {
+class Captcha {
+
+	/**
+	 * Verify a reCaptcha token
+	 * @param $token
+	 *
+	 * @return bool
+	 */
+	public static function verifyToken( $token ) {
+		global $wgArticleRankingCaptcha;
+
+		// If the captcha is disabled, always return true
+		if ( !self::isEnabled() ) {
+			return true;
+		}
 
 		$data = [
-			'secret'   => $secret,
+			'secret'   => $wgArticleRankingCaptcha[ 'secret' ],
 			'response' => $token
 		];
 
@@ -24,6 +38,11 @@ class ARCaptcha {
 
 		return $result->success === true;
 
+	}
+
+	public static function isEnabled() {
+		global $wgArticleRankingCaptcha;
+		return ( $wgArticleRankingCaptcha[ 'secret' ] && $wgArticleRankingCaptcha[ 'siteKey' ] );
 	}
 
 }

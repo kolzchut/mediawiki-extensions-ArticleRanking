@@ -1,16 +1,33 @@
 <?php
 
-class ArticleRanking {
+namespace MediaWiki\Extension\ArticleRanking;
+
+use InvalidArgumentException;
+use TemplateParser;
+use Title;
+
+class Vote {
 
 	/**
 	 * Save vote for a certain page ID
 	 *
-	 * @param int $page_id
+	 * @param Title $title
 	 * @param int $vote 1 for positive vote, 0 for negative vote
+	 *
 	 * @return bool
 	 */
-	public static function saveVote( Int $page_id, Int $vote ) {
-		$dbw = wfGetDB( DB_MASTER );
+	public static function saveVote( Title $title, int $vote ) {
+		if ( !in_array( $vote, [-1, 1] ) ) {
+			throw new InvalidArgumentException( '$vote can only be -1 or 1' );
+		}
+
+		if ( !$title->exists() ) {
+			throw new InvalidArgumentException( "$title does not exist" );
+		}
+
+		$page_id = $title->getArticleID();
+
+		$dbw = wfGetDB( DB_PRIMARY );
 
 		$votes = $dbw->select( 'article_rankings',
 			[ '*' ],
@@ -81,7 +98,7 @@ class ArticleRanking {
 	public static function createRankingSection() {
 		global $wgArticleRankingCaptcha;
 
-		$templateParser = new TemplateParser( __DIR__ . '/templates' );
+		$templateParser = new TemplateParser( __DIR__ . '/../templates' );
 
 		return $templateParser->processTemplate( 'voting', [
 			'section1title'  => wfMessage( 'ranking-section1-title' ),

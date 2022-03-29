@@ -1,6 +1,10 @@
 <?php
 
-class ARGetVotesAPI extends ApiBase {
+namespace MediaWiki\Extension\ArticleRanking;
+
+use ApiBase;
+
+class ApiGetVotes extends ApiBase {
 
 	public function __construct( $main, $moduleName ) {
 		parent::__construct( $main, $moduleName );
@@ -8,7 +12,7 @@ class ARGetVotesAPI extends ApiBase {
 
 	protected function getAllowedParams() {
 		return [
-			'id' => [
+			'pageid' => [
 				ApiBase::PARAM_TYPE => 'integer',
 				ApiBase::PARAM_REQUIRED => true
 			]
@@ -17,12 +21,10 @@ class ARGetVotesAPI extends ApiBase {
 
 	public function execute() {
 		$queryResult = $this->getResult();
-		$params      = $this->extractRequestParams();
+		$params = $this->extractRequestParams();
 
-		$page_id = $params[ 'id' ];
-		$output  = [ 'success' => false ];
-
-		$result = ArticleRanking::getRank( $page_id );
+		$page = $this->getTitleOrPageId( $params );
+		$result = Vote::getRank( $page->getId() );
 
 		if ( $result !== false ) {
 			$output[ 'success' ] = 1;
