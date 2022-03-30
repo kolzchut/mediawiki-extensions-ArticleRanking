@@ -28,7 +28,7 @@ to verify (basically a CSRF protection and nothing more).
 
 ### Updating a vote count for a specific page
 To update a vote count, make a POST request to
-`http://example.com/api.php?action=rank-vote&id={page_id}&vote={vote_type}&token={token}&format=json`
+`https://example.com/api.php?action=rank-vote&id={page_id}&vote={vote_type}&token={token}&format=json`
 
 | Parameter    | Type    | Description                                                   |
 |--------------|---------|---------------------------------------------------------------|
@@ -42,3 +42,7 @@ To get a page vote count, make a GET request to `http://example.com/api.php?acti
 | Parameter | Type    | Description                           |
 |-----------|---------|---------------------------------------|
 | page_id   | Integer | The page id of the page being queried |
+
+
+## TODO
+- Create a maintenance script to transfer the votes from the old, pre-v2 format to the new table.

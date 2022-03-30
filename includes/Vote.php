@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\ArticleRanking;
 
 use InvalidArgumentException;
+use RequestContext;
 use TemplateParser;
 use Title;
 
@@ -20,50 +21,65 @@ class Vote {
 		if ( !in_array( $vote, [-1, 1] ) ) {
 			throw new InvalidArgumentException( '$vote can only be -1 or 1' );
 		}
-
 		if ( !$title->exists() ) {
 			throw new InvalidArgumentException( "$title does not exist" );
 		}
 
-		$page_id = $title->getArticleID();
-
+		$requestContext = RequestContext::getMain();
 		$dbw = wfGetDB( DB_PRIMARY );
 
-		$votes = $dbw->select( 'article_rankings',
-			[ '*' ],
-			[ 'page_id' => $page_id ]
-		);
-
-		$ranking = $votes->fetchObject();
-
-		if ( $ranking ) {
-			$positiveVotes = $ranking->positive_votes;
-			$totalVotes    = $ranking->total_votes;
-
-			if ( $vote === 1 ) {
-				$positiveVotes = $positiveVotes + 1;
-			}
-
-			$totalVotes = $totalVotes + 1;
-
-			$result = $dbw->update( 'article_rankings',
-				[
-					'positive_votes' => $positiveVotes,
-					'total_votes'    => $totalVotes
-				],
-				[
-					'page_id' => $page_id
-				]
-			);
-		} else {
-			$result = $dbw->insert( 'article_rankings', [
-				'positive_votes' => $vote,
-				'total_votes'    => 1,
-				'page_id'        => $page_id
-			] );
-		}
+		$result = $dbw->insert( 'article_rankings2', [
+			'ranking_timestamp' => wfTimestampNow(),
+			'ranking_value' => $vote,
+			'ranking_page_id' => $title->getArticleID(),
+			'ranking_ip' => $requestContext->getRequest()->getIP(),
+			'ranking_actor' => $requestContext->getUser()->getActorId()
+		] );
 
 		return (bool)$result;
+	}
+
+
+	/**
+	 * Get rank for a specific page ID
+	 *
+	 * @param int $page_id
+	 * @return array|bool an array that includes the number of positive votes, total votes and
+	 *                    total rank percentage, or false
+	 */
+	public static function getRankingTotals( int $page_id ) {
+		$dbr = wfGetDB( DB_REPLICA );
+
+		$positiveVotes = $dbr->selectField(
+			'article_rankings2',
+			'SUM(ranking_value)',
+			[
+				'ranking_page_id' => $page_id,
+				'ranking_value' => 1
+			]
+		);
+		$negativeVotes = $dbr->selectField(
+			'article_rankings2',
+			'SUM(ranking_value)',
+			[
+				'ranking_page_id' => $page_id,
+				'ranking_value' => -1
+			]
+		);
+
+		// No results
+		if ( $positiveVotes === false && $negativeVotes === false ) {
+			return false;
+		}
+
+		$totalVotes = $positiveVotes + $negativeVotes;
+
+		return [
+			'positive_votes' => $positiveVotes,
+			'negative_votes' => $negativeVotes,
+			'total_votes'    => $totalVotes,
+			'rank'           => ( $positiveVotes / $totalVotes ) * 100
+		];
 	}
 
 	/**
@@ -76,9 +92,9 @@ class Vote {
 	public static function getRank( Int $page_id ) {
 		$dbr = wfGetDB( DB_REPLICA );
 
-		$result = $dbr->select(
-			'article_rankings',
-			[ '*' ],
+		$result = $dbr->selectField(
+			'article_rankings2',
+			'SUM(ranking_value)',
 			[ 'page_id' => $page_id ]
 		);
 

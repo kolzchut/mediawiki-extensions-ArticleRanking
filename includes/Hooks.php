@@ -53,8 +53,11 @@ class Hooks {
 			__DIR__ . '/../sql/ArticleRankings.sql'
 		);
 
-		// @todo: use this to change all the current votes into a single row in the new db structure
-		// $updater->addPostDatabaseUpdateMaintenance( AddMissingContests::class );
+		// The new table will replace the old one completely
+		$updater->addExtensionTable(
+			'article_ranking2',
+			__DIR__ . '/../sql/ArticleRankingsNewTableFormat.2022-03-29.sql'
+		);
 	}
 
 }
