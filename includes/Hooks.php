@@ -19,10 +19,10 @@ class Hooks {
 		$out->addModules( [ 'ext.articleRanking', 'ext.articleRanking.changeRequest' ] );
 
 		// $out->showErrorPage( 'ranking-invalid-captcha-title', 'ranking-invalid-captcha-keys-message' );
-		if ( Vote::isCaptchaEnabled() ) {
+		if ( Captcha::isEnabled() ) {
 			$out->addHeadItem(
-				'recaptcha',
-				'<script async defer src="https://www.google.com/recaptcha/api.js"></script>'
+				'captcha',
+				Captcha::getScript()
 			);
 		}
 	}
@@ -38,7 +38,7 @@ class Hooks {
 	public static function onResourceLoaderGetConfigVars( &$vars ) {
 		global $wgArticleRankingConfig;
 		$vars['wgArticleRankingConfig'] = $wgArticleRankingConfig;
-		$vars['wgArticleRankingConfig']['isCaptchaEnabled'] = Vote::isCaptchaEnabled();
+		$vars['wgArticleRankingConfig']['isCaptchaEnabled'] = Captcha::isEnabled();
 	}
 
 	/**

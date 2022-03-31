@@ -122,14 +122,11 @@ class Vote {
 			'no'             => wfMessage( 'ranking-no' ),
 			'section2title'  => wfMessage( 'ranking-section2-title' ),
 			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
-			'is-captcha-enabled' => self::isCaptchaEnabled(),
-			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
+			'is-captcha-enabled' => Captcha::isEnabled(),
+			'siteKey'        => Captcha::getSiteKey()
 		] );
 	}
 
-	public static function isCaptchaEnabled() {
-		global $wgArticleRankingCaptcha;
-		return ( $wgArticleRankingCaptcha[ 'secret' ] && $wgArticleRankingCaptcha[ 'siteKey' ] );
-	}
+
 }
 

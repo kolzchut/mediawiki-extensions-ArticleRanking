@@ -1,4 +1,4 @@
-( function ( mw, $ ) {
+( function () {
 	'use strict';
 
 	mw.ranking = {
@@ -7,6 +7,7 @@
 		$btns: $( '.ranking-section .sub-section1 .ranking-btn' ),
 		$statusIcon: $( '<i class="fa fa-spinner fa-spin"></i>' ),
 		$votingMessages: $( '.ranking-section .voting-messages' ),
+
 		vote: function ( captchaToken ) {
 			return new mw.Api().postWithToken( 'csrf', {
 				action: 'rank-vote',
@@ -62,7 +63,7 @@
 			$( this ).prepend( mw.ranking.$statusIcon );
 			$( this ).addClass( 'selected' );
 			if ( mw.ranking.config.isCaptchaEnabled === true ) {
-				grecaptcha.execute();
+				hcaptcha.execute();
 			} else {
 				mw.ranking.vote();
 			}
@@ -73,4 +74,4 @@
 	window.verifyRankingCaptcha = mw.ranking.verifyCaptcha;
 	window.handleRankingCaptchaError = mw.ranking.informFailedVote;
 
-}( mediaWiki, jQuery ) );
+}() );

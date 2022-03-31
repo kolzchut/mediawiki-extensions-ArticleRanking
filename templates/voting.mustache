@@ -8,12 +8,13 @@
 
 		<div class="voting-messages"></div>
 		{{#is-captcha-enabled}}
-		<div class="g-recaptcha"
+		<div class="h-captcha"
 			 data-sitekey="{{ siteKey }}"
+			 data-size="invisible"
 			 data-callback="verifyRankingCaptcha"
 			 data-error-callback="handleRankingCaptchaError"
-			 data-size="invisible">
-		</div>
+			 data-close-callback="handleRankingCaptchaError"
+		></div>
 		{{/is-captcha-enabled}}
 	</div>
 
