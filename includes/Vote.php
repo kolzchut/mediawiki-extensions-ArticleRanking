@@ -29,7 +29,7 @@ class Vote {
 		$dbw = wfGetDB( DB_PRIMARY );
 
 		$result = $dbw->insert( 'article_rankings2', [
-			'ranking_timestamp' => wfTimestampNow(),
+			'ranking_timestamp' => $dbw->timestamp(),
 			'ranking_value' => $vote,
 			'ranking_page_id' => $title->getArticleID(),
 			'ranking_ip' => $requestContext->getRequest()->getIP(),
