@@ -7,9 +7,12 @@ The purpose of this extension is to let users rank certain articles.
 It can be used with or without a captcha; the captcha used is [hCaptcha's
 Invisible Recaptcha](https://docs.hcaptcha.com/invisible),
 which requires a site key and a secret key provided.
+Please note that if you use the captcha, it is recommended for legal and privacy reasons to include
+a note and a link to hCaptcha's privacy policy. See details here:
+https://docs.hcaptcha.com/faq#do-i-need-to-display-anything-on-the-page-when-using-hcaptcha-in-invisible-mode
 
-One (smaller) part of this extension is used to launch an external
-change proposal form. This is dependent on extension:WRShareBar.
+One (smaller) part of this extension is used to launch an external change proposal form.
+This is dependent on extension:WRShareBar.
 
 ## Configuration
 
