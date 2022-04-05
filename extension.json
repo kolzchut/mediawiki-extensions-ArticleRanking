@@ -16,6 +16,9 @@
 		"rank-vote": "MediaWiki\\Extension\\ArticleRanking\\Api\\ApiVote",
 		"rank-votes": "MediaWiki\\Extension\\ArticleRanking\\Api\\ApiGetVotes"
 	},
+	"SpecialPages": {
+		"ArticleRanking": "MediaWiki\\Extension\\ArticleRanking\\SpecialArticleRankingReport"
+	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
 		"remoteExtPath": "WikiRights/ArticleRanking"
@@ -48,6 +51,11 @@
 		"ArticleRanking": [
 			"i18n"
 		]
+	},
+	"GroupPermissions": {
+		"sysop": {
+			"articleranking-view-report": true
+		}
 	},
 	"config": {
 		"ArticleRankingConfig": {

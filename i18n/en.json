@@ -3,6 +3,7 @@
 		"authors": [
 		]
 	},
+	"articleranking": "Article Ranking Report",
 	"ranking-section1-title": "Was this article helpful?",
 	"ranking-yes": "Yes",
 	"ranking-no": "No",
@@ -12,7 +13,20 @@
 	"ranking-cr-form-title": "Submit a change proposal",
 	"ranking-vote-success": "Thank you for your feedback!",
 	"ranking-vote-fail": "An error had occurred; please try again.",
-	
-	"ranking-invalid-captcha-title": "reCAPTCHA error",
-	"ranking-invalid-captcha-keys-message": "Missing reCAPTCHA keys"
+
+	"ranking-invalid-captcha-title": "CAPTCHA error",
+	"ranking-invalid-captcha-keys-message": "Missing CAPTCHA keys",
+
+	"articleranking-filter-legend": "Filter",
+	"articleranking-filter-title": "Page",
+	"articleranking-page-title": "Page",
+	"articleranking-sum-negative": "Negative Votes",
+	"articleranking-sum-negative-percent": "%",
+	"articleranking-sum-positive": "Positive Votes",
+	"articleranking-sum-positive-percent": "%",
+	"articleranking-sum-total": "Total Votes",
+	"articleranking-filter-min-ranknigs": "Minimum number of votes",
+
+	"right-articleranking-view-report": "View article ranking report",
+	"action-articleranking-view-report": "view article ranking report"
 }

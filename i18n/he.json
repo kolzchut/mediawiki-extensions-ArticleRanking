@@ -3,6 +3,7 @@
 		"authors": [
 		]
 	},
+	"articleranking": "דו\"ח דירוגי עמוד",
 	"ranking-section1-title": "האם העמוד סייע לכם?",
 	"ranking-yes": "כן",
 	"ranking-no": "לא",
@@ -13,7 +14,19 @@
 	"ranking-vote-success": "תודה, הצבעתכם נקלטה בהצלחה",
 	"ranking-vote-fail": "אירעה שגיאה במהלך שליחת ההצבעה, אנא נסו שנית",
 
-	"ranking-invalid-captcha-title": "שגיאת reCAPTCHA",
-	"ranking-invalid-captcha-keys-message": "מפתחות reCAPTCHA חסרים"
+	"ranking-invalid-captcha-title": "שגיאת CAPTCHA",
+	"ranking-invalid-captcha-keys-message": "מפתחות CAPTCHA חסרים",
 
+	"articleranking-filter-legend": "סינון",
+	"articleranking-filter-title": "דף",
+	"articleranking-page-title": "דף",
+	"articleranking-sum-negative": "הצבעות שליליות",
+	"articleranking-sum-negative-percent": "%",
+	"articleranking-sum-positive": "הצבעות חיוביות",
+	"articleranking-sum-positive-percent": "%",
+	"articleranking-sum-total": "סה\"כ הצבעות",
+	"articleranking-filter-min-ranknigs": "לפחות מס' זה של הצבעות",
+
+	"right-articleranking-view-report": "צפיה בדו\" דירוגי עמוד",
+	"action-articleranking-view-report": "לצפות בדו\"ח דירוגי עמוד"
 }
