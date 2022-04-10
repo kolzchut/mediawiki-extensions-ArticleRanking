@@ -6,6 +6,7 @@ use SpecialPage;
 
 class SpecialArticleRankingReport extends SpecialPage {
 	protected $opts;
+	protected $pager;
 
 	public function __construct( $name = 'ArticleRanking' ) {
 		parent::__construct( $name, 'articleranking-view-report' );
@@ -19,7 +20,6 @@ class SpecialArticleRankingReport extends SpecialPage {
 		$request = $this->getRequest();
 
 		$this->opts['target']  = $par ?? $request->getVal( 'target' );
-		$user = $this->getUser();
 		$this->opts['limit'] = $request->getInt( 'limit' );
 
 		$skip = $request->getText( 'offset' ) || $request->getText( 'dir' ) == 'prev';
@@ -29,13 +29,11 @@ class SpecialArticleRankingReport extends SpecialPage {
 			$this->opts['end'] = $request->getVal( 'end' );
 		}
 
-		$opts['min_rankings'] = $request->getInt( 'min_rankings' );
+		$this->opts['min_rankings'] = $request->getInt( 'min_rankings' );
 
+		$this->pager = new ArticleRankingPager( $this, $this->opts, $this->getLinkRenderer() );
 		$out->addHTML( $this->getForm( $this->opts ) );
-
-		$pager = new ArticleRankingPager( $this, $opts, $this->getLinkRenderer() );
-
-		$out->addHTML( $pager->getFullOutput()->getText() );
+		$out->addHTML( $this->pager->getFullOutput()->getText() );
 	}
 
 	/**
@@ -76,10 +74,17 @@ class SpecialArticleRankingReport extends SpecialPage {
 		$fields['min_rankings'] = [
 			'type' => 'int',
 			'min' => 2,
-			'default' => '',
+			'default' => '20',
 			'id' => 'mw-min-rankings',
 			'name' => 'min_rankings',
 			'label' => $this->msg( 'articleranking-filter-min-ranknigs' )->text()
+		];
+		$fields['limit'] = [
+			'type' => 'limitselect',
+			'label-message' => 'table_pager_limit_label',
+			'options' => $this->pager->getLimitSelectList(),
+			'name' => 'limit',
+			'default' => $this->pager->getLimit(),
 		];
 
 		$htmlForm = \HTMLForm::factory( 'ooui', $fields, $this->getContext() );

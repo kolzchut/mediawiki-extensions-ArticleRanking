@@ -8,13 +8,21 @@ namespace MediaWiki\Extension\ArticleRanking;
 
 use DateTime;
 use MediaWiki\Linker\LinkRenderer;
-use MediaWiki\MediaWikiServices;
 use SpecialPage;
 use TablePager;
+use Title;
 
 class ArticleRankingPager extends TablePager {
+	/** @var array SQL conditions */
 	public $mConds = [];
+	/** @var array SQL options */
 	public $mOptions = [];
+	/** @var int The maximum number of entries to show */
+	public $mLimit = 10000;
+	/** @var int[] List of default entry limit options to be presented to clients */
+	public $mLimitsShown = [ 1000, 5000, 10000, 20000 ];
+	/** @var int The default entry limit choosen for clients */
+	public $mDefaultLimit = 10000;
 
 	/**
 	 * @param SpecialPage $form
@@ -24,7 +32,7 @@ class ArticleRankingPager extends TablePager {
 	public function __construct( $form, $conds, LinkRenderer $linkRenderer ) {
 		$dbr = wfGetDB( DB_REPLICA );
 		if ( $conds[ 'target' ] ) {
-			$pageId = \Title::newFromText( $conds[ 'target' ] )->getArticleID();
+			$pageId = Title::newFromText( $conds[ 'target' ] )->getArticleID();
 			$this->mConds[ 'ranking_page_id' ] = $pageId;
 		}
 		// @todo add conditions for start/end (timestamp)
@@ -40,9 +48,15 @@ class ArticleRankingPager extends TablePager {
 		}
 
 		parent::__construct( $form->getContext(), $linkRenderer );
+
+		// getLimitOffsetForUser() will limit us to 5,000, which is not good enough for our purposes
+		// So if the limit requested is one of the presets, which we allow, we override it
+		$reqLimit = $this->getRequest()->getInt( 'limit' );
+		list( $this->mLimit, $this->mOffset ) = $this->getRequest()->getLimitOffsetForUser( $this->getUser(), $this->mDefaultLimit, '' );
+		$this->mLimit = ( $reqLimit > 5000 && in_array( $reqLimit, $this->mLimitsShown ) ) ? $reqLimit : $this->mLimit;
 	}
 
-	/* @inheritDoc */
+	/** @inheritDoc */
 	protected function getFieldNames() {
 		static $headers = null;
 
@@ -63,13 +77,13 @@ class ArticleRankingPager extends TablePager {
 		return $headers;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	/** @inheritDoc */
 	protected function getTableClass() {
-		return 'mw-datatable wikitable';
+		// Add wikitable for style, sortable for JS-based sorting on-page
+		return 'mw-datatable wikitable sortable';
 	}
 
+	/** @inheritDoc */
 	public function getQueryInfo() {
 		$db = $this->getDatabase();
 		$positiveVotesCond = $db->conditional( [ 'ranking_value > 0' ], 'ranking_value', '0' );
@@ -84,39 +98,50 @@ class ArticleRankingPager extends TablePager {
 				'ranking_page_id',
 				'sum_negative' => "SUM($negativeVotesCond)",
 				'sum_positive' => "SUM($positiveVotesCond)",
-				'sum_total' => "SUM($negativeVotesCond) + SUM($positiveVotesCond)"
+				'sum_total' => "SUM(ABS(ranking_value))"
 			],
 			'conds' => $this->mConds,
 			'options' => $this->mOptions
 		];
 	}
 
+	/** @inheritDoc */
 	public function getIndexField() {
-		return 'ranking_page_id';
+		return [
+			'sum_total',
+			'sum_negative',
+			'sum_positive'
+		];
 	}
 
+	/** @inheritDoc */
 	public function getDefaultSort() {
-		return 'ranking_page_id';
+		return '';
 	}
 
+	/** @inheritDoc */
+	protected function getDefaultDirections() {
+		return self::DIR_DESCENDING;
+	}
+
+	/** @inheritDoc */
 	protected function isFieldSortable( $field ) {
 		// no index for sorting exists
 		return false;
 	}
 
+	/** @inheritDoc */
 	public function formatValue( $name, $value ) {
-		$sum_total = $this->mCurrentRow->sum_negative + $this->mCurrentRow->sum_positive;
-
-		// TODO: Implement formatValue() method.
+		$row = $this->mCurrentRow;
 		switch ( $name ) {
 			case 'ranking_page_id':
-				$title = \Title::newFromID( $value );
+				$title = Title::newFromID( $value );
 				return $this->getLinkRenderer()->makeKnownLink( $title );
 			case 'sum_positive_percent':
-				$percent = round( $this->mCurrentRow->sum_positive / $sum_total * 100 );
+				$percent = round( $row->sum_positive / $row->sum_total * 100 );
 				return ( $percent . '%' );
 			case 'sum_negative_percent':
-				$percent = round( $this->mCurrentRow->sum_negative / $sum_total * 100 );
+				$percent = round( $row->sum_negative / $row->sum_total * 100 );
 				return ( $percent . '%' );
 			default:
 				return $value;
