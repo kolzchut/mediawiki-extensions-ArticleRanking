@@ -14,6 +14,9 @@ https://docs.hcaptcha.com/faq#do-i-need-to-display-anything-on-the-page-when-usi
 One (smaller) part of this extension is used to launch an external change proposal form.
 This is dependent on extension:WRShareBar.
 
+## Upgrading from v1 to v2
+You __must__ run `update.php` immediately. It will create a new table, migrate data from the old one and then remove it.
+
 ## Configuration
 
 | Main Key                 | sub-key                | default                 | description                                    |

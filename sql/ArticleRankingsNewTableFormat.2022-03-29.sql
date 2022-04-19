@@ -10,6 +10,6 @@ CREATE TABLE IF NOT EXISTS /*_*/article_rankings2 (
 	ranking_timestamp binary(14) NOT NULL default ''
 ) /*$wgDBTableOptions*/;
 
-CREATE INDEX /*_*/page_id_index ON /*_*/article_rankings2 (ranking_page_id);
-CREATE INDEX /*_*/timestamp_index ON /*_*/article_rankings2 (ranking_timestamp);
+CREATE INDEX /*i*/page_id_index ON /*_*/article_rankings2 (ranking_page_id);
+CREATE INDEX /*i*/timestamp_index ON /*_*/article_rankings2 (ranking_timestamp);
 

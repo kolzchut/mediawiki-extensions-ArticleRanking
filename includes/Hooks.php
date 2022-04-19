@@ -48,16 +48,16 @@ class Hooks {
 	 * @param DatabaseUpdater $updater
 	 */
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
-		$updater->addExtensionTable(
-			'article_ranking',
-			__DIR__ . '/../sql/ArticleRankings.sql'
-		);
-
 		// The new table will replace the old one completely
 		$updater->addExtensionTable(
-			'article_ranking2',
+			'article_rankings2',
 			__DIR__ . '/../sql/ArticleRankingsNewTableFormat.2022-03-29.sql'
 		);
-	}
 
+		// Migrate data from article_rankings to article_rankings2, then drop article_ranking
+		$updater->dropExtensionTable(
+			'article_rankings',
+			__DIR__ . '/../sql/ArticleRankingMigrateDataFromOldTable.2022-04-12.sql'
+		);
+	}
 }
