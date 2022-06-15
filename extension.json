@@ -1,11 +1,11 @@
 {
 	"name": "ArticleRanking",
-	"version": "2.0.0a",
+	"version": "2.0.1",
 	"author": [
 		"Tal Koren (Interjet, Kol Zchut)",
 		"Dror S. [FFS] ([https://www.kolzchut.org.il Kol-Zchut])"
 	],
-	"descriptionmsg": "An extension that allows anonymous users to rate articles",
+	"descriptionmsg": "articleranking-desc",
 	"url": "https://github.com/kolzchut/mediawiki-extensions-ArticleRanking",
 	"license-name": "MIT",
 	"type": "other",

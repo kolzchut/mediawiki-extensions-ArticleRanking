@@ -4,6 +4,7 @@
 		]
 	},
 	"articleranking": "Article Ranking Report",
+	"articleranking-desc": "An extension that allows anonymous users to rate articles",
 	"ranking-section1-title": "Was this article helpful?",
 	"ranking-yes": "Yes",
 	"ranking-no": "No",
@@ -26,6 +27,9 @@
 	"articleranking-sum-positive-percent": "%",
 	"articleranking-sum-total": "Total Votes",
 	"articleranking-filter-min-ranknigs": "Minimum number of votes",
+	"articleranking-filter-content-area": "Content Area",
+	"articleranking-tableheader-content-area": "Content Area",
+
 
 	"right-articleranking-view-report": "View article ranking report",
 	"action-articleranking-view-report": "view article ranking report"

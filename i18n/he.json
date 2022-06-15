@@ -26,6 +26,8 @@
 	"articleranking-sum-positive-percent": "%",
 	"articleranking-sum-total": "סה\"כ הצבעות",
 	"articleranking-filter-min-ranknigs": "לפחות מס' זה של הצבעות",
+	"articleranking-filter-content-area": "תחום תוכן",
+	"articleranking-tableheader-content-area": "תחום תוכן",
 
 	"right-articleranking-view-report": "צפיה בדו\" דירוגי עמוד",
 	"action-articleranking-view-report": "לצפות בדו\"ח דירוגי עמוד"

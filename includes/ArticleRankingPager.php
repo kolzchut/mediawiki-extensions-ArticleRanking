@@ -7,6 +7,8 @@
 namespace MediaWiki\Extension\ArticleRanking;
 
 use DateTime;
+use ExtensionRegistry;
+use MediaWiki\Extension\ArticleContentArea\ArticleContentArea;
 use MediaWiki\Linker\LinkRenderer;
 use SpecialPage;
 use TablePager;
@@ -23,6 +25,8 @@ class ArticleRankingPager extends TablePager {
 	public $mLimitsShown = [ 1000, 5000, 10000, 20000 ];
 	/** @var int The default entry limit choosen for clients */
 	public $mDefaultLimit = 10000;
+	/** @var string|null The article content area to filter by */
+	protected $mContentAreaFilter = null;
 
 	/**
 	 * @param SpecialPage $form
@@ -43,6 +47,10 @@ class ArticleRankingPager extends TablePager {
 			$this->mConds[] = 'ranking_timestamp <= ' . $dbr->timestamp( new DateTime( $conds[ 'end' ] ) );
 		}
 
+		if ( isset( $conds[ 'content_area' ] ) && !empty( $conds[ 'content_area' ] ) ) {
+			$this->mContentAreaFilter = $conds[ 'content_area' ];
+		}
+
 		if ( $conds['min_rankings'] > 1 && empty( $conds['target'] ) ) {
 			$this->mOptions[ 'HAVING' ] = 'SUM(ABS(ranking_value)) >= ' . $conds[ 'min_rankings' ];
 		}
@@ -52,7 +60,8 @@ class ArticleRankingPager extends TablePager {
 		// getLimitOffsetForUser() will limit us to 5,000, which is not good enough for our purposes
 		// So if the limit requested is one of the presets, which we allow, we override it
 		$reqLimit = $this->getRequest()->getInt( 'limit' );
-		list( $this->mLimit, $this->mOffset ) = $this->getRequest()->getLimitOffsetForUser( $this->getUser(), $this->mDefaultLimit, '' );
+		list( $this->mLimit, $this->mOffset ) =
+			$this->getRequest()->getLimitOffsetForUser( $this->getUser(), $this->mDefaultLimit, '' );
 		$this->mLimit = ( $reqLimit > 5000 && in_array( $reqLimit, $this->mLimitsShown ) ) ? $reqLimit : $this->mLimit;
 	}
 
@@ -69,6 +78,10 @@ class ArticleRankingPager extends TablePager {
 				'sum_positive' => 'articleranking-sum-positive',
 				'sum_positive_percent' => 'articleranking-sum-positive-percent',
 			];
+			if ( ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
+				$headers[ 'content_area' ] = 'articleranking-tableheader-content-area';
+			}
+
 			foreach ( $headers as $key => $val ) {
 				$headers[$key] = $this->msg( $val )->text();
 			}
@@ -92,17 +105,26 @@ class ArticleRankingPager extends TablePager {
 		$this->mOptions[ 'GROUP BY' ] = 'ranking_page_id';
 
 		// We use sums here for b/c - older rows might have values larger than 1 or smaller than -1
-		return [
+		$query = [
 			'tables' => [ 'article_rankings2' ],
 			'fields' => [
 				'ranking_page_id',
 				'sum_negative' => "SUM($negativeVotesCond)",
 				'sum_positive' => "SUM($positiveVotesCond)",
-				'sum_total' => "SUM(ABS(ranking_value))"
+				'sum_total' => 'SUM(ABS(ranking_value))'
 			],
 			'conds' => $this->mConds,
 			'options' => $this->mOptions
 		];
+
+		// If Extension:ArticleContentArea is available, use it
+		if ( \ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
+			$query = array_merge_recursive(
+				$query, ArticleContentArea::getJoin( $this->mContentAreaFilter, 'ranking_page_id' )
+			);
+		}
+
+		return $query;
 	}
 
 	/** @inheritDoc */

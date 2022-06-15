@@ -2,6 +2,8 @@
 
 namespace MediaWiki\Extension\ArticleRanking;
 
+use ExtensionRegistry;
+use MediaWiki\Extension\ArticleContentArea\ArticleContentArea;
 use SpecialPage;
 
 class SpecialArticleRankingReport extends SpecialPage {
@@ -30,6 +32,9 @@ class SpecialArticleRankingReport extends SpecialPage {
 		}
 
 		$this->opts['min_rankings'] = $request->getInt( 'min_rankings' );
+		if ( ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
+			$this->opts[ 'content_area' ] = $request->getVal( 'content_area' );
+		}
 
 		$this->pager = new ArticleRankingPager( $this, $this->opts, $this->getLinkRenderer() );
 		$out->addHTML( $this->getForm( $this->opts ) );
@@ -55,13 +60,29 @@ class SpecialArticleRankingReport extends SpecialPage {
 			'required' => false,
 			'autofocus' => !$target,
 		];
+		if ( ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
+			$options['contentAreaOptions'] = ArticleContentArea::getValidContentAreas();
+
+			// Format the arrays for a select field and Add an "all" options
+			foreach ( $options as &$option ) {
+				$option = self::makeOptionsWithAllForSelect( $option );
+			}
+
+
+			$fields['content_area'] = [
+				'type'          => 'select',
+				'name'          => 'content_area',
+				'label-message' => 'articleranking-filter-content-area',
+				'options'       => $options[ 'contentAreaOptions' ],
+			];
+		}
 		$fields['start'] = [
 			'type' => 'date',
 			'default' => '',
 			'id' => 'mw-date-start',
 			'label' => $this->msg( 'date-range-from' )->text(),
 			'name' => 'start',
-			//'section' => 'articleranking-date',
+			// 'section' => 'articleranking-date',
 		];
 		$fields['end'] = [
 			'type' => 'date',
@@ -69,7 +90,7 @@ class SpecialArticleRankingReport extends SpecialPage {
 			'id' => 'mw-date-end',
 			'label' => $this->msg( 'date-range-to' )->text(),
 			'name' => 'end',
-			//'section' => 'articleranking-date',
+			// 'section' => 'articleranking-date',
 		];
 		$fields['min_rankings'] = [
 			'type' => 'int',
@@ -103,6 +124,17 @@ class SpecialArticleRankingReport extends SpecialPage {
 		$htmlForm->loadData();
 
 		return $htmlForm->getHTML( false );
+	}
+
+	private static function makeOptionsForSelect( $arr ) {
+		// Remove empty elements
+		$arr = array_filter( $arr );
+		return array_combine( $arr, $arr );
+	}
+
+	private static function makeOptionsWithAllForSelect( $arr ) {
+		// @todo i18n
+		return [ 'הכל' => '' ] + self::makeOptionsForSelect( $arr );
 	}
 
 	/** @inheritDoc */

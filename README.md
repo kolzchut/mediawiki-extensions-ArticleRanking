@@ -34,6 +34,10 @@ to verify (basically a CSRF protection and nothing more).
 `Special:ArticleRanking` shows the current results, including some filtering.
 In the future it will also probably allow drilling down into individual votes for a page.
 
+If [extension:ArticleContentArea](https://github.com/kolzchut/mediawiki-extensions-ArticleContentArea)
+is installed, it will allow filtering by the content area in the report. 
+
+
 ## API modules
 
 ### Updating a vote count for a specific page
@@ -55,7 +59,6 @@ To get a page vote count, make a GET request to `http://example.com/api.php?acti
 
 
 ## TODO
-- Create a maintenance script to transfer the votes from the old, pre-v2 format to the new table.
 - Allow getting the vote count by page title
 - Add a user right for getting the vote count through the API
 - Maybe: add a user right for voting
