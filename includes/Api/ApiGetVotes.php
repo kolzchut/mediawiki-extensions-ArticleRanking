@@ -1,8 +1,9 @@
 <?php
 
-namespace MediaWiki\Extension\ArticleRanking;
+namespace MediaWiki\Extension\ArticleRanking\Api;
 
 use ApiBase;
+use MediaWiki\Extension\ArticleRanking\Vote;
 
 class ApiGetVotes extends ApiBase {
 
@@ -29,8 +30,7 @@ class ApiGetVotes extends ApiBase {
 		if ( $result !== false ) {
 			$output[ 'success' ] = 1;
 			$output[ 'votes' ]   = ceil( $result[ 'rank' ] );
-		}
-		else {
+		} else {
 			$output[ 'success' ] = 0;
 		}
 
