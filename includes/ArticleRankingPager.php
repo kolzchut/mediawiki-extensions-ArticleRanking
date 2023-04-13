@@ -158,7 +158,7 @@ class ArticleRankingPager extends TablePager {
 		switch ( $name ) {
 			case 'ranking_page_id':
 				$title = Title::newFromID( $value );
-				return $this->getLinkRenderer()->makeKnownLink( $title );
+				return $title ? $this->getLinkRenderer()->makeKnownLink( $title ) : '';
 			case 'sum_positive_percent':
 				$percent = round( $row->sum_positive / $row->sum_total * 100 );
 				return ( $percent . '%' );

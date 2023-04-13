@@ -1,0 +1,31 @@
+{
+	"name": "mediawiki/article-ranking",
+	"type": "mediawiki-extension",
+	"description": "MediaWiki extension to rank articles as good/bad",
+	"keywords": [
+		"wiki",
+		"MediaWiki",
+		"extension"
+	],
+	"extra": {
+		"phan-taint-check-plugin": "2.0.1"
+	},
+	"require-dev": {
+		"jakub-onderka/php-parallel-lint": "1.0.0",
+		"mediawiki/mediawiki-codesniffer": "26.0.0",
+		"jakub-onderka/php-console-highlighter": "0.3.2",
+		"mediawiki/minus-x": "0.3.1",
+		"mediawiki/mediawiki-phan-config": "0.6.1"
+	},
+	"scripts": {
+		"fix": [
+			"minus-x fix .",
+			"phpcbf"
+		],
+		"test": [
+			"parallel-lint . --exclude vendor --exclude node_modules",
+			"minus-x check .",
+			"phpcs -sp"
+		]
+	}
+}

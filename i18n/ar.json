@@ -12,8 +12,7 @@
 	"ranking-cr-form-title": "اكتب اقتراح تغيير",
 	"ranking-vote-success": "شكرا، استلمنا تصويتكم",
 	"ranking-vote-fail": "طرأ خلل خلال ارسال اقتراحكم، حاولوا ثانية لطفا",
-
-	"ranking-invalid-captcha-title": "שגיאת reCAPTCHA",
-	"ranking-invalid-captcha-keys-message": "מפתחות reCAPTCHA חסרים"
+	"ranking-invalid-captcha-title": "שגיאת CAPTCHA",
+	"ranking-invalid-captcha-keys-message": "מפתחות CAPTCHA חסרים"
 
 }

@@ -14,7 +14,6 @@
 	"ranking-cr-form-title": "Submit a change proposal",
 	"ranking-vote-success": "Thank you for your feedback!",
 	"ranking-vote-fail": "An error had occurred; please try again.",
-
 	"ranking-invalid-captcha-title": "CAPTCHA error",
 	"ranking-invalid-captcha-keys-message": "Missing CAPTCHA keys",
 

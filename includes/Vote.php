@@ -39,7 +39,6 @@ class Vote {
 		return (bool)$result;
 	}
 
-
 	/**
 	 * Get rank for a specific page ID
 	 *
@@ -55,7 +54,7 @@ class Vote {
 			'SUM(ranking_value)',
 			[
 				'ranking_page_id' => $page_id,
-				'ranking_value' => 1
+				'ranking_value > 0'
 			]
 		);
 		$negativeVotes = $dbr->selectField(
@@ -83,37 +82,13 @@ class Vote {
 	}
 
 	/**
-	 * Get rank for a specific page ID
-	 *
-	 * @param int $page_id
-	 * @return array|bool an array that includes the number of positive votes, total votes and
-	 *                    total rank percentage, or false
+	 * @see getRankingTotals()
 	 */
-	public static function getRank( Int $page_id ) {
-		$dbr = wfGetDB( DB_REPLICA );
-
-		$result = $dbr->selectField(
-			'article_rankings2',
-			'SUM(ranking_value)',
-			[ 'page_id' => $page_id ]
-		);
-
-		$result = $result->fetchRow();
-
-		if ( !$result ) {
-			return false;
-		}
-
-		return [
-			'positive_votes' => $result[ 'positive_votes' ],
-			'total_votes'    => $result[ 'total_votes' ],
-			'rank'           => ( (int)$result[ 'positive_votes' ] / (int)$result[ 'total_votes' ] ) * 100
-		];
+	public static function getRank( int $page_id ) {
+		return self::getRankingTotals( $page_id );
 	}
 
 	public static function createRankingSection() {
-		global $wgArticleRankingCaptcha;
-
 		$templateParser = new TemplateParser( __DIR__ . '/../templates' );
 
 		return $templateParser->processTemplate( 'voting', [

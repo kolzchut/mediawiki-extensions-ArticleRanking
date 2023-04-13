@@ -5,7 +5,7 @@
 		positiveVote: false,
 		config: mw.config.get( 'wgArticleRankingConfig' ),
 		$btns: $( '.ranking-section .sub-section1 .ranking-btn' ),
-		$statusIcon: $( '<i class="fa fa-spinner fa-spin"></i>' ),
+		$statusIcon: $( '<i>' ).addClass( 'fa fa-spinner fa-spin' ),
 		$votingMessages: $( '.ranking-section .voting-messages' ),
 
 		vote: function ( captchaToken ) {
@@ -14,7 +14,7 @@
 				pageid: mw.config.get( 'wgArticleId' ),
 				captchaToken: captchaToken || null,
 				vote: this.positiveVote ? 1 : -1
-			} ).fail( function() {
+			} ).fail( function () {
 				mw.ranking.informFailedVote();
 			} ).done( function( response ) {
 				if ( response.success ) {
@@ -55,7 +55,7 @@
 		}
 	};
 
-	$( document ).ready( function () {
+	$( function () {
 		$( mw.ranking.$btns ).on( 'click', function () {
 			mw.ranking.$votingMessages.hide(); // In case we already displayed a message before
 			mw.ranking.positiveVote = $( this ).hasClass( 'yes' );

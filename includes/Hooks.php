@@ -8,12 +8,11 @@ use Skin;
 class Hooks {
 
 	/**
-	 * Adds VisualEditor JS to the output.
+	 * @param OutputPage &$out
+	 * @param Skin &$skin
 	 *
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/BeforePageDisplay
-	 *
-	 * @param OutputPage &$out The page view.
-	 * @param Skin $skin The skin that's going to build the UI.
+	 * @return bool
+	 * @throws \ConfigException
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		$out->addModules( [ 'ext.articleRanking', 'ext.articleRanking.changeRequest' ] );
@@ -33,7 +32,7 @@ class Hooks {
 	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderGetConfigVars
 	 *
-	 * @param &$vars array of variables to be added into the output of the startup module.
+	 * @param array &$vars variables to be added into the output of the startup module.
 	 */
 	public static function onResourceLoaderGetConfigVars( &$vars ) {
 		global $wgArticleRankingConfig;

@@ -12,12 +12,12 @@
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\ArticleRanking\\": "includes/"
 	},
+	"SpecialPages": {
+		"ArticleRanking": "MediaWiki\\Extension\\ArticleRanking\\SpecialArticleRankingReport"
+	},
 	"APIModules": {
 		"rank-vote": "MediaWiki\\Extension\\ArticleRanking\\Api\\ApiVote",
 		"rank-votes": "MediaWiki\\Extension\\ArticleRanking\\Api\\ApiGetVotes"
-	},
-	"SpecialPages": {
-		"ArticleRanking": "MediaWiki\\Extension\\ArticleRanking\\SpecialArticleRankingReport"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
@@ -52,10 +52,16 @@
 			"i18n"
 		]
 	},
+	"AvailableRights": [
+		"articleranking-view-report"
+	],
 	"GroupPermissions": {
 		"sysop": {
 			"articleranking-view-report": true
 		}
+	},
+	"ExtensionMessagesFiles": {
+		"ArticleRankingAlias": "ArticleRanking.i18n.alias.php"
 	},
 	"config": {
 		"ArticleRankingConfig": {
