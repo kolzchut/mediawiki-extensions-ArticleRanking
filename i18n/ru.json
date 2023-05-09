@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tatiana Berlin"
+		]
+	},
+	"articleranking": "Отчет \"Популярные страницы\"",
+	"ranking-section1-title": "Помогла ли вам эта страница?",
+	"ranking-yes": "Да",
+	"ranking-no": "Нет",
+	"ranking-section2-title": "У вас есть дополнительная информация или предложения по уточнению этой записи?",
+	"ranking-propose-change": "Отправить предложение об изменении",
+	"ranking-cr-form-title": "Предлагаемое изменение содержания сайта",
+	"ranking-vote-success": "Спасибо, ваш голос  принят",
+	"ranking-vote-fail": "Произошла ошибка при голосовании, попробуйте еще раз",
+	"ranking-invalid-captcha-title": "Ошибка CAPTCHA",
+	"ranking-invalid-captcha-keys-message": "Отсутствуют ключи CAPTCHA",
+	"articleranking-filter-legend": "Фильтрация",
+	"articleranking-filter-title": "Страница",
+	"articleranking-page-title": "Страница",
+	"articleranking-sum-negative": "Голосование \"против\"",
+	"articleranking-sum-negative-percent": "%",
+	"articleranking-sum-positive": "Голосование \"за\"",
+	"articleranking-sum-positive-percent": "%",
+	"articleranking-sum-total": "Количество проголосовавших",
+	"articleranking-filter-min-ranknigs": "По крайней мере, это количество голосов",
+	"articleranking-filter-content-area": "Область содержимого",
+	"articleranking-tableheader-content-area": "Область содержимого",
+	"right-articleranking-view-report": "Просмотр отчета \"Популярные страницы\"",
+	"action-articleranking-view-report": "Для просмотра отчета \"Популярные страницы\""
+}
