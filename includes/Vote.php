@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\ArticleRanking;
 
 use InvalidArgumentException;
+use MediaWiki\Extension\ArticleContentArea\ArticleContentArea;
 use RequestContext;
 use TemplateParser;
 use Title;
@@ -88,10 +89,16 @@ class Vote {
 		return self::getRankingTotals( $page_id );
 	}
 
-	public static function createRankingSection() {
-		$templateParser = new TemplateParser( __DIR__ . '/../templates' );
+	/**
+	 * @param Title $title
+	 *
+	 * @return string
+	 */
+	public static function createRankingSection( $title = null ) {
+		global $wgArticleRankingConfig, $wgContentLanguage;
 
-		return $templateParser->processTemplate( 'voting', [
+		$templateParser = new TemplateParser( __DIR__ . '/../templates' );
+		$data = [
 			'section1title'  => wfMessage( 'ranking-section1-title' ),
 			'yes'            => wfMessage( 'ranking-yes' ),
 			'no'             => wfMessage( 'ranking-no' ),
@@ -99,7 +106,26 @@ class Vote {
 			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
 			'is-captcha-enabled' => Captcha::isEnabled(),
 			'siteKey'        => Captcha::getSiteKey()
-		] );
+		];
+
+		if ( !is_null( $title ) ) {
+			$url = $wgArticleRankingConfig['changerequest']['url'];
+			$urlParams = [
+				'articleId' => $title->getArticleID(),
+				'page' => $title->getPrefixedText(),
+				'lang' => $wgContentLanguage
+			];
+
+			if ( \ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
+				$urlParams[ 'contentArea' ] = ArticleContentArea::getArticleContentArea( $title );
+			}
+
+			$url = $url . '?' . http_build_query( $urlParams );
+			$data['changerequestUrl'] = $url;
+		}
+
+
+		return $templateParser->processTemplate( 'voting', $data );
 	}
 
 

@@ -38,8 +38,7 @@
 			]
 		},
 		"ext.articleRanking.changeRequest": {
-			"scripts": "modules/articleRanking.changeRequest.js",
-			"dependencies": ["ext.wr.ShareBar.js", "mediawiki.Uri"]
+			"scripts": "modules/articleRanking.changeRequest.js"
 		}
 	},
 	"Hooks": {
