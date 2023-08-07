@@ -2,6 +2,7 @@
 namespace MediaWiki\Extension\ArticleRanking;
 
 use DatabaseUpdater;
+use MediaWiki\MediaWikiServices;
 use OutputPage;
 use Skin;
 
@@ -11,13 +12,18 @@ class Hooks {
 	 * @param OutputPage &$out
 	 * @param Skin &$skin
 	 *
-	 * @return bool
 	 * @throws \ConfigException
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$out->addModules( [ 'ext.articleRanking', 'ext.articleRanking.changeRequest' ] );
+		$conf = MediaWikiServices::getInstance()->getMainConfig();
 
-		// $out->showErrorPage( 'ranking-invalid-captcha-title', 'ranking-invalid-captcha-keys-message' );
+		$modules = [ 'ext.articleRanking' ];
+		if ( $conf->get( 'ArticleRankingAddChangeRequest' ) === true ) {
+			$modules[] = 'ext.articleRanking.changeRequest';
+		}
+
+		$out->addModules( $modules );
+
 		if ( Captcha::isEnabled() ) {
 			$out->addHeadItem(
 				'captcha',

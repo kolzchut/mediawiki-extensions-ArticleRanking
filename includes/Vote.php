@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\ArticleRanking;
 
 use InvalidArgumentException;
 use MediaWiki\Extension\ArticleContentArea\ArticleContentArea;
+use MediaWiki\MediaWikiServices;
 use RequestContext;
 use TemplateParser;
 use Title;
@@ -19,7 +20,7 @@ class Vote {
 	 * @return bool
 	 */
 	public static function saveVote( Title $title, int $vote ) {
-		if ( !in_array( $vote, [-1, 1] ) ) {
+		if ( !in_array( $vote, [ -1, 1 ] ) ) {
 			throw new InvalidArgumentException( '$vote can only be -1 or 1' );
 		}
 		if ( !$title->exists() ) {
@@ -83,37 +84,44 @@ class Vote {
 	}
 
 	/**
-	 * @see getRankingTotals()
+	 * @deprecated replaced by getRankingTotals()
 	 */
 	public static function getRank( int $page_id ) {
 		return self::getRankingTotals( $page_id );
 	}
 
+	private static function getMsgForContent( $msgName ) {
+		return wfMessage( $msgName )->inContentLanguage()->text();
+	}
+
 	/**
-	 * @param Title $title
+	 * @param Title|null $title
 	 *
 	 * @return string
 	 */
 	public static function createRankingSection( $title = null ) {
-		global $wgArticleRankingConfig, $wgContentLanguage;
+		$conf = MediaWikiServices::getInstance()->getMainConfig();
+		$articleRankingConfig = $conf->get( 'ArticleRankingConfig' );
+		$templateFileName = $conf->get( 'ArticleRankingTemplateFileName' );
+		$templatePath = $conf->get( 'ArticleRankingTemplatePath' ) ?: __DIR__ . '/../templates';
+		$templateParser = new TemplateParser( $templatePath );
 
-		$templateParser = new TemplateParser( __DIR__ . '/../templates' );
-		$data = [
-			'section1title'  => wfMessage( 'ranking-section1-title' ),
-			'yes'            => wfMessage( 'ranking-yes' ),
-			'no'             => wfMessage( 'ranking-no' ),
-			'section2title'  => wfMessage( 'ranking-section2-title' ),
-			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
+		$params = [
+			'section1title'  => self::getMsgForContent( 'ranking-section1-title' ),
+			'yes'            => self::getMsgForContent( 'ranking-yes' ),
+			'no'             => self::getMsgForContent( 'ranking-no' ),
+			'section2title'  => self::getMsgForContent( 'ranking-section2-title' ),
+			'proposeChanges' => self::getMsgForContent( 'ranking-propose-change' ),
 			'is-captcha-enabled' => Captcha::isEnabled(),
 			'siteKey'        => Captcha::getSiteKey()
 		];
 
-		if ( !is_null( $title ) ) {
-			$url = $wgArticleRankingConfig['changerequest']['url'];
+		if ( $title !== null ) {
+			$url = $articleRankingConfig['changerequest']['url'];
 			$urlParams = [
 				'articleId' => $title->getArticleID(),
 				'page' => $title->getPrefixedText(),
-				'lang' => $wgContentLanguage
+				'lang' => MediaWikiServices::getInstance()->getContentLanguage()->getCode()
 			];
 
 			if ( \ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
@@ -121,13 +129,17 @@ class Vote {
 			}
 
 			$url = $url . '?' . http_build_query( $urlParams );
-			$data['changerequestUrl'] = $url;
+			$params['changerequestUrl'] = $url;
 		}
 
+		$hookContainer = MediaWikiServices::getInstance()->getHookContainer();
+		$continue = $hookContainer->run( 'ArticleRankingTemplateParams', [ &$params ] );
 
-		return $templateParser->processTemplate( 'voting', $data );
+		if ( $continue ) {
+			return $templateParser->processTemplate( $templateFileName, $params );
+		}
+
+		return '';
 	}
 
-
 }
-

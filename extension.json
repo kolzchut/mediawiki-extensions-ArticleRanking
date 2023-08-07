@@ -71,6 +71,9 @@
 			},
 			"trackClicks": true
 		},
+		"ArticleRankingTemplatePath": false,
+		"ArticleRankingTemplateFileName": "voting",
+		"ArticleRankingAddChangeRequest": true,
 		"ArticleRankingCaptcha": {
 			"siteKey": "",
 			"secret": ""

@@ -25,10 +25,22 @@ You __must__ run `update.php` immediately. It will create a new table, migrate d
 | $wgArticleRankingConfig  | `changerequest['url']` | "/forms/ChangeRequest/" | the location of the change request form        |
 | $wgArticleRankingCaptcha | `siteKey`              | empty                   | Captcha site key                               |
 | $wgArticleRankingCaptcha | `secret`               | empty                   | Captcha secret key                             |
+| $wgArticleRankingTemplatePath |                | empty                   | Path of directory includes template file.
+| $wgArticleRankingTemplateFileName |                | voting                   | mustache file name
+| $wgArticleRankingAddChangeRequest |                | true                   | If to add change request part
 
 Leaving either of the $wgArticleRankingCaptcha keys empty will disable
 the use of the captcha, falling back to only using a MediaWiki token
 to verify (basically a CSRF protection and nothing more).
+When omitting  $wgArticleRankingTemplatePath `ArticleRanking/templates` used.
+
+## Templating  
+Best way is copy from `ArticleRanking/templates/voting.mustache` and modifing it.
+
+## Hooks
+`ArticleRankingTemplateParams` allows you to modify the parmams passed into the mustache template. You can pass to the hook additional parameters to use, when calling `ArticleRanking::createRankingSection`.  
+For example, pass pageId to use the title.
+
 
 ## Report
 `Special:ArticleRanking` shows the current results, including some filtering.
