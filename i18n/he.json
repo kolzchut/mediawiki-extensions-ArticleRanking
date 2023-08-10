@@ -8,8 +8,10 @@
 	"ranking-yes": "כן",
 	"ranking-no": "לא",
 
-	"ranking-section2-title": "יש לכם מידע נוסף או הצעות לעדכון ערך זה?",
-	"ranking-propose-change": "שלחו הצעת שינוי",
+	"@todo: translate ranking-section2-title": "",
+	"ranking-section2-title": "יש לכם הצעות לעדכון?",
+	"@todo: translate ranking-propose-change": "",
+	"ranking-propose-change": "הציעו שינוי",
 	"ranking-cr-form-title": "הצעת שינוי לתוכן האתר",
 	"ranking-vote-success": "תודה, הצבעתכם נקלטה בהצלחה",
 	"ranking-vote-fail": "אירעה שגיאה במהלך שליחת ההצבעה, אנא נסו שנית",
