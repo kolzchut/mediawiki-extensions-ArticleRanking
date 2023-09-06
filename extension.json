@@ -32,7 +32,10 @@
 			"styles": "modules/article-ranking.style.less",
 			"dependencies": [
 				"mediawiki.jqueryMsg",
-				"mediawiki.api"
+				"mediawiki.api",
+				"oojs-ui-core",
+				"oojs-ui-widgets",
+				"oojs-ui-windows"
 			],
 			"messages": [
 				"ranking-vote-success",
