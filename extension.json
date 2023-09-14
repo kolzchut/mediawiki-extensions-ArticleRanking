@@ -64,11 +64,6 @@
 	},
 	"config": {
 		"ArticleRankingConfig": {
-			"changerequest": {
-				"url": "/forms/ChangeRequest/",
-				"width": 750,
-				"height": 650
-			},
 			"trackClicks": true
 		},
 		"ArticleRankingTemplatePath": false,
