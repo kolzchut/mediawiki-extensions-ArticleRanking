@@ -32,19 +32,13 @@
 			"styles": "modules/article-ranking.style.less",
 			"dependencies": [
 				"mediawiki.jqueryMsg",
-				"mediawiki.api",
-				"oojs-ui-core",
-				"oojs-ui-widgets",
-				"oojs-ui-windows"
+				"mediawiki.api"
 			],
 			"messages": [
 				"ranking-vote-success",
 				"ranking-vote-fail",
 				"ranking-cr-form-title"
 			]
-		},
-		"ext.articleRanking.changeRequest": {
-			"scripts": "modules/articleRanking.changeRequest.js"
 		}
 	},
 	"Hooks": {

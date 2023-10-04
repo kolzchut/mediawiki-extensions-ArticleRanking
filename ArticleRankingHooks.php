@@ -3,7 +3,7 @@
 class ArticleRankingHooks {
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$out->addModules( [ 'ext.articleRanking', 'ext.articleRanking.changeRequest' ] );
+		$out->addModules( [ 'ext.articleRanking' ] );
 
 		// $out->showErrorPage( 'ranking-invalid-captcha-title', 'ranking-invalid-captcha-keys-message' );
 		if ( ArticleRanking::isCaptchaEnabled() ) {

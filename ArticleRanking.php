@@ -81,14 +81,18 @@ class ArticleRanking {
 	public static function createRankingSection() {
 		global $wgArticleRankingCaptcha;
 
+		$section2 = '';
+		if ( \ExtensionRegistry::getInstance()->isLoaded( 'KZChangeRequest' ) ) {
+			$section2 = \KZChangeRequest::createChangeRequestButton();
+		}
+
 		$templateParser = new TemplateParser( __DIR__ . '/templates' );
 
 		return $templateParser->processTemplate( 'voting', [
 			'section1title'  => wfMessage( 'ranking-section1-title' ),
 			'yes'            => wfMessage( 'ranking-yes' ),
 			'no'             => wfMessage( 'ranking-no' ),
-			'section2title'  => wfMessage( 'ranking-section2-title' ),
-			'proposeChanges' => wfMessage( 'ranking-propose-change' ),
+			'section2'       => $section2,
 			'is-captcha-enabled' => self::isCaptchaEnabled(),
 			'siteKey'        => $wgArticleRankingCaptcha[ 'siteKey' ]
 		] );
@@ -99,4 +103,3 @@ class ArticleRanking {
 		return ( $wgArticleRankingCaptcha[ 'secret' ] && $wgArticleRankingCaptcha[ 'siteKey' ] );
 	}
 }
-
