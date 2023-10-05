@@ -39,10 +39,6 @@
 				"ranking-vote-fail",
 				"ranking-cr-form-title"
 			]
-		},
-		"ext.articleRanking.changeRequest": {
-			"scripts": "modules/articleRanking.changeRequest.js",
-			"dependencies": ["ext.wr.ShareBar.js", "mediawiki.Uri"]
 		}
 	},
 	"Hooks": {
@@ -57,11 +53,6 @@
 	},
 	"config": {
 		"ArticleRankingConfig": {
-			"changerequest": {
-				"url": "/forms/ChangeRequest/",
-				"width": 750,
-				"height": 650
-			},
 			"trackClicks": true
 		},
 		"ArticleRankingCaptcha": {
