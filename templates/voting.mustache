@@ -20,11 +20,13 @@
 				{{/is-captcha-enabled}}
 			</div>
 		</div>
+		{{#showChangeRequest}}
 		<div class="sub-section sub-section2">
-			<h2 class="sub-section-header">{{ section2title }}</h2>
+			<div class="sub-section-header">{{ section2title }}</h2>
 			<div class="sub-section-content">
-				<a href="{{changerequestUrl}}" class="btn btn-secondary ranking-btn changerequest" target="_blank">{{ proposeChanges }}</a>
+				{{{changerequestBtn}}}
 			</div>
 		</div>
+		{{/showChangeRequest}}
 	</div>
 </div>

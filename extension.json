@@ -36,9 +36,6 @@
 				"ranking-vote-fail",
 				"ranking-cr-form-title"
 			]
-		},
-		"ext.articleRanking.changeRequest": {
-			"scripts": "modules/articleRanking.changeRequest.js"
 		}
 	},
 	"Hooks": {
