@@ -1,7 +1,5 @@
 @import 'mediawiki.mixins';
 
-@color-green: #5B7F31; // See @color-green in skin:Helena
-
 .ranking-section {
 	display: table;
 	width: 100%;
@@ -10,6 +8,13 @@
 
 	.buttons {
 		white-space: nowrap;
+	}
+
+	.sub-section-header {
+		// Overrides for default <h2> styles
+		// @todo solve by not using <h2> tags...
+		padding-top: 0;
+		margin-top: 0;
 	}
 
 	.ranking-btn {
@@ -37,28 +42,23 @@
 		padding-left: 2%;
 	}
 
-	.sub-section1 {
-		min-width: 43%;
-	}
-
 	@media screen and (max-width: 768px) {
-		.sub-section1 {
-			width: 100%;
+		display: block;
 
-			> div {
-				display: flex;
-			}
+		.sub-section {
+			display: block;
 		}
 
-		.sub-section2 {
-			display: none;
-			// The following rules are useless when hidden - relevant in the future when we show this
-		    border-top: 2px solid #b7b7b7;
-			padding-top: 25px;
+		.sub-section + .sub-section {
+			padding-left: 0;
+		}
+
+		.sub-section-header {
+			margin-top: 1em;
 		}
 
 		.ranking-btn {
-			width: 144px;
+			min-width: 144px;
 			margin: 0;
 
 			&.no {
