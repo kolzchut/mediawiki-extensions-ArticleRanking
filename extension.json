@@ -1,6 +1,6 @@
 {
 	"name": "ArticleRanking",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"author": [
 		"Tal Koren (Interjet, Kol Zchut)",
 		"Dror S. [FFS] ([https://www.kolzchut.org.il Kol-Zchut])"
@@ -36,9 +36,6 @@
 				"ranking-vote-fail",
 				"ranking-cr-form-title"
 			]
-		},
-		"ext.articleRanking.changeRequest": {
-			"scripts": "modules/articleRanking.changeRequest.js"
 		}
 	},
 	"Hooks": {
@@ -64,11 +61,6 @@
 	},
 	"config": {
 		"ArticleRankingConfig": {
-			"changerequest": {
-				"url": "/forms/ChangeRequest/",
-				"width": 750,
-				"height": 650
-			},
 			"trackClicks": true
 		},
 		"ArticleRankingTemplatePath": false,

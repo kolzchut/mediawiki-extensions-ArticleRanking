@@ -116,21 +116,12 @@ class Vote {
 			'siteKey'        => Captcha::getSiteKey()
 		];
 
-		if ( $title !== null ) {
-			$url = $articleRankingConfig['changerequest']['url'];
-			$urlParams = [
-				'articleId' => $title->getArticleID(),
-				'page' => $title->getPrefixedText(),
-				'lang' => MediaWikiServices::getInstance()->getContentLanguage()->getCode()
-			];
-
-			if ( \ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
-				$urlParams[ 'contentArea' ] = ArticleContentArea::getArticleContentArea( $title );
-			}
-
-			$url = $url . '?' . http_build_query( $urlParams );
-			$params['changerequestUrl'] = $url;
+		if ( \ExtensionRegistry::getInstance()->isLoaded( 'KZChangeRequest' ) ) {
+			$articleId = $title ? $title->getArticleID() : null;
+			$params[ 'changerequestBtn' ] = \KZChangeRequest::createChangeRequestButton( $articleId );
 		}
+
+		$params['showChangeRequest'] = isset( $params['changerequestBtn'] );
 
 		$hookContainer = MediaWikiServices::getInstance()->getHookContainer();
 		$continue = $hookContainer->run( 'ArticleRankingTemplateParams', [ &$params ] );

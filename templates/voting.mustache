@@ -1,7 +1,7 @@
 <div class="ranking-section-wrapper">
 	<div class="ranking-section hidden-print noprint">
 		<div class="sub-section sub-section1">
-			<div class="sub-section-header">{{ section1title }}</div>
+			<h2 class="sub-section-header">{{ section1title }}</h2>
 			<div class="sub-section-content">
 				<div class="buttons">
 					<button class="btn btn-secondary ranking-btn yes" type="button">{{ yes }}</button>
@@ -20,11 +20,13 @@
 				{{/is-captcha-enabled}}
 			</div>
 		</div>
+		{{#showChangeRequest}}
 		<div class="sub-section sub-section2">
 			<h2 class="sub-section-header">{{ section2title }}</h2>
 			<div class="sub-section-content">
-				<a href="{{changerequestUrl}}" class="btn btn-secondary ranking-btn changerequest" target="_blank">{{ proposeChanges }}</a>
+				{{{changerequestBtn}}}
 			</div>
 		</div>
+		{{/showChangeRequest}}
 	</div>
 </div>

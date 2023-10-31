@@ -11,8 +11,8 @@ Please note that if you use the captcha, it is recommended for legal and privacy
 a note and a link to hCaptcha's privacy policy. See details here:
 https://docs.hcaptcha.com/faq#do-i-need-to-display-anything-on-the-page-when-using-hcaptcha-in-invisible-mode
 
-One (smaller) part of this extension is used to launch an external change proposal form.
-This is dependent on extension:WRShareBar.
+One (smaller) part of this extension is used to launch a change proposal form. This has a soft
+requirement on extension:KZChangeRequest.
 
 ## Upgrading from v1 to v2
 You __must__ run `update.php` immediately. It will create a new table, migrate data from the old one and then remove it.
@@ -38,7 +38,7 @@ When omitting  $wgArticleRankingTemplatePath `ArticleRanking/templates` used.
 Best way is copy from `ArticleRanking/templates/voting.mustache` and modifing it.
 
 ## Hooks
-`ArticleRankingTemplateParams` allows you to modify the parmams passed into the mustache template. You can pass to the hook additional parameters to use, when calling `ArticleRanking::createRankingSection`.  
+`ArticleRankingTemplateParams` allows you to modify the params passed into the mustache template. You can pass to the hook additional parameters to use, when calling `ArticleRanking::createRankingSection`.  
 For example, pass pageId to use the title.
 
 
