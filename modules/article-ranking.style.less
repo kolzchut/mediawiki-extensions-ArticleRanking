@@ -1,12 +1,9 @@
 @import 'mediawiki.mixins';
 
-@color-green: #5B7F31; // See @color-green in skin:Helena
-
 .ranking-section {
 	display: table;
 	width: 100%;
 	padding: 0 0 22px 0;
-	margin-bottom: 10px;
 
 	.buttons {
 		white-space: nowrap;
@@ -28,35 +25,7 @@
 		}
 	}
 
-	.sub-section {
-		display: table-cell;
-		vertical-align: top;
-	}
-
-	.sub-section + .sub-section {
-		padding-left: 2%;
-	}
-
-	.sub-section1 {
-		min-width: 43%;
-	}
-
 	@media screen and (max-width: 768px) {
-		.sub-section1 {
-			width: 100%;
-
-			> div {
-				display: flex;
-			}
-		}
-
-		.sub-section2 {
-			display: none;
-			// The following rules are useless when hidden - relevant in the future when we show this
-		    border-top: 2px solid #b7b7b7;
-			padding-top: 25px;
-		}
-
 		.ranking-btn {
 			width: 144px;
 			margin: 0;
@@ -65,11 +34,5 @@
 				margin: 0 0 0 10px;
 			}
 		}
-	}
-}
-
-.article-type-mainpage {
-	.ranking-section {
-		display: none;
 	}
 }

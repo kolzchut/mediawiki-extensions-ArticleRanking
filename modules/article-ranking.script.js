@@ -4,7 +4,7 @@
 	mw.ranking = {
 		positiveVote: false,
 		config: mw.config.get( 'wgArticleRankingConfig' ),
-		$btns: $( '.ranking-section .sub-section1 .ranking-btn' ),
+		$btns: $( '.ranking-section .ranking-btn' ),
 		$statusIcon: $( '<i>' ).addClass( 'fa fa-spinner fa-spin' ),
 		$votingMessages: $( '.ranking-section .voting-messages' ),
 

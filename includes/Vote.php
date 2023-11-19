@@ -107,21 +107,12 @@ class Vote {
 		$templateParser = new TemplateParser( $templatePath );
 
 		$params = [
-			'section1title'  => self::getMsgForContent( 'ranking-section1-title' ),
+			'section-title'  => self::getMsgForContent( 'ranking-section-title' ),
 			'yes'            => self::getMsgForContent( 'ranking-yes' ),
 			'no'             => self::getMsgForContent( 'ranking-no' ),
-			'section2title'  => self::getMsgForContent( 'ranking-section2-title' ),
-			'proposeChanges' => self::getMsgForContent( 'ranking-propose-change' ),
 			'is-captcha-enabled' => Captcha::isEnabled(),
 			'siteKey'        => Captcha::getSiteKey()
 		];
-
-		if ( \ExtensionRegistry::getInstance()->isLoaded( 'KZChangeRequest' ) ) {
-			$articleId = $title ? $title->getArticleID() : null;
-			$params[ 'changerequestBtn' ] = \KZChangeRequest::createChangeRequestButton( $articleId );
-		}
-
-		$params['showChangeRequest'] = isset( $params['changerequestBtn'] );
 
 		$hookContainer = MediaWikiServices::getInstance()->getHookContainer();
 		$continue = $hookContainer->run( 'ArticleRankingTemplateParams', [ &$params ] );
