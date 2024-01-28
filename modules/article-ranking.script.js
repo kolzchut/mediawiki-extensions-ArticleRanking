@@ -38,20 +38,11 @@
 			return mw.ranking.vote( token );
 		},
 		trackEvent: function ( action, label ) {
-			if ( mw.ranking.config.trackClicks !== true ||
-				mw.loader.getState( 'ext.googleUniversalAnalytics.utils' ) === null
-			) {
+			if ( mw.ranking.config.trackClicks !== true ) {
 				return;
 			}
 
-			mw.loader.using( 'ext.googleUniversalAnalytics.utils' ).then( function () {
-				mw.googleAnalytics.utils.recordEvent( {
-					eventCategory: 'article-ranking',
-					eventAction: action,
-					eventLabel: label,
-					nonInteraction: false
-				} );
-			} );
+			mw.track( 'article-ranking', { action: action, label: label } );
 		}
 	};
 
