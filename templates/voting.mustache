@@ -2,8 +2,8 @@
 	<div class="header">{{ section-title }}</div>
 	<div class="content">
 		<div class="buttons">
-			<button class="btn btn-secondary ranking-btn yes" type="button" aria-label="{{ yes }}" title="{{ yes }}"><i class="kzi kzi-thumb-up"></i></button>
-			<button class="btn btn-secondary ranking-btn no" type="button" aria-label="{{ no }}" title="{{ no }}"><i class="kzi kzi-thumb-down"></i></button>
+			<button class="btn btn-secondary ranking-btn yes" title="{{ yes }}">{{ yes }}</button>
+			<button class="btn btn-secondary ranking-btn no" title="{{ no }}">{{ no }}</button>
 		</div>
 		<div class="voting-messages"></div>
 		{{#is-captcha-enabled}}
