@@ -28,7 +28,9 @@ class Vote {
 		}
 
 		$requestContext = RequestContext::getMain();
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()
+			->getConnectionProvider()
+			->getPrimaryDatabase();
 
 		$result = $dbw->insert( 'article_rankings2', [
 			'ranking_timestamp' => $dbw->timestamp(),
@@ -49,7 +51,9 @@ class Vote {
 	 *                    total rank percentage, or false
 	 */
 	public static function getRankingTotals( int $page_id ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()
+			->getConnectionProvider()
+			->getReplicaDatabase();
 
 		$positiveVotes = $dbr->selectField(
 			'article_rankings2',

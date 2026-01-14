@@ -34,7 +34,9 @@ class ArticleRankingPager extends TablePager {
 	 * @param LinkRenderer $linkRenderer
 	 */
 	public function __construct( $form, $conds, LinkRenderer $linkRenderer ) {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()
+			->getConnectionProvider()
+			->getReplicaDatabase();
 		if ( $conds[ 'target' ] ) {
 			$pageId = Title::newFromText( $conds[ 'target' ] )->getArticleID();
 			$this->mConds[ 'ranking_page_id' ] = $pageId;
