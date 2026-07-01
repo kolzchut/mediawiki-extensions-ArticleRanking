@@ -10,6 +10,7 @@ use DateTime;
 use ExtensionRegistry;
 use MediaWiki\Extension\ArticleContentArea\ArticleContentArea;
 use MediaWiki\Linker\LinkRenderer;
+use MediaWiki\MediaWikiServices;
 use SpecialPage;
 use TablePager;
 use Title;
