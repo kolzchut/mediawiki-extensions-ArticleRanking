@@ -22,7 +22,6 @@ You __must__ run `update.php` immediately. It will create a new table, migrate d
 | $wgArticleRankingCaptcha          | `secret`      | empty   | Captcha secret key                             |
 | $wgArticleRankingTemplatePath     |               | empty   | Path of directory includes template file.      |
 | $wgArticleRankingTemplateFileName |               | voting  | mustache file name                             |
-| $wgArticleRankingAddChangeRequest |               | true    | If to add change request part                  |
 
 Leaving either of the $wgArticleRankingCaptcha keys empty will disable
 the use of the captcha, falling back to only using a MediaWiki token
