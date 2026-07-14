@@ -2,7 +2,6 @@
 namespace MediaWiki\Extension\ArticleRanking;
 
 use DatabaseUpdater;
-use MediaWiki\MediaWikiServices;
 use OutputPage;
 use Skin;
 
@@ -15,14 +14,7 @@ class Hooks {
 	 * @throws \ConfigException
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-		$conf = MediaWikiServices::getInstance()->getMainConfig();
-
-		$modules = [ 'ext.articleRanking' ];
-		if ( $conf->get( 'ArticleRankingAddChangeRequest' ) === true ) {
-			$modules[] = 'ext.articleRanking.changeRequest';
-		}
-
-		$out->addModules( $modules );
+		$out->addModules( [ 'ext.articleRanking' ] );
 
 		if ( Captcha::isEnabled() ) {
 			$out->addHeadItem(
