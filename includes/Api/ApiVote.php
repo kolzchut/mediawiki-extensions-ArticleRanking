@@ -24,7 +24,7 @@ class ApiVote extends ApiBase {
 			],
 			'vote' => [
 				ApiBase::PARAM_TYPE => [ '-1', '1' ],
-				ApiBase::PARAM_REQUIRED => false
+				ApiBase::PARAM_REQUIRED => true
 			]
 		];
 	}
@@ -38,6 +38,12 @@ class ApiVote extends ApiBase {
 		$page = $this->getTitleOrPageId( $params );
 		$vote    = $params[ 'vote' ];
 		$result = 0;
+
+		// Origin-side abuse backstop (integrity, not volume). Edge-layer
+		// volume/bot defense is tracked in kolzchut/kz-infrastructure#503.
+		if ( $this->getUser()->pingLimiter( 'articleranking-vote' ) ) {
+			$this->dieWithError( 'apierror-ratelimited', 'ratelimited' );
+		}
 
 		// If the captcha is disabled, verifyToken() will always return true
 		if ( Captcha::verifyToken( $captchaToken ) ) {
