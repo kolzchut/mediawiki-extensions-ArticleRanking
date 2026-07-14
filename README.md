@@ -4,12 +4,11 @@
 
 The purpose of this extension is to let users rank certain articles.
 
-It can be used with or without a captcha; the captcha used is [hCaptcha's
-Invisible Recaptcha](https://docs.hcaptcha.com/invisible),
-which requires a site key and a secret key provided.
-Please note that if you use the captcha, it is recommended for legal and privacy reasons to include
-a note and a link to hCaptcha's privacy policy. See details here:
-https://docs.hcaptcha.com/faq#do-i-need-to-display-anything-on-the-page-when-using-hcaptcha-in-invisible-mode
+It can be used with or without a captcha; the captcha used is
+[Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) in
+invisible-style ("execute") mode, which requires a site key and a secret key
+provided. On the Kol-Zchut platform one shared widget is used, with this
+service identified by the `cData` value `articleranking`.
 
 ## Upgrading from v1 to v2
 You __must__ run `update.php` immediately. It will create a new table, migrate data from the old one and then remove it.
