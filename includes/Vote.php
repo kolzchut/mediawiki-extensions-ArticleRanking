@@ -115,7 +115,9 @@ class Vote {
 			'yes'            => self::getMsgForContent( 'ranking-yes' ),
 			'no'             => self::getMsgForContent( 'ranking-no' ),
 			'is-captcha-enabled' => Captcha::isEnabled(),
-			'siteKey'        => Captcha::getSiteKey()
+			'siteKey'        => Captcha::getSiteKey(),
+			// Explicit widget language (he/ar/ru) rather than browser auto-detect.
+			'language'       => RequestContext::getMain()->getLanguage()->getCode()
 		];
 
 		$hookContainer = MediaWikiServices::getInstance()->getHookContainer();

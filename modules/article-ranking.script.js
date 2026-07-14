@@ -16,7 +16,7 @@
 				vote: this.positiveVote ? 1 : -1
 			} ).fail( function () {
 				mw.ranking.informFailedVote();
-			} ).done( function( response ) {
+			} ).done( function ( response ) {
 				if ( response.success ) {
 					mw.ranking.setMessage( mw.messages.get( 'ranking-vote-success' ) );
 					mw.ranking.$statusIcon.removeClass( 'fa-spinner fa-spin' ).addClass( 'fa-check' );
@@ -54,7 +54,10 @@
 			$( this ).prepend( mw.ranking.$statusIcon );
 			$( this ).addClass( 'selected' );
 			if ( mw.ranking.config.isCaptchaEnabled === true ) {
-				hcaptcha.execute();
+				// Turnstile widget uses data-execution="execute"; kick off the
+				// (invisible-style) challenge, which calls verifyRankingCaptcha
+				// with the token on success.
+				turnstile.execute( document.querySelector( '.cf-turnstile' ) );
 			} else {
 				mw.ranking.vote();
 			}
