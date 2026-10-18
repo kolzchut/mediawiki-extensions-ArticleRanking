@@ -63,7 +63,7 @@ class ArticleRankingPager extends TablePager {
 		// getLimitOffsetForUser() will limit us to 5,000, which is not good enough for our purposes
 		// So if the limit requested is one of the presets, which we allow, we override it
 		$reqLimit = $this->getRequest()->getInt( 'limit' );
-		list( $this->mLimit, $this->mOffset ) =
+		[ $this->mLimit, $this->mOffset ] =
 			$this->getRequest()->getLimitOffsetForUser( $this->getUser(), $this->mDefaultLimit, '' );
 		$this->mLimit = ( $reqLimit > 5000 && in_array( $reqLimit, $this->mLimitsShown ) ) ? $reqLimit : $this->mLimit;
 	}

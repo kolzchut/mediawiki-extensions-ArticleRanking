@@ -7,10 +7,15 @@ use MediaWiki\Extension\ArticleRanking\Vote;
 
 class ApiGetVotes extends ApiBase {
 
+	/**
+	 * @param \ApiMain $main
+	 * @param string $moduleName
+	 */
 	public function __construct( $main, $moduleName ) {
 		parent::__construct( $main, $moduleName );
 	}
 
+	/** @inheritDoc */
 	protected function getAllowedParams() {
 		return [
 			'pageid' => [

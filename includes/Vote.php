@@ -3,7 +3,6 @@
 namespace MediaWiki\Extension\ArticleRanking;
 
 use InvalidArgumentException;
-use MediaWiki\Extension\ArticleContentArea\ArticleContentArea;
 use MediaWiki\MediaWikiServices;
 use RequestContext;
 use TemplateParser;
@@ -127,6 +126,10 @@ class Vote {
 		return self::getRankingTotals( $page_id );
 	}
 
+	/**
+	 * @param string $msgName
+	 * @return string
+	 */
 	private static function getMsgForContent( $msgName ) {
 		return wfMessage( $msgName )->inContentLanguage()->text();
 	}

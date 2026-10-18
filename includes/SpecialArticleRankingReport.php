@@ -7,13 +7,17 @@ use MediaWiki\Extension\ArticleContentArea\ArticleContentArea;
 use SpecialPage;
 
 class SpecialArticleRankingReport extends SpecialPage {
+	/** @var array */
 	protected $opts;
+	/** @var ArticleRankingPager */
 	protected $pager;
 
+	/** @param string $name */
 	public function __construct( $name = 'ArticleRanking' ) {
 		parent::__construct( $name, 'articleranking-view-report' );
 	}
 
+	/** @inheritDoc */
 	public function execute( $sub ) {
 		parent::execute( $sub );
 
@@ -52,7 +56,7 @@ class SpecialArticleRankingReport extends SpecialPage {
 		$fields['target'] = [
 			'type' => 'title',
 			'default' => $target ?
-				str_replace( '_', ' ', $target ) : '' ,
+				str_replace( '_', ' ', $target ) : '',
 			'label' => $this->msg( 'articleranking-filter-title' )->text(),
 			'name' => 'target',
 			'id' => 'mw-target-title',
@@ -67,7 +71,6 @@ class SpecialArticleRankingReport extends SpecialPage {
 			foreach ( $options as &$option ) {
 				$option = self::makeOptionsWithAllForSelect( $option );
 			}
-
 
 			$fields['content_area'] = [
 				'type'          => 'select',
@@ -126,12 +129,20 @@ class SpecialArticleRankingReport extends SpecialPage {
 		return $htmlForm->getHTML( false );
 	}
 
+	/**
+	 * @param array $arr
+	 * @return array
+	 */
 	private static function makeOptionsForSelect( $arr ) {
 		// Remove empty elements
 		$arr = array_filter( $arr );
 		return array_combine( $arr, $arr );
 	}
 
+	/**
+	 * @param array $arr
+	 * @return array
+	 */
 	private static function makeOptionsWithAllForSelect( $arr ) {
 		// @todo i18n
 		return [ 'הכל' => '' ] + self::makeOptionsForSelect( $arr );

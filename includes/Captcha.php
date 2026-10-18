@@ -80,24 +80,29 @@ class Captcha {
 		return true;
 	}
 
+	/** @return string The Turnstile site key from $wgArticleRankingCaptcha */
 	public static function getSiteKey() {
 		global $wgArticleRankingCaptcha;
 		return $wgArticleRankingCaptcha[ 'siteKey' ];
 	}
 
+	/** @return string The Turnstile secret from $wgArticleRankingCaptcha */
 	public static function getSecret() {
 		global $wgArticleRankingCaptcha;
 		return $wgArticleRankingCaptcha[ 'secret' ];
 	}
 
+	/** @return string The script tag that loads the Turnstile widget */
 	public static function getScript() {
 		return '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>';
 	}
 
+	/** @return string The Turnstile siteverify endpoint */
 	public static function getVerificationUrl() {
 		return 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 	}
 
+	/** @return bool Whether both the site key and the secret are configured */
 	public static function isEnabled() {
 		global $wgArticleRankingCaptcha;
 		return ( $wgArticleRankingCaptcha[ 'secret' ] && $wgArticleRankingCaptcha[ 'siteKey' ] );

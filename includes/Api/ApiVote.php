@@ -3,15 +3,20 @@
 namespace MediaWiki\Extension\ArticleRanking\Api;
 
 use ApiBase;
-use MediaWiki\Extension\ArticleRanking\Vote;
 use MediaWiki\Extension\ArticleRanking\Captcha;
+use MediaWiki\Extension\ArticleRanking\Vote;
 
 class ApiVote extends ApiBase {
 
+	/**
+	 * @param \ApiMain $main
+	 * @param string $moduleName
+	 */
 	public function __construct( $main, $moduleName ) {
 		parent::__construct( $main, $moduleName );
 	}
 
+	/** @inheritDoc */
 	protected function getAllowedParams() {
 		return [
 			'captchaToken' => [
@@ -53,6 +58,7 @@ class ApiVote extends ApiBase {
 		$queryResult->addValue( null, 'success', $result ? 1 : 0 );
 	}
 
+	/** @inheritDoc */
 	public function needsToken() {
 		return 'csrf';
 	}
