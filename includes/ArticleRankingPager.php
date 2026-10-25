@@ -43,11 +43,10 @@ class ArticleRankingPager extends TablePager {
 			// An invalid title matches no page, so the report is empty rather than a fatal
 			$this->mConds[ 'ranking_page_id' ] = $title ? $title->getArticleID() : 0;
 		}
-		// @todo add conditions for start/end (timestamp)
-		if ( $conds[ 'start' ] ) {
+		if ( !empty( $conds[ 'start' ] ) ) {
 			$this->mConds[] = 'ranking_timestamp >= ' . $dbr->timestamp( new DateTime( $conds[ 'start' ] ) );
 		}
-		if ( $conds[ 'end' ] ) {
+		if ( !empty( $conds[ 'end' ] ) ) {
 			$this->mConds[] = 'ranking_timestamp <= ' . $dbr->timestamp( new DateTime( $conds[ 'end' ] ) );
 		}
 
@@ -63,8 +62,10 @@ class ArticleRankingPager extends TablePager {
 
 		// getLimitOffsetForUser() will limit us to 5,000, which is not good enough for our purposes
 		// So if the limit requested is one of the presets, which we allow, we override it
+		// Only the limit is taken from here: the offset is the "<total>|<page id>" string IndexPager
+		// already read, and the integer offset this returns would truncate it
 		$reqLimit = $this->getRequest()->getInt( 'limit' );
-		[ $this->mLimit, $this->mOffset ] =
+		[ $this->mLimit ] =
 			$this->getRequest()->getLimitOffsetForUser( $this->getUser(), $this->mDefaultLimit, '' );
 		$this->mLimit = ( $reqLimit > 5000 && in_array( $reqLimit, $this->mLimitsShown ) ) ? $reqLimit : $this->mLimit;
 	}
@@ -133,11 +134,45 @@ class ArticleRankingPager extends TablePager {
 
 	/** @inheritDoc */
 	public function getIndexField() {
-		return [
-			'sum_total',
-			'sum_negative',
-			'sum_positive'
-		];
+		// Totals are not unique, so the page id (the GROUP BY key) breaks ties; without it,
+		// paging skips or repeats the pages that share a total at a page boundary
+		return [ [ 'sum_total', 'ranking_page_id' ] ];
+	}
+
+	/**
+	 * The sort key is an aggregate, which WHERE cannot reference, so the offset condition
+	 * IndexPager would put in WHERE goes in HAVING instead, applied to the grouped rows.
+	 *
+	 * @inheritDoc
+	 */
+	protected function buildQueryInfo( $offset, $limit, $order ) {
+		$info = parent::buildQueryInfo( '', $limit, $order );
+		if ( !$offset ) {
+			return $info;
+		}
+
+		[ , $fields, , , $options ] = $info;
+		$columns = (array)$this->mIndexField;
+		// As in IndexPager, a shorter offset (e.g. an old link with a total only) uses the leading columns
+		$offsets = explode( '|', $offset, count( $columns ) );
+		$conds = [];
+		foreach ( array_slice( $columns, 0, count( $offsets ) ) as $i => $column ) {
+			// HAVING gets the aggregate expression, not its alias, and integers so that the
+			// comparison is numeric
+			$conds[ $fields[ $column ] ?? $column ] = (int)$offsets[ $i ];
+		}
+		if ( $order === self::QUERY_ASCENDING ) {
+			$operator = $this->mIncludeOffset ? '>=' : '>';
+		} else {
+			$operator = $this->mIncludeOffset ? '<=' : '<';
+		}
+
+		$having = isset( $options[ 'HAVING' ] ) ? (array)$options[ 'HAVING' ] : [];
+		$having[] = $this->getDatabase()->buildComparison( $operator, $conds );
+		$options[ 'HAVING' ] = $having;
+		$info[4] = $options;
+
+		return $info;
 	}
 
 	/** @inheritDoc */
