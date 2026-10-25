@@ -63,6 +63,13 @@ To get a page vote count, make a GET request to `http://example.com/api.php?acti
 |------------|---------|---------------------------------------|
 | pageid     | Integer | The page id of the page being queried |
 
+The response is a `ranking` object:
+
+| Field   | Type    | Description                                                                     |
+|---------|---------|---------------------------------------------------------------------------------|
+| success | Integer | 1 if the page has votes, 0 if it has none                                       |
+| votes   | Number  | Only when `success` is 1: the percentage of positive votes (0-100), rounded up |
+
 
 ## TODO
 - Allow getting the vote count by page title

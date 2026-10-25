@@ -13,7 +13,8 @@
 		"MediaWiki\\Extension\\ArticleRanking\\": "includes/"
 	},
 	"TestAutoloadNamespaces": {
-		"MediaWiki\\Extension\\ArticleRanking\\Tests\\Integration\\": "tests/phpunit/integration/"
+		"MediaWiki\\Extension\\ArticleRanking\\Tests\\Integration\\": "tests/phpunit/integration/",
+		"MediaWiki\\Extension\\ArticleRanking\\Tests\\Unit\\": "tests/phpunit/unit/"
 	},
 	"SpecialPages": {
 		"ArticleRanking": "MediaWiki\\Extension\\ArticleRanking\\SpecialArticleRankingReport"

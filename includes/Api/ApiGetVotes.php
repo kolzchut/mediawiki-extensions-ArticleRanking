@@ -32,7 +32,8 @@ class ApiGetVotes extends ApiBase {
 		$page = $this->getTitleOrPageId( $params );
 		$result = Vote::getRank( $page->getId() );
 
-		if ( $result !== false ) {
+		// A page with no votes has no rank; report it as before, with success = 0
+		if ( $result[ 'total_votes' ] > 0 ) {
 			$output[ 'success' ] = 1;
 			$output[ 'votes' ]   = ceil( $result[ 'rank' ] );
 		} else {
