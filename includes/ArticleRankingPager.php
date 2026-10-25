@@ -39,8 +39,9 @@ class ArticleRankingPager extends TablePager {
 			->getConnectionProvider()
 			->getReplicaDatabase();
 		if ( $conds[ 'target' ] ) {
-			$pageId = Title::newFromText( $conds[ 'target' ] )->getArticleID();
-			$this->mConds[ 'ranking_page_id' ] = $pageId;
+			$title = Title::newFromText( $conds[ 'target' ] );
+			// An invalid title matches no page, so the report is empty rather than a fatal
+			$this->mConds[ 'ranking_page_id' ] = $title ? $title->getArticleID() : 0;
 		}
 		// @todo add conditions for start/end (timestamp)
 		if ( $conds[ 'start' ] ) {
