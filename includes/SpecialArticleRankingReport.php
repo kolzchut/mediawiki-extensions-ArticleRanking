@@ -25,7 +25,9 @@ class SpecialArticleRankingReport extends SpecialPage {
 		$this->opts = [];
 		$request = $this->getRequest();
 
-		$this->opts['target']  = $par ?? $request->getVal( 'target' );
+		// Special:ArticleRanking/<page> is shorthand for ?target=<page>; an explicit ?target wins,
+		// so the filter form still works when submitted from a subpage URL
+		$this->opts['target'] = $request->getVal( 'target', $sub );
 		$this->opts['limit'] = $request->getInt( 'limit' );
 
 		$skip = $request->getText( 'offset' ) || $request->getText( 'dir' ) == 'prev';
@@ -114,6 +116,8 @@ class SpecialArticleRankingReport extends SpecialPage {
 		$htmlForm = \HTMLForm::factory( 'ooui', $fields, $this->getContext() );
 		$htmlForm
 			->setMethod( 'get' )
+			// Submit to the base page, so the form's target field is the only target
+			->setTitle( $this->getPageTitle() )
 			// When offset is defined, the user is paging through results,
 			// so we hide the form by default to allow users to focus on browsing
 			// rather than defining search parameters
