@@ -18,9 +18,33 @@ class CaptchaTest extends MediaWikiIntegrationTestCase {
 	/** cData this fork sends; overridden in the teen fork's copy of this test. */
 	private const CDATA = 'articleranking';
 
-	private function enableCaptcha(): void {
-		$this->setMwGlobals( 'wgArticleRankingCaptcha', [ 'siteKey' => 'sk', 'secret' => 'se' ] );
+	/** @var string|false MW_ENVIRONMENT before the test */
+	private $savedEnvironment;
+
+	protected function setUp(): void {
+		parent::setUp();
+		$this->savedEnvironment = getenv( 'MW_ENVIRONMENT' );
+	}
+
+	protected function tearDown(): void {
+		putenv( $this->savedEnvironment === false
+			? 'MW_ENVIRONMENT'
+			: 'MW_ENVIRONMENT=' . $this->savedEnvironment );
+		parent::tearDown();
+	}
+
+	private function enableCaptcha( string $secret = 'se' ): void {
+		$this->setMwGlobals( 'wgArticleRankingCaptcha', [ 'siteKey' => 'sk', 'secret' => $secret ] );
 		$this->overrideConfigValue( 'Server', 'https://kolzchut.org.il' );
+	}
+
+	/** What siteverify answers for Cloudflare's always-pass test secret. */
+	private function stubTestSecretSiteverify(): void {
+		$this->stubSiteverify( json_encode( [
+			'success' => true,
+			'hostname' => 'example.com',
+			'error-codes' => [],
+		] ) );
 	}
 
 	/**
@@ -57,7 +81,7 @@ class CaptchaTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testMissingHostnameStillPasses(): void {
-		// Cloudflare's always-pass test keys omit hostname; a valid cData is enough.
+		// The hostname check applies only when siteverify reports one.
 		$this->enableCaptcha();
 		$this->stubSiteverify( json_encode( [
 			'success' => true,
@@ -84,6 +108,40 @@ class CaptchaTest extends MediaWikiIntegrationTestCase {
 			'hostname' => 'evil.example.com',
 		] ) );
 		$this->assertFalse( Captcha::verifyToken( 'replayed-token' ) );
+	}
+
+	public function testTestSecretPassesInDevelopment(): void {
+		putenv( 'MW_ENVIRONMENT=development' );
+		$this->enableCaptcha( Captcha::TEST_SECRET );
+		$this->stubTestSecretSiteverify();
+		$this->assertTrue( Captcha::verifyToken( 'XXXX.DUMMY.TOKEN.XXXX' ) );
+	}
+
+	public function testTestSecretFailsOutsideDevelopment(): void {
+		foreach ( [ 'MW_ENVIRONMENT=staging', 'MW_ENVIRONMENT=production', 'MW_ENVIRONMENT' ] as $env ) {
+			putenv( $env );
+			$this->enableCaptcha( Captcha::TEST_SECRET );
+			$this->stubTestSecretSiteverify();
+			$this->assertFalse( Captcha::verifyToken( 'XXXX.DUMMY.TOKEN.XXXX' ), $env );
+		}
+	}
+
+	public function testRealSecretKeepsChecksInDevelopment(): void {
+		// Only the test secret skips the cData and hostname checks.
+		putenv( 'MW_ENVIRONMENT=development' );
+		$this->enableCaptcha();
+		$this->stubTestSecretSiteverify();
+		$this->assertFalse( Captcha::verifyToken( 'token' ) );
+	}
+
+	public function testUnsuccessfulTestSecretFailsInDevelopment(): void {
+		putenv( 'MW_ENVIRONMENT=development' );
+		$this->enableCaptcha( Captcha::TEST_SECRET );
+		$this->stubSiteverify( json_encode( [
+			'success' => false,
+			'error-codes' => [ 'invalid-input-response' ],
+		] ) );
+		$this->assertFalse( Captcha::verifyToken( 'bad-token' ) );
 	}
 
 	public function testUnsuccessfulVerificationFails(): void {

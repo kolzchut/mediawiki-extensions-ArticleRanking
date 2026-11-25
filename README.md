@@ -10,6 +10,16 @@ invisible-style ("execute") mode, which requires a site key and a secret key
 provided. On the Kol-Zchut platform one shared widget is used, with this
 service identified by the `cData` value `articleranking`.
 
+The `ext.articleRanking` module loads Turnstile and renders the widget
+explicitly, and asks it for a fresh token for each vote, as a token can be
+used only once.
+
+Cloudflare's [test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/)
+work only on a development wiki (`MW_ENVIRONMENT=development`): siteverify
+answers the always-pass test secret with the hostname `example.com` and no
+`cData`, so the server accepts it there without those two checks. Anywhere
+else, and for a real secret, both are checked.
+
 ## Upgrading from v1 to v2
 You __must__ run `update.php` immediately. It will create a new table, migrate data from the old one and then remove it.
 

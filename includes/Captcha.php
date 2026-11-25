@@ -9,11 +9,22 @@ use RequestContext;
 class Captcha {
 
 	/**
+	 * Cloudflare's documented always-pass Turnstile test secret.
+	 *
+	 * @see https://developers.cloudflare.com/turnstile/troubleshooting/testing/
+	 */
+	public const TEST_SECRET = '1x0000000000000000000000000000000AA';
+
+	/**
 	 * Verify a Cloudflare Turnstile token against the siteverify endpoint.
 	 *
 	 * The captcha is dormant unless $wgArticleRankingCaptcha is configured, in
 	 * which case verification fails open. This service is identified within the
 	 * shared platform widget by cData 'articleranking'.
+	 *
+	 * Cloudflare's test secret is answered with hostname 'example.com' and no
+	 * cData, so it passes only in development (MW_ENVIRONMENT=development); a
+	 * real secret always gets the cData and hostname checks.
 	 *
 	 * @param string $token Turnstile response token from the client widget
 	 *
@@ -58,6 +69,11 @@ class Captcha {
 			return false;
 		}
 
+		if ( self::isDevelopmentTestSecret() ) {
+			$logger->debug( 'Turnstile test secret accepted in development' );
+			return true;
+		}
+
 		// Confirm the token was minted for THIS service, not another consumer of
 		// the shared platform widget.
 		if ( ( $result['cdata'] ?? '' ) !== 'articleranking' ) {
@@ -67,8 +83,8 @@ class Captcha {
 		}
 
 		// Defence-in-depth on top of the widget's allowed-hostnames list: the token
-		// must have been solved on this wiki's own host. Only enforced when
-		// siteverify reports a hostname (the always-pass test keys omit it).
+		// must have been solved on this wiki's own host. siteverify reports the
+		// hostname for real keys; a response without one is not rejected here.
 		$expectedHost = parse_url( (string)$services->getMainConfig()->get( 'Server' ), PHP_URL_HOST );
 		$returnedHost = $result['hostname'] ?? '';
 		if ( $expectedHost && $returnedHost && $returnedHost !== $expectedHost ) {
@@ -92,14 +108,18 @@ class Captcha {
 		return $wgArticleRankingCaptcha[ 'secret' ];
 	}
 
-	/** @return string The script tag that loads the Turnstile widget */
-	public static function getScript() {
-		return '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>';
-	}
-
 	/** @return string The Turnstile siteverify endpoint */
 	public static function getVerificationUrl() {
 		return 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+	}
+
+	/**
+	 * @return bool Whether the configured secret is Cloudflare's test secret and
+	 *  this is a development wiki
+	 */
+	private static function isDevelopmentTestSecret() {
+		return self::getSecret() === self::TEST_SECRET
+			&& getenv( 'MW_ENVIRONMENT' ) === 'development';
 	}
 
 	/** @return bool Whether both the site key and the secret are configured */

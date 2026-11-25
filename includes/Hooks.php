@@ -14,14 +14,9 @@ class Hooks {
 	 * @throws \ConfigException
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+		// With the captcha on, the module loads Turnstile itself and renders the
+		// widget explicitly, once it can receive the token.
 		$out->addModules( [ 'ext.articleRanking' ] );
-
-		if ( Captcha::isEnabled() ) {
-			$out->addHeadItem(
-				'captcha',
-				Captcha::getScript()
-			);
-		}
 	}
 
 	/**
