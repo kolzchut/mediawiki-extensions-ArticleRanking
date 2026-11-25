@@ -191,7 +191,13 @@ class ArticleRankingPager extends TablePager {
 		return false;
 	}
 
-	/** @inheritDoc */
+	/**
+	 * TablePager puts what this returns into the cell as HTML, unescaped. Only the
+	 * page link is built as HTML here; every other value, including page properties
+	 * such as the content area that editors set, is escaped.
+	 *
+	 * @inheritDoc
+	 */
 	public function formatValue( $name, $value ) {
 		$row = $this->mCurrentRow;
 		switch ( $name ) {
@@ -200,12 +206,12 @@ class ArticleRankingPager extends TablePager {
 				return $title ? $this->getLinkRenderer()->makeKnownLink( $title ) : '';
 			case 'sum_positive_percent':
 				$percent = round( $row->sum_positive / $row->sum_total * 100 );
-				return ( $percent . '%' );
+				return htmlspecialchars( $percent . '%' );
 			case 'sum_negative_percent':
 				$percent = round( $row->sum_negative / $row->sum_total * 100 );
-				return ( $percent . '%' );
+				return htmlspecialchars( $percent . '%' );
 			default:
-				return $value;
+				return htmlspecialchars( (string)$value );
 		}
 	}
 }
