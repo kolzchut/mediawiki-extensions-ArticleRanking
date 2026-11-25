@@ -2,6 +2,7 @@
 
 namespace MediaWiki\Extension\ArticleRanking\Tests\Integration;
 
+use ExtensionRegistry;
 use MediaWiki\Extension\ArticleRanking\ArticleRankingPager;
 use MediaWiki\Extension\ArticleRanking\SpecialArticleRankingReport;
 use MediaWiki\Request\FauxRequest;
@@ -133,5 +134,36 @@ class ArticleRankingPagerTest extends MediaWikiIntegrationTestCase {
 		$pager = $this->newPager( $page->getTitle()->getPrefixedText() );
 
 		$this->assertSame( $page->getId(), $pager->mConds['ranking_page_id'] );
+	}
+
+	public function testFormatValueEscapesValuesItDoesNotBuild(): void {
+		$pager = $this->newPager( '' );
+
+		$this->assertSame( '&lt;i data-x=1&gt;', $pager->formatValue( 'content_area', '<i data-x=1>' ) );
+		$this->assertSame( '', $pager->formatValue( 'content_area', null ) );
+		$this->assertSame( '7', $pager->formatValue( 'sum_total', '7' ) );
+	}
+
+	public function testContentAreaIsEscapedInTheTable(): void {
+		if ( !ExtensionRegistry::getInstance()->isLoaded( 'ArticleContentArea' ) ) {
+			$this->markTestSkipped( 'The content area column needs Extension:ArticleContentArea' );
+		}
+		$page = $this->getExistingTestPage( 'ArticleRankingPagerTest' );
+		$this->getDb()->newInsertQueryBuilder()
+			->insertInto( 'page_props' )
+			->row( [
+				'pp_page' => $page->getId(),
+				'pp_propname' => 'ArticleContentArea',
+				'pp_value' => '<i data-x=1>',
+				'pp_sortkey' => null,
+			] )
+			->caller( __METHOD__ )
+			->execute();
+		$this->insertVotes( [ $page->getId() => 2 ] );
+
+		$body = $this->newPager( '' )->getBody();
+
+		$this->assertStringContainsString( '&lt;i data-x=1&gt;', $body );
+		$this->assertDoesNotMatchRegularExpression( '/<i[\s>\/]/i', $body );
 	}
 }
