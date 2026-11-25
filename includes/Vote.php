@@ -7,6 +7,7 @@ use MediaWiki\MediaWikiServices;
 use RequestContext;
 use TemplateParser;
 use Title;
+use Wikimedia\IPUtils;
 
 class Vote {
 
@@ -58,8 +59,9 @@ class Vote {
 	 * one live vote per identity per page.
 	 *
 	 * Registered users key by user id; anonymous users key by a keyed hash of
-	 * their IP — the HMAC secret is $wgSecretKey, which lives outside this
-	 * table, so a DB-only compromise cannot recover the address. Deliberately
+	 * their IP (an IPv6 address by its /64; see getVoterNetwork()) — the HMAC
+	 * secret is $wgSecretKey, which lives outside this table, so a DB-only
+	 * compromise cannot recover the address. Deliberately
 	 * does NOT call getActorId(), to keep anonymous voting decoupled from
 	 * MediaWiki's actor / temporary-account machinery.
 	 *
@@ -72,7 +74,37 @@ class Vote {
 			return 'u:' . $user->getId();
 		}
 		$secret = MediaWikiServices::getInstance()->getMainConfig()->get( 'SecretKey' );
-		return 'ip:' . hash_hmac( 'sha256', $ctx->getRequest()->getIP(), $secret );
+		return self::getAnonVoterKey( $ctx->getRequest()->getIP(), $secret );
+	}
+
+	/**
+	 * The voter key for an anonymous voter at $ip: a keyed hash of the voter's
+	 * network (see getVoterNetwork()).
+	 *
+	 * @param string $ip the client IP, as WebRequest::getIP() returns it
+	 * @param string $secret HMAC secret ($wgSecretKey)
+	 * @return string
+	 */
+	public static function getAnonVoterKey( string $ip, string $secret ): string {
+		return 'ip:' . hash_hmac( 'sha256', self::getVoterNetwork( $ip ), $secret );
+	}
+
+	/**
+	 * The part of an anonymous voter's IP that identifies them.
+	 *
+	 * An IPv6 address is reduced to its /64 prefix, because a single
+	 * subscriber is usually assigned a whole /64 and can use any address in
+	 * it; MediaWiki's own 'subnet' rate limits group IPv6 the same way. An
+	 * IPv4 address is used as it is.
+	 *
+	 * @param string $ip
+	 * @return string
+	 */
+	public static function getVoterNetwork( string $ip ): string {
+		if ( IPUtils::isIPv6( $ip ) ) {
+			return IPUtils::sanitizeRange( "$ip/64" );
+		}
+		return $ip;
 	}
 
 	/**

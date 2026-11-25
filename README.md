@@ -28,6 +28,26 @@ the use of the captcha, falling back to only using a MediaWiki token
 to verify (basically a CSRF protection and nothing more).
 When omitting  $wgArticleRankingTemplatePath `ArticleRanking/templates` used.
 
+## Voting limits
+
+Each voter has one live vote per page; voting again replaces it. A
+registered voter is identified by user id. An anonymous voter is identified by
+a keyed hash of their IP address, where an IPv6 address counts by its /64
+prefix, as one subscriber usually holds a whole /64.
+
+The vote API is rate-limited under the `articleranking-vote` action. The
+extension sets a default in `$wgRateLimits`, which a site can override:
+
+```php
+$wgRateLimits['articleranking-vote'] = [
+	'ip'     => [ 10, 60 ],
+	// per /64 for IPv6, per /24 for IPv4
+	'subnet' => [ 30, 60 ],
+	'newbie' => [ 10, 60 ],
+	'user'   => [ 30, 60 ],
+];
+```
+
 ## Templating  
 Best way is copy from `ArticleRanking/templates/voting.mustache` and modifing it.
 
