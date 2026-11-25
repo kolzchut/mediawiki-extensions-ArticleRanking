@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"articleranking": "{{doc-special|ArticleRanking}}\nThe title of the report page that lists vote totals per page.",
+	"articleranking-desc": "{{desc|name=Article Ranking|url=https://github.com/kolzchut/mediawiki-extensions-ArticleRanking}}",
+	"ranking-section-title": "Heading of the voting section shown at the bottom of an article, asking whether the page helped the reader.",
+	"ranking-yes": "Label of the button that casts a positive vote.\n{{Identical|Yes}}",
+	"ranking-no": "Label of the button that casts a negative vote.\n{{Identical|No}}",
+	"ranking-vote-success": "Message shown in the voting section after a vote was recorded.",
+	"ranking-vote-fail": "Message shown in the voting section when a vote could not be recorded; the reader can vote again.",
+	"ranking-invalid-captcha-title": "Title of an error about the CAPTCHA.",
+	"ranking-invalid-captcha-keys-message": "Error shown when the CAPTCHA site key or secret is not configured.",
+	"articleranking-filter-legend": "Legend of the filter form on [[Special:ArticleRanking]].\n{{Identical|Filter}}",
+	"articleranking-filter-title": "Label of the filter field on [[Special:ArticleRanking]] that limits the report to one page.\n{{Identical|Page}}",
+	"articleranking-page-title": "Column header on [[Special:ArticleRanking]]: the page that was voted on.\n{{Identical|Page}}",
+	"articleranking-sum-negative": "Column header on [[Special:ArticleRanking]]: the number of negative votes.",
+	"articleranking-sum-negative-percent": "Column header on [[Special:ArticleRanking]]: the share of negative votes, as a percentage. Shown next to {{msg-mw|articleranking-sum-negative}}.",
+	"articleranking-sum-positive": "Column header on [[Special:ArticleRanking]]: the number of positive votes.",
+	"articleranking-sum-positive-percent": "Column header on [[Special:ArticleRanking]]: the share of positive votes, as a percentage. Shown next to {{msg-mw|articleranking-sum-positive}}.",
+	"articleranking-sum-total": "Column header on [[Special:ArticleRanking]]: the total number of votes.",
+	"articleranking-filter-min-ranknigs": "Label of the filter field on [[Special:ArticleRanking]] that hides pages with fewer votes than the number entered.",
+	"articleranking-filter-content-area": "Label of the filter field on [[Special:ArticleRanking]] that limits the report to one content area. Shown only when the ArticleContentArea extension is installed.",
+	"articleranking-tableheader-content-area": "Column header on [[Special:ArticleRanking]]: the content area of the page. Shown only when the ArticleContentArea extension is installed.",
+	"right-articleranking-view-report": "{{doc-right|articleranking-view-report}}",
+	"action-articleranking-view-report": "{{doc-action|articleranking-view-report}}"
+}
